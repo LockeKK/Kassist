@@ -1,0 +1,1172 @@
+
+Map of kassit.sm8 from link file compile.lkf - Mon Feb 01 15:21:03 2016
+
+
+                               --------
+                               Segments
+                               --------
+
+start 00008080 end 000080ff length   127 segment .const
+start 000082c8 end 0000938a length  4290 segment .text
+start 0000938a end 000093f7 length   109 segment .sm
+start 00004000 end 00004000 length     0 segment .eeprom
+start 00000000 end 00000017 length    23 segment .bsct, initialized
+start 00008116 end 0000812d length    23 segment .bsct, from
+start 00000017 end 000000e6 length   207 segment .ubsct
+start 0000e6:0 end 0000e6:5 length     5 segment .bit, initialized
+start 0000812d end 0000812e length     1 segment .bit, from
+start 000000e7 end 000000e7 length     0 segment .share
+start 00000100 end 00000215 length   277 segment .data, initialized
+start 0000812e end 00008243 length   277 segment .data, from
+start 00000215 end 0000023b length    38 segment .bss
+start 0000023b end 000002c0 length   133 segment uid, initialized
+start 00008243 end 000082c8 length   133 segment uid, from
+start 00000000 end 000007d5 length  2005 segment .info.
+start 00008000 end 00008080 length   128 segment .const
+start 000080ff end 00008116 length    23 segment .init
+
+
+                               -------
+                               Modules
+                               -------
+
+C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8:
+start 000082c8 end 00008313 length    75 section .text
+start 00000215 end 00000215 length     0 section .bss
+start 00000017 end 00000017 length     0 section .ubsct
+start 00000000 end 0000002f length    47 section .info.
+
+.\out\main.o:
+start 00008313 end 00008376 length    99 section .text
+start 00000000 end 00000002 length     2 section .bsct
+start 00000017 end 0000001b length     4 section .ubsct
+start 0000002f end 000000a6 length   119 section .info.
+
+.\out\battery.o:
+start 000000a6 end 00000120 length   122 section .info.
+
+.\out\config.o:
+start 00008376 end 00008472 length   252 section .text
+start 00000100 end 00000209 length   265 section .data
+start 00000215 end 0000023b length    38 section .bss
+start 00000002 end 00000008 length     6 section .bsct
+start 00000120 end 00000199 length   121 section .info.
+start 00008080 end 000080f9 length   121 section .const
+
+.\out\host_service.o:
+start 00008472 end 0000875a length   744 section .text
+start 00000008 end 00000010 length     8 section .bsct
+start 0000001b end 000000bf length   164 section .ubsct
+start 00000199 end 00000218 length   127 section .info.
+start 0000e6:0 end 0000e6:2 length     2 section .bit
+
+.\out\input_service.o:
+start 0000875a end 00008ade length   900 section .text
+start 000000bf end 000000c6 length     7 section .ubsct
+start 00000218 end 00000298 length   128 section .info.
+start 0000e6:2 end 0000e6:3 length     1 section .bit
+
+.\out\security.o:
+start 00008ade end 00008b07 length    41 section .text
+start 00000209 end 00000215 length    12 section .data
+start 00000298 end 00000313 length   123 section .info.
+start 0000938a end 000093f7 length   109 section .sm
+start 0000023b end 000002c0 length   133 section uid (.uid)
+start 000080f9 end 000080ff length     6 section .const
+
+.\out\rc_monitor.o:
+start 00008b07 end 00008ce4 length   477 section .text
+start 00000010 end 00000011 length     1 section .bsct
+start 000000c6 end 000000ca length     4 section .ubsct
+start 00000313 end 00000390 length   125 section .info.
+start 0000e6:3 end 0000e6:4 length     1 section .bit
+
+.\out\servo_output.o:
+start 00008ce4 end 000091e5 length  1281 section .text
+start 00000011 end 00000017 length     6 section .bsct
+start 000000ca end 000000dc length    18 section .ubsct
+start 00000390 end 0000040f length   127 section .info.
+start 0000e6:4 end 0000e6:5 length     1 section .bit
+
+.\out\board.o:
+start 000091e5 end 000091f1 length    12 section .text
+start 0000040f end 00000487 length   120 section .info.
+
+.\out\storage.o:
+start 000091f1 end 000092ae length   189 section .text
+start 00000487 end 00000501 length   122 section .info.
+
+(C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)idiv.o:
+start 000092ae end 000092cc length    30 section .text
+start 00000501 end 0000052f length    46 section .info.
+
+(C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)imul.o:
+start 000092cc end 000092ed length    33 section .text
+start 0000052f end 0000055d length    46 section .info.
+
+(C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lcmp.o:
+start 000092ed end 0000930d length    32 section .text
+start 0000055d end 0000058b length    46 section .info.
+
+(C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lgadc.o:
+start 0000930d end 0000931d length    16 section .text
+start 0000058b end 000005ba length    47 section .info.
+
+(C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lgsbc.o:
+start 0000931d end 00009333 length    22 section .text
+start 000005ba end 000005e9 length    47 section .info.
+
+(C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lreg.o:
+start 000000dc end 000000e0 length     4 section .ubsct
+start 000005e9 end 00000617 length    46 section .info.
+
+(C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lzmp.o:
+start 00009333 end 00009345 length    18 section .text
+start 00000617 end 00000645 length    46 section .info.
+
+(C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)rtol.o:
+start 00009345 end 00009357 length    18 section .text
+start 00000645 end 00000673 length    46 section .info.
+
+(C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)sdivx.o:
+start 00009357 end 00009382 length    43 section .text
+start 00000673 end 000006a2 length    47 section .info.
+
+(C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)utolx.o:
+start 00009382 end 00009389 length     7 section .text
+start 000006a2 end 000006d1 length    47 section .info.
+
+(C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)xreg.o:
+start 000000e0 end 000000e3 length     3 section .ubsct
+start 000006d1 end 000006ff length    46 section .info.
+
+(C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)yreg.o:
+start 000000e3 end 000000e6 length     3 section .ubsct
+start 000006ff end 0000072d length    46 section .info.
+
+.\out\vector.o:
+start 00009389 end 0000938a length     1 section .text
+start 0000072d end 000007a6 length   121 section .info.
+start 00008000 end 00008080 length   128 section .const
+
+
+                             -----------
+                             Stack usage
+                             -----------
+
+.\out\board.o:
+_beep_notify                         2   (2)
+_board_int                           2   (2)
+_delay                               2   (2)
+_get_ch3_profile                >    2   (2)
+_get_ch3_state                       2   (2)
+_get_dip_state                       2   (2)
+_led                            >    2   (2)
+_reboot                              2   (2)
+
+.\out\config.o:
+L3_fresh_config_check                4   (4)
+_load_all_parameters                16   (3)
+_load_system_configs                13   (5)
+_save_system_configs                16   (5)
+_update_attr_status                 21   (5)
+_update_rtr_status                  21   (5)
+
+.\out\host_service.o:
+L12_set_attr_flag                   28   (7)
+L31_get_sys_info                    34   (13)
+L51_reset_to_factroy                20   (13)
+L71_get_device_sn                    2   (2)
+_cmd_execution_done                  7   (5)
+_cmd_execution_ng                    7   (5)
+_cmd_frame_decode               >    3   (3)
+_host_cmd_init                       3   (3)
+_host_cmd_process                   36   (2) *** pointer() ***
+_send_ack_frame                      5   (5)
+_set_event_ack_ready                 2   (2)
+
+.\out\input_service.o:
+L11_ch3_clicks_decode                4   (4)
+L31_input_process_thread            19   (15)
+L51_process_ch3_click_timeout       22   (3)
+L71_add_click                        2   (2)
+_input_ch3_handler                  26   (4)
+
+.\out\main.o:
+L11_check_no_signal                  2   (2)
+L5_service_systick                   4   (2)
+_diagnostics_service                 2   (2)
+_main                           >   38   (2)
+
+.\out\rc_monitor.o:
+L11_normalize_channel                7   (4)
+L31_initialize_channel               4   (4)
+_init_servo_reader                   2   (2)
+_output_raw_channels            >    4   (4)
+_read_rc_channels                    9   (2)
+
+.\out\security.o:
+L3_make_uid_signature               29   (18)
+L5_encrypte                          6   (6)
+L7_decrypt                           6   (6)
+_security_init                      31   (2)
+_verify_encrypted_uid               27   (21)
+
+.\out\servo_output.o:
+L11_enter_setup_mode                31   (3)
+L12_do_reversing_setup              23   (2)
+L13_do_steel_setup                  25   (4)
+L14_do_servo_output_setup           28   (7)
+L31_start_reversing_setup           23   (2)
+L32_start_steel_setup               23   (2)
+L33_start_servo_output_setup        26   (5)
+L34_calculate_servo_pulse           11   (8)
+L51_stop_reversing_setup             4   (2)
+L52_stop_steel_setup                 4   (2)
+L53_stop_servo_output_setup          4   (2)
+L54_calculate_servo_activeness       9   (9)
+L572_servo_output_manually      >   18   (7)
+L71_if_reversing_setup_done          2   (2)
+L72_if_steel_setup_done              2   (2)
+L73_if_servo_output_setup_done       2   (2)
+_check_setup_mode                   34   (3)
+_if_under_setup_actions              4   (2)
+_init_servo_output              >    8   (8)
+_input_user_acknowledge              2   (2)
+_update_servo_output                20   (9)
+
+.\out\storage.o:
+L3_storage_make_writable             3   (3)
+L5_storage_make_readonly             2   (2)
+_hw_storage_read                     8   (8)
+_hw_storage_write                   11   (8)
+
+.\out\vector.o:
+_DefaultInterrupt               >    5   (5)
+
+Stack size: 43
+
+
+                              ---------
+                              Call tree
+                              ---------
+   1 > L572_servo_output_manually: (7)
+   2      + L34_calculate_servo_pulse: (8)
+       
+   3 > _DefaultInterrupt: (5)
+
+   4 > __stext: (0)
+
+   5 > _cmd_frame_decode: (3)
+
+   6 > _get_ch3_profile: (2)
+
+   7 > _init_servo_output: (8)
+
+   8 > _led: (2)
+
+   9 > _main: (2)
+  10      + L11_check_no_signal: (2)
+  11      + L5_service_systick: (2)
+  12      + _board_int: (2)
+  13      + _check_setup_mode: (3)
+  14      |    + L11_enter_setup_mode: (3)
+  15      |    |    + L12_do_reversing_setup: (2)
+  16      |    |    |    + _beep_notify: (2)
+  17      |    |    |    + _save_system_configs: (5)
+  18      |    |    |    |    + _hw_storage_write: (8)
+  19      |    |    |    |    |    + L3_storage_make_writable: (3)
+  20      |    |    |    |    |    + L5_storage_make_readonly: (2)
+          |    |    |    |    | 
+          |    |    |    | 
+  21      |    |    |    + _update_rtr_status: (5)
+  22      |    |    |    |    + L3_fresh_config_check: (4)
+  23      |    |    |    |    + _save_system_configs --> 17
+          |    |    |    | 
+          |    |    | 
+  24      |    |    + L13_do_steel_setup: (4)
+  25      |    |    |    + L34_calculate_servo_pulse --> 2
+  26      |    |    |    + _save_system_configs --> 17
+  27      |    |    |    + _update_rtr_status --> 21
+          |    |    | 
+  28      |    |    + L14_do_servo_output_setup: (7)
+  29      |    |    |    + L34_calculate_servo_pulse --> 2
+  30      |    |    |    + _beep_notify --> 16
+  31      |    |    |    + _save_system_configs --> 17
+  32      |    |    |    + _update_rtr_status --> 21
+          |    |    | 
+  33      |    |    + L31_start_reversing_setup: (2)
+  34      |    |    |    + _update_rtr_status --> 21
+          |    |    | 
+  35      |    |    + L32_start_steel_setup: (2)
+  36      |    |    |    + _update_rtr_status --> 21
+          |    |    | 
+  37      |    |    + L33_start_servo_output_setup: (5)
+  38      |    |    |    + _beep_notify --> 16
+  39      |    |    |    + _update_attr_status: (5)
+  40      |    |    |    |    + L3_fresh_config_check --> 22
+  41      |    |    |    |    + _save_system_configs --> 17
+          |    |    |    | 
+  42      |    |    |    + _update_rtr_status --> 21
+          |    |    | 
+  43      |    |    + L51_stop_reversing_setup: (2)
+  44      |    |    |    + _beep_notify --> 16
+          |    |    | 
+  45      |    |    + L52_stop_steel_setup: (2)
+  46      |    |    |    + _beep_notify --> 16
+          |    |    | 
+  47      |    |    + L53_stop_servo_output_setup: (2)
+  48      |    |    |    + _beep_notify --> 16
+          |    |    | 
+  49      |    |    + L71_if_reversing_setup_done: (2)
+  50      |    |    + L72_if_steel_setup_done: (2)
+  51      |    |    + L73_if_servo_output_setup_done: (2)
+  52      |    |    + _load_system_configs: (5)
+  53      |    |    |    + _hw_storage_read: (8)
+          |    |    | 
+          |    | 
+  54      |    + _get_dip_state: (2)
+          | 
+  55      + _diagnostics_service: (2)
+  56      + _host_cmd_init: (3)
+  57      + _host_cmd_process: (2)
+  58      |    + (L12_set_attr_flag) ...
+  59      |    + (L31_get_sys_info) ...
+  60      |    + (L51_reset_to_factroy) ...
+  61      |    + (L71_get_device_sn) ...
+  62      |    + _send_ack_frame: (5)
+          | 
+  63      + _init_servo_reader: (2)
+  64      + _input_ch3_handler: (4)
+  65      |    + L51_process_ch3_click_timeout: (3)
+  66      |    |    + L31_input_process_thread: (15)
+  67      |    |    |    + L11_ch3_clicks_decode: (4)
+  68      |    |    |    + _beep_notify --> 16
+          |    |    | 
+  69      |    |    + _if_under_setup_actions: (2)
+  70      |    |    |    + L71_if_reversing_setup_done --> 49
+  71      |    |    |    + L72_if_steel_setup_done --> 50
+  72      |    |    |    + L73_if_servo_output_setup_done --> 51
+          |    |    | 
+  73      |    |    + _input_user_acknowledge: (2)
+          |    | 
+  74      |    + L71_add_click: (2)
+  75      |    + _get_ch3_state: (2)
+          | 
+  76      + _load_all_parameters: (3)
+  77      |    + L3_fresh_config_check --> 22
+  78      |    + _load_system_configs --> 52
+          | 
+  79      + _read_rc_channels: (2)
+  80      |    + L11_normalize_channel: (4)
+  81      |    + L31_initialize_channel: (4)
+          | 
+  82      + _security_init: (2)
+  83      |    + L3_make_uid_signature: (18)
+  84      |    |    + L5_encrypte: (6)
+  85      |    |    + _hw_storage_write --> 18
+  86      |    |    + _reboot: (2)
+          |    | 
+  87      |    + L7_decrypt: (6)
+  88      |    + _save_system_configs --> 17
+          | 
+  89      + _update_servo_output: (9)
+  90      |    + L34_calculate_servo_pulse --> 2
+  91      |    + L54_calculate_servo_activeness: (9)
+          | 
+  92      + _verify_encrypted_uid: (21)
+  93      |    + L5_encrypte --> 84
+          | 
+       
+  94 > _output_raw_channels: (4)
+
+  95   L11_ch3_clicks_decode --> 67
+
+  96   L11_check_no_signal --> 10
+
+  97   L11_enter_setup_mode --> 14
+
+  98   L11_normalize_channel --> 80
+
+  99   L12_do_reversing_setup --> 15
+
+ 100   L12_set_attr_flag: (7)
+ 101      + _update_attr_status --> 39
+       
+ 102   L13_do_steel_setup --> 24
+
+ 103   L14_do_servo_output_setup --> 28
+
+ 104   L31_get_sys_info: (13)
+ 105      + _cmd_execution_done: (5)
+ 106      |    + _set_event_ack_ready: (2)
+          | 
+ 107      + _cmd_execution_ng: (5)
+ 108      |    + _set_event_ack_ready --> 106
+          | 
+ 109      + _save_system_configs --> 17
+ 110      + _set_event_ack_ready --> 106
+ 111      + _update_rtr_status --> 21
+       
+ 112   L31_initialize_channel --> 81
+
+ 113   L31_input_process_thread --> 66
+
+ 114   L31_start_reversing_setup --> 33
+
+ 115   L32_start_steel_setup --> 35
+
+ 116   L33_start_servo_output_setup --> 37
+
+ 117   L34_calculate_servo_pulse --> 2
+
+ 118   L3_fresh_config_check --> 22
+
+ 119   L3_make_uid_signature --> 83
+
+ 120   L3_storage_make_writable --> 19
+
+ 121   L51_process_ch3_click_timeout --> 65
+
+ 122   L51_reset_to_factroy: (13)
+ 123      + _cmd_execution_ng --> 107
+ 124      + _delay: (2)
+ 125      + _reboot --> 86
+ 126      + _set_event_ack_ready --> 106
+       
+ 127   L51_stop_reversing_setup --> 43
+
+ 128   L52_stop_steel_setup --> 45
+
+ 129   L53_stop_servo_output_setup --> 47
+
+ 130   L54_calculate_servo_activeness --> 91
+
+ 131   L5_encrypte --> 84
+
+ 132   L5_service_systick --> 11
+
+ 133   L5_storage_make_readonly --> 20
+
+ 134   L71_add_click --> 74
+
+ 135   L71_get_device_sn: (2)
+
+ 136   L71_if_reversing_setup_done --> 49
+
+ 137   L72_if_steel_setup_done --> 50
+
+ 138   L73_if_servo_output_setup_done --> 51
+
+ 139   L7_decrypt --> 87
+
+ 140   _beep_notify --> 16
+
+ 141   _board_int --> 12
+
+ 142   _check_setup_mode --> 13
+
+ 143   _cmd_execution_done --> 105
+
+ 144   _cmd_execution_ng --> 107
+
+ 145   _delay --> 124
+
+ 146   _diagnostics_service --> 55
+
+ 147   _get_ch3_state --> 75
+
+ 148   _get_dip_state --> 54
+
+ 149   _host_cmd_init --> 56
+
+ 150   _host_cmd_process --> 57
+
+ 151   _hw_storage_read --> 53
+
+ 152   _hw_storage_write --> 18
+
+ 153   _if_under_setup_actions --> 69
+
+ 154   _init_servo_reader --> 63
+
+ 155   _input_ch3_handler --> 64
+
+ 156   _input_user_acknowledge --> 73
+
+ 157   _load_all_parameters --> 76
+
+ 158   _load_system_configs --> 52
+
+ 159   _read_rc_channels --> 79
+
+ 160   _reboot --> 86
+
+ 161   _save_system_configs --> 17
+
+ 162   _security_init --> 82
+
+ 163   _send_ack_frame --> 62
+
+ 164   _set_event_ack_ready --> 106
+
+ 165   _update_attr_status --> 39
+
+ 166   _update_rtr_status --> 21
+
+ 167   _update_servo_output --> 89
+
+ 168   _verify_encrypted_uid --> 92
+
+
+
+                               -------
+                               Symbols
+                               -------
+
+_ADC_CR1                   00005401   defined in .\out\security.o
+                                      *** not used ***
+_ADC_CR2                   00005402   defined in .\out\security.o
+                                      *** not used ***
+_ADC_CR3                   00005403   defined in .\out\security.o
+                                      *** not used ***
+_ADC_CSR                   00005400   defined in .\out\security.o
+                                      *** not used ***
+_ADC_DRH                   00005404   defined in .\out\security.o
+                                      *** not used ***
+_ADC_DRL                   00005405   defined in .\out\security.o
+                                      *** not used ***
+_ADC_TDRH                  00005406   defined in .\out\security.o
+                                      *** not used ***
+_ADC_TDRL                  00005407   defined in .\out\security.o
+                                      *** not used ***
+_AWU_APR                   000050f1   defined in .\out\security.o
+                                      *** not used ***
+_AWU_CSR1                  000050f0   defined in .\out\security.o
+                                      *** not used ***
+_AWU_TBR                   000050f2   defined in .\out\security.o
+                                      *** not used ***
+_BEEP_CSR                  000050f3   defined in .\out\security.o
+                                      *** not used ***
+_CAN_DGR                   00005426   defined in .\out\security.o
+                                      *** not used ***
+_CAN_FPSR                  00005427   defined in .\out\security.o
+                                      *** not used ***
+_CAN_IER                   00005425   defined in .\out\security.o
+                                      *** not used ***
+_CAN_MCR                   00005420   defined in .\out\security.o
+                                      *** not used ***
+_CAN_MSR                   00005421   defined in .\out\security.o
+                                      *** not used ***
+_CAN_P0                    00005428   defined in .\out\security.o
+                                      *** not used ***
+_CAN_P1                    00005429   defined in .\out\security.o
+                                      *** not used ***
+_CAN_P2                    0000542a   defined in .\out\security.o
+                                      *** not used ***
+_CAN_P3                    0000542b   defined in .\out\security.o
+                                      *** not used ***
+_CAN_P4                    0000542c   defined in .\out\security.o
+                                      *** not used ***
+_CAN_P5                    0000542d   defined in .\out\security.o
+                                      *** not used ***
+_CAN_P6                    0000542e   defined in .\out\security.o
+                                      *** not used ***
+_CAN_P7                    0000542f   defined in .\out\security.o
+                                      *** not used ***
+_CAN_P8                    00005430   defined in .\out\security.o
+                                      *** not used ***
+_CAN_P9                    00005431   defined in .\out\security.o
+                                      *** not used ***
+_CAN_PA                    00005432   defined in .\out\security.o
+                                      *** not used ***
+_CAN_PB                    00005433   defined in .\out\security.o
+                                      *** not used ***
+_CAN_PC                    00005434   defined in .\out\security.o
+                                      *** not used ***
+_CAN_PD                    00005435   defined in .\out\security.o
+                                      *** not used ***
+_CAN_PE                    00005436   defined in .\out\security.o
+                                      *** not used ***
+_CAN_PF                    00005437   defined in .\out\security.o
+                                      *** not used ***
+_CAN_RFR                   00005424   defined in .\out\security.o
+                                      *** not used ***
+_CAN_TPR                   00005423   defined in .\out\security.o
+                                      *** not used ***
+_CAN_TSR                   00005422   defined in .\out\security.o
+                                      *** not used ***
+_CFG_GCR                   00007f60   defined in .\out\security.o
+                                      *** not used ***
+_CLK_CANCCR                000050cb   defined in .\out\security.o
+                                      *** not used ***
+_CLK_CCOR                  000050c9   defined in .\out\security.o
+                                      *** not used ***
+_CLK_CKDIVR                000050c6   defined in .\out\security.o
+                                      *** not used ***
+_CLK_CMSR                  000050c3   defined in .\out\security.o
+                                      *** not used ***
+_CLK_CSSR                  000050c8   defined in .\out\security.o
+                                      *** not used ***
+_CLK_ECKCR                 000050c1   defined in .\out\security.o
+                                      *** not used ***
+_CLK_HSITRIMR              000050cc   defined in .\out\security.o
+                                      *** not used ***
+_CLK_ICKCR                 000050c0   defined in .\out\security.o
+                                      *** not used ***
+_CLK_PCKENR1               000050c7   defined in .\out\security.o
+                                      *** not used ***
+_CLK_PCKENR2               000050ca   defined in .\out\security.o
+                                      *** not used ***
+_CLK_SWCR                  000050c5   defined in .\out\security.o
+                                      *** not used ***
+_CLK_SWIMCCR               000050cd   defined in .\out\security.o
+                                      *** not used ***
+_CLK_SWR                   000050c4   defined in .\out\security.o
+                                      *** not used ***
+_DM_BK1RE                  00007f90   defined in .\out\security.o
+                                      *** not used ***
+_DM_BK1RH                  00007f91   defined in .\out\security.o
+                                      *** not used ***
+_DM_BK1RL                  00007f92   defined in .\out\security.o
+                                      *** not used ***
+_DM_BK2RE                  00007f93   defined in .\out\security.o
+                                      *** not used ***
+_DM_BK2RH                  00007f94   defined in .\out\security.o
+                                      *** not used ***
+_DM_BK2RL                  00007f95   defined in .\out\security.o
+                                      *** not used ***
+_DM_CR1                    00007f96   defined in .\out\security.o
+                                      *** not used ***
+_DM_CR2                    00007f97   defined in .\out\security.o
+                                      *** not used ***
+_DM_CSR1                   00007f98   defined in .\out\security.o
+                                      *** not used ***
+_DM_CSR2                   00007f99   defined in .\out\security.o
+                                      *** not used ***
+_DM_ENFCTR                 00007f9a   defined in .\out\security.o
+                                      *** not used ***
+_DefaultInterrupt          00009389   defined in .\out\vector.o section .text
+_EXTI_CR1                  000050a0   defined in .\out\security.o
+                                      *** not used ***
+_EXTI_CR2                  000050a1   defined in .\out\security.o
+                                      *** not used ***
+_FLASH_CR1                 0000505a   defined in .\out\security.o
+                                      *** not used ***
+_FLASH_CR2                 0000505b   defined in .\out\security.o
+_FLASH_DUKR                00005064   defined in .\out\security.o
+                                      *** not used ***
+_FLASH_FPR                 0000505d   defined in .\out\security.o
+                                      *** not used ***
+_FLASH_IAPSR               0000505f   defined in .\out\security.o
+_FLASH_NCR2                0000505c   defined in .\out\security.o
+_FLASH_NFPR                0000505e   defined in .\out\security.o
+                                      *** not used ***
+_FLASH_PUKR                00005062   defined in .\out\security.o
+_I2C_CCRH                  0000521c   defined in .\out\security.o
+                                      *** not used ***
+_I2C_CCRL                  0000521b   defined in .\out\security.o
+                                      *** not used ***
+_I2C_CR1                   00005210   defined in .\out\security.o
+                                      *** not used ***
+_I2C_CR2                   00005211   defined in .\out\security.o
+                                      *** not used ***
+_I2C_DR                    00005216   defined in .\out\security.o
+                                      *** not used ***
+_I2C_FREQR                 00005212   defined in .\out\security.o
+                                      *** not used ***
+_I2C_ITR                   0000521a   defined in .\out\security.o
+                                      *** not used ***
+_I2C_OARH                  00005214   defined in .\out\security.o
+                                      *** not used ***
+_I2C_OARL                  00005213   defined in .\out\security.o
+                                      *** not used ***
+_I2C_PECR                  0000521e   defined in .\out\security.o
+                                      *** not used ***
+_I2C_SR1                   00005217   defined in .\out\security.o
+                                      *** not used ***
+_I2C_SR2                   00005218   defined in .\out\security.o
+                                      *** not used ***
+_I2C_SR3                   00005219   defined in .\out\security.o
+                                      *** not used ***
+_I2C_TRISER                0000521d   defined in .\out\security.o
+                                      *** not used ***
+_ITC_SPR1                  00007f70   defined in .\out\security.o
+                                      *** not used ***
+_ITC_SPR2                  00007f71   defined in .\out\security.o
+                                      *** not used ***
+_ITC_SPR3                  00007f72   defined in .\out\security.o
+                                      *** not used ***
+_ITC_SPR4                  00007f73   defined in .\out\security.o
+                                      *** not used ***
+_ITC_SPR5                  00007f74   defined in .\out\security.o
+                                      *** not used ***
+_ITC_SPR6                  00007f75   defined in .\out\security.o
+                                      *** not used ***
+_ITC_SPR7                  00007f76   defined in .\out\security.o
+                                      *** not used ***
+_ITC_SPR8                  00007f77   defined in .\out\security.o
+                                      *** not used ***
+_IWDG_KR                   000050e0   defined in .\out\security.o
+                                      *** not used ***
+_IWDG_PR                   000050e1   defined in .\out\security.o
+                                      *** not used ***
+_IWDG_RLR                  000050e2   defined in .\out\security.o
+                                      *** not used ***
+_PA_CR1                    00005003   defined in .\out\security.o
+                                      *** not used ***
+_PA_CR2                    00005004   defined in .\out\security.o
+                                      *** not used ***
+_PA_DDR                    00005002   defined in .\out\security.o
+                                      *** not used ***
+_PA_IDR                    00005001   defined in .\out\security.o
+                                      *** not used ***
+_PA_ODR                    00005000   defined in .\out\security.o
+                                      *** not used ***
+_PB_CR1                    00005008   defined in .\out\security.o
+                                      *** not used ***
+_PB_CR2                    00005009   defined in .\out\security.o
+                                      *** not used ***
+_PB_DDR                    00005007   defined in .\out\security.o
+                                      *** not used ***
+_PB_IDR                    00005006   defined in .\out\security.o
+                                      *** not used ***
+_PB_ODR                    00005005   defined in .\out\security.o
+                                      *** not used ***
+_PC_CR1                    0000500d   defined in .\out\security.o
+                                      *** not used ***
+_PC_CR2                    0000500e   defined in .\out\security.o
+                                      *** not used ***
+_PC_DDR                    0000500c   defined in .\out\security.o
+                                      *** not used ***
+_PC_IDR                    0000500b   defined in .\out\security.o
+                                      *** not used ***
+_PC_ODR                    0000500a   defined in .\out\security.o
+                                      *** not used ***
+_PD_CR1                    00005012   defined in .\out\security.o
+                                      *** not used ***
+_PD_CR2                    00005013   defined in .\out\security.o
+                                      *** not used ***
+_PD_DDR                    00005011   defined in .\out\security.o
+                                      *** not used ***
+_PD_IDR                    00005010   defined in .\out\security.o
+                                      *** not used ***
+_PD_ODR                    0000500f   defined in .\out\security.o
+                                      *** not used ***
+_PE_CR1                    00005017   defined in .\out\security.o
+                                      *** not used ***
+_PE_CR2                    00005018   defined in .\out\security.o
+                                      *** not used ***
+_PE_DDR                    00005016   defined in .\out\security.o
+                                      *** not used ***
+_PE_IDR                    00005015   defined in .\out\security.o
+                                      *** not used ***
+_PE_ODR                    00005014   defined in .\out\security.o
+                                      *** not used ***
+_PF_CR1                    0000501c   defined in .\out\security.o
+                                      *** not used ***
+_PF_CR2                    0000501d   defined in .\out\security.o
+                                      *** not used ***
+_PF_DDR                    0000501b   defined in .\out\security.o
+                                      *** not used ***
+_PF_IDR                    0000501a   defined in .\out\security.o
+                                      *** not used ***
+_PF_ODR                    00005019   defined in .\out\security.o
+                                      *** not used ***
+_PG_CR1                    00005021   defined in .\out\security.o
+                                      *** not used ***
+_PG_CR2                    00005022   defined in .\out\security.o
+                                      *** not used ***
+_PG_DDR                    00005020   defined in .\out\security.o
+                                      *** not used ***
+_PG_IDR                    0000501f   defined in .\out\security.o
+                                      *** not used ***
+_PG_ODR                    0000501e   defined in .\out\security.o
+                                      *** not used ***
+_PH_CR1                    00005026   defined in .\out\security.o
+                                      *** not used ***
+_PH_CR2                    00005027   defined in .\out\security.o
+                                      *** not used ***
+_PH_DDR                    00005025   defined in .\out\security.o
+                                      *** not used ***
+_PH_IDR                    00005024   defined in .\out\security.o
+                                      *** not used ***
+_PH_ODR                    00005023   defined in .\out\security.o
+                                      *** not used ***
+_PI_CR1                    0000502b   defined in .\out\security.o
+                                      *** not used ***
+_PI_CR2                    0000502c   defined in .\out\security.o
+                                      *** not used ***
+_PI_DDR                    0000502a   defined in .\out\security.o
+                                      *** not used ***
+_PI_IDR                    00005029   defined in .\out\security.o
+                                      *** not used ***
+_PI_ODR                    00005028   defined in .\out\security.o
+                                      *** not used ***
+_RST_SR                    000050b3   defined in .\out\security.o
+                                      *** not used ***
+_SPI_CR1                   00005200   defined in .\out\security.o
+                                      *** not used ***
+_SPI_CR2                   00005201   defined in .\out\security.o
+                                      *** not used ***
+_SPI_CRCPR                 00005205   defined in .\out\security.o
+                                      *** not used ***
+_SPI_DR                    00005204   defined in .\out\security.o
+                                      *** not used ***
+_SPI_ICR                   00005202   defined in .\out\security.o
+                                      *** not used ***
+_SPI_RXCRCR                00005206   defined in .\out\security.o
+                                      *** not used ***
+_SPI_SR                    00005203   defined in .\out\security.o
+                                      *** not used ***
+_SPI_TXCRCR                00005207   defined in .\out\security.o
+                                      *** not used ***
+_SWIM_CSR                  00007f80   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_ARRH                 00005262   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_ARRL                 00005263   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_BKR                  0000526d   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CCER1                0000525c   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CCER2                0000525d   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CCMR1                00005258   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CCMR2                00005259   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CCMR3                0000525a   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CCMR4                0000525b   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CCR1H                00005265   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CCR1L                00005266   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CCR2H                00005267   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CCR2L                00005268   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CCR3H                00005269   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CCR3L                0000526a   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CCR4H                0000526b   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CCR4L                0000526c   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CNTRH                0000525e   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CNTRL                0000525f   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CR1                  00005250   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_CR2                  00005251   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_DTR                  0000526e   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_EGR                  00005257   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_ETR                  00005253   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_IER                  00005254   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_OISR                 0000526f   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_PSCRH                00005260   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_PSCRL                00005261   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_RCR                  00005264   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_SMCR                 00005252   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_SR1                  00005255   defined in .\out\security.o
+                                      *** not used ***
+_TIM1_SR2                  00005256   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_ARRH                 0000530d   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_ARRL                 0000530e   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_CCER1                00005308   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_CCER2                00005309   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_CCMR1                00005305   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_CCMR2                00005306   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_CCMR3                00005307   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_CCR1H                0000530f   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_CCR1L                00005310   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_CCR2H                00005311   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_CCR2L                00005312   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_CCR3H                00005313   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_CCR3L                00005314   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_CNTRH                0000530a   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_CNTRL                0000530b   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_CR1                  00005300   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_EGR                  00005304   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_IER                  00005301   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_PSCR                 0000530c   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_SR1                  00005302   defined in .\out\security.o
+                                      *** not used ***
+_TIM2_SR2                  00005303   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_ARRH                 0000532b   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_ARRL                 0000532c   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_CCER1                00005327   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_CCMR1                00005325   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_CCMR2                00005326   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_CCR1H                0000532d   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_CCR1L                0000532e   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_CCR2H                0000532f   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_CCR2L                00005330   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_CNTRH                00005328   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_CNTRL                00005329   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_CR1                  00005320   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_EGR                  00005324   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_IER                  00005321   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_PSCR                 0000532a   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_SR1                  00005322   defined in .\out\security.o
+                                      *** not used ***
+_TIM3_SR2                  00005323   defined in .\out\security.o
+                                      *** not used ***
+_TIM4_ARR                  00005346   defined in .\out\security.o
+                                      *** not used ***
+_TIM4_CNTR                 00005344   defined in .\out\security.o
+                                      *** not used ***
+_TIM4_CR1                  00005340   defined in .\out\security.o
+                                      *** not used ***
+_TIM4_EGR                  00005343   defined in .\out\security.o
+                                      *** not used ***
+_TIM4_IER                  00005341   defined in .\out\security.o
+                                      *** not used ***
+_TIM4_PSCR                 00005345   defined in .\out\security.o
+                                      *** not used ***
+_TIM4_SR                   00005342   defined in .\out\security.o
+                                      *** not used ***
+_USART1_BRR1               00005232   defined in .\out\security.o
+                                      *** not used ***
+_USART1_BRR2               00005233   defined in .\out\security.o
+                                      *** not used ***
+_USART1_CR1                00005234   defined in .\out\security.o
+                                      *** not used ***
+_USART1_CR2                00005235   defined in .\out\security.o
+                                      *** not used ***
+_USART1_CR3                00005236   defined in .\out\security.o
+                                      *** not used ***
+_USART1_CR4                00005237   defined in .\out\security.o
+                                      *** not used ***
+_USART1_CR5                00005238   defined in .\out\security.o
+                                      *** not used ***
+_USART1_DR                 00005231   defined in .\out\security.o
+                                      *** not used ***
+_USART1_GTR                00005239   defined in .\out\security.o
+                                      *** not used ***
+_USART1_PSCR               0000523a   defined in .\out\security.o
+                                      *** not used ***
+_USART1_SR                 00005230   defined in .\out\security.o
+                                      *** not used ***
+_USART3_BRR1               00005242   defined in .\out\security.o
+                                      *** not used ***
+_USART3_BRR2               00005243   defined in .\out\security.o
+                                      *** not used ***
+_USART3_CR1                00005244   defined in .\out\security.o
+                                      *** not used ***
+_USART3_CR2                00005245   defined in .\out\security.o
+                                      *** not used ***
+_USART3_CR3                00005246   defined in .\out\security.o
+                                      *** not used ***
+_USART3_CR4                00005247   defined in .\out\security.o
+                                      *** not used ***
+_USART3_CR6                00005249   defined in .\out\security.o
+                                      *** not used ***
+_USART3_DR                 00005241   defined in .\out\security.o
+                                      *** not used ***
+_USART3_SR                 00005240   defined in .\out\security.o
+                                      *** not used ***
+_WWDG_CR                   000050d1   defined in .\out\security.o
+                                      *** not used ***
+_WWDG_WR                   000050d2   defined in .\out\security.o
+                                      *** not used ***
+__endmem                   000006ff   defined in command file
+                                      *** not used ***
+__endzp                    000000e6   defined in command file section .ubsct
+                                      used in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8
+__idesc__                  000080ff   defined in linker section .init
+                                      used in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8
+__memory                   0000023b   defined in command file section .bss
+                                      used in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8
+__signature_maker_length   0000006d   defined in command file
+                                      *** not used ***
+__signature_orig_length    00000085   defined in command file
+                                      *** not used ***
+__stack                    000007ff   defined in command file
+                                      used in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8
+__startmem                 0000023b   defined in command file section .bss
+                                      *** not used ***
+__stext                    000082c8   defined in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8 section .text
+                                      used in .\out\vector.o
+__vectab                   00008000   defined in .\out\vector.o section .const
+                                      *** not used ***
+_beep_notify               000091ee   defined in .\out\board.o section .text
+                                      used in .\out\input_service.o
+                                              .\out\servo_output.o
+_board_int                 000091e5   defined in .\out\board.o section .text
+                                      used in .\out\main.o
+_ch3_actions               00000100   defined in .\out\config.o section .data, initialized
+                                      used in .\out\input_service.o
+_check_setup_mode          00008dfa   defined in .\out\servo_output.o section .text
+                                      used in .\out\main.o
+_cmd_execution_done        00008501   defined in .\out\host_service.o section .text
+_cmd_execution_ng          0000852a   defined in .\out\host_service.o section .text
+_cmd_frame_decode          00008472   defined in .\out\host_service.o section .text
+_copy_right                00000002   defined in .\out\config.o section .bsct, initialized
+                                      *** not used ***
+_delay                     000091e7   defined in .\out\board.o section .text
+                                      used in .\out\host_service.o
+_dev_config                000001c7   defined in .\out\config.o section .data, initialized
+                                      used in .\out\main.o .\out\input_service.o
+                                              .\out\rc_monitor.o
+                                              .\out\servo_output.o
+_diagnostics_service       00008348   defined in .\out\main.o section .text
+_exit                      00008311   defined in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8 section .text
+_get_ch3_profile           000091ec   defined in .\out\board.o section .text
+_get_ch3_state             000091e8   defined in .\out\board.o section .text
+                                      used in .\out\input_service.o
+_get_dip_state             000091ea   defined in .\out\board.o section .text
+                                      used in .\out\servo_output.o
+_global_flags              00000004   defined in .\out\config.o section .bsct, initialized
+                                      used in .\out\main.o .\out\host_service.o
+                                              .\out\input_service.o
+                                              .\out\rc_monitor.o
+                                              .\out\servo_output.o
+_host_cmd_init             000086e7   defined in .\out\host_service.o section .text
+                                      used in .\out\main.o
+_host_cmd_process          0000873b   defined in .\out\host_service.o section .text
+                                      used in .\out\main.o
+_hw_storage_read           000091f1   defined in .\out\storage.o section .text
+                                      used in .\out\config.o
+_hw_storage_write          0000920b   defined in .\out\storage.o section .text
+                                      used in .\out\config.o .\out\security.o
+_if_under_setup_actions    00008dd8   defined in .\out\servo_output.o section .text
+                                      used in .\out\input_service.o
+_init_servo_output         00008ce4   defined in .\out\servo_output.o section .text
+_init_servo_reader         00008b07   defined in .\out\rc_monitor.o section .text
+                                      used in .\out\main.o
+_input_ch3_handler         0000875a   defined in .\out\input_service.o section .text
+                                      used in .\out\main.o
+_input_user_acknowledge    00008ded   defined in .\out\servo_output.o section .text
+                                      used in .\out\input_service.o
+_led                       000091f0   defined in .\out\board.o section .text
+_load_all_parameters       000083fc   defined in .\out\config.o section .text
+                                      used in .\out\main.o
+_load_system_configs       000083aa   defined in .\out\config.o section .text
+                                      used in .\out\servo_output.o
+_main                      0000834d   defined in .\out\main.o section .text
+                                      used in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8
+_output_raw_channels       00008b86   defined in .\out\rc_monitor.o section .text
+_product_info              00008080   defined in .\out\config.o section .const
+                                      *** not used ***
+_rc_channel                000001a0   defined in .\out\config.o section .data, initialized
+                                      used in .\out\input_service.o
+                                              .\out\rc_monitor.o
+                                              .\out\servo_output.o
+_read_rc_channels          00008b0c   defined in .\out\rc_monitor.o section .text
+                                      used in .\out\main.o
+_reboot                    000091e6   defined in .\out\board.o section .text
+                                      used in .\out\host_service.o
+                                              .\out\security.o
+_save_system_configs       000083d3   defined in .\out\config.o section .text
+                                      used in .\out\host_service.o
+                                              .\out\security.o
+                                              .\out\servo_output.o
+_security_init             00008ade   defined in .\out\security.o section .text
+                                      used in .\out\main.o
+_send_ack_frame            00008707   defined in .\out\host_service.o section .text
+_servo_output_endpoint     00000215   defined in .\out\config.o section .bss
+                                      used in .\out\servo_output.o
+_servo_outputs             00000140   defined in .\out\config.o section .data, initialized
+                                      used in .\out\input_service.o
+                                              .\out\servo_output.o
+_set_event_ack_ready       000086e2   defined in .\out\host_service.o section .text
+_th_actions                0000021b   defined in .\out\config.o section .bss
+_update_attr_status        00008390   defined in .\out\config.o section .text
+                                      used in .\out\host_service.o
+                                              .\out\servo_output.o
+_update_rtr_status         00008376   defined in .\out\config.o section .text
+                                      used in .\out\host_service.o
+                                              .\out\servo_output.o
+_update_servo_output       00008d8c   defined in .\out\servo_output.o section .text
+                                      used in .\out\main.o
+_verify_encrypted_uid      0000023b   defined in .\out\security.o section uid (.uid), initialized
+                                      used in .\out\main.o
+c_idiv                     000092ae   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)idiv.o section .text
+                                      used in .\out\input_service.o
+c_imul                     000092cc   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)imul.o section .text
+                                      used in .\out\rc_monitor.o
+                                              .\out\servo_output.o
+c_lcmp                     000092ed   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lcmp.o section .text
+                                      used in .\out\servo_output.o
+c_lgadc                    0000930d   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lgadc.o section .text
+                                      used in .\out\servo_output.o
+c_lgsbc                    0000931d   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lgsbc.o section .text
+                                      used in .\out\main.o .\out\rc_monitor.o
+c_lreg                     000000dc   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lreg.o section .ubsct
+                                      used in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lcmp.o
+                                              (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)rtol.o
+                                              (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)utolx.o
+c_lzmp                     00009333   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lzmp.o section .text
+                                      used in .\out\main.o .\out\rc_monitor.o
+c_rtol                     00009345   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)rtol.o section .text
+                                      used in .\out\rc_monitor.o
+c_sdivx                    0000935d   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)sdivx.o section .text
+                                      *** not used ***
+c_smodx                    00009357   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)sdivx.o section .text
+                                      used in .\out\input_service.o
+c_uitolx                   00009382   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)utolx.o section .text
+                                      used in .\out\rc_monitor.o
+                                              .\out\servo_output.o
+c_x                        000000e0   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)xreg.o section .ubsct
+                                      used in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8
+                                              .\out\host_service.o
+                                              .\out\rc_monitor.o .\out\storage.o
+                                              (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)imul.o
+                                              (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)sdivx.o
+c_y                        000000e3   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)yreg.o section .ubsct
+                                      used in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8
+                                              .\out\host_service.o
+                                              .\out\input_service.o
+                                              .\out\storage.o
