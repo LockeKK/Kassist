@@ -357,7 +357,8 @@ typedef struct {
     u16 servo_output_setup : 3;
     u16 reversing_setup : 2;
     u16 steel_setup : 3;	
-    u16 host_click : 1;
+    u16 host_click : 1;	
+    u8 host_config;
 	SYS_INFO_T *si;
 } GLOBAL_FLAGS_T;
 

@@ -190,7 +190,7 @@ static const SYS_INFO_T sys_info[] = {
 };
 
 GLOBAL_FLAGS_T global_flags = {
-0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, sys_info
+0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, sys_info
 };
 
 

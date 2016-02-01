@@ -125,7 +125,6 @@ void cmd_execution_ng(void)
 	buf[index++] = CMD_ACK_NG;
 	
 	set_event_ack_ready();
-
 }
 
 /*
@@ -237,16 +236,42 @@ static void simulate_ch3_click(void)
 {
 	global_flags.host_click = cmd_frame_buffer[5];
 	if (global_flags.host_click)
+	{
 		process_simulate_ch3_clicks(cmd_frame_buffer[6]);
+		cmd_execution_done();
+	}
+	else
+	{
+		cmd_execution_ng();
+	}
 }
 
-
-/* only used after PWM0~3 setting before postion setting*/
 /*
 TxBuf:
 [4]: Command type;
-[5~8]: position
-[9~12]: mandatroy or not
+[5]: REVERSING_SETUP/STEEL_SETUP
+*/
+static void start_reversing_steel_setup(void)
+{
+	if (cmd_frame_buffer[5] == REVERSING_SETUP ||
+		cmd_frame_buffer[5] == STEEL_SETUP)
+	{
+		global_flags.host_config = cmd_frame_buffer[5];
+		cmd_execution_done();
+	}
+	else
+	{
+		cmd_execution_ng();
+	}
+}
+
+
+/* NOTE: Must be used after PWM0~3 setting before postion setting*/
+/*
+TxBuf:
+[4]: Command type;
+[5~8]: pwm0~3's position
+[9~12]: mandatroy or ingore
 */
 static void set_attr_flag(void)
 {

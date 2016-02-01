@@ -1,5 +1,5 @@
 
-Map of kassit.sm8 from link file compile.lkf - Mon Feb 01 17:29:29 2016
+Map of kassit.sm8 from link file compile.lkf - Mon Feb 01 19:31:37 2016
 
 
                                --------
@@ -7,20 +7,20 @@ Map of kassit.sm8 from link file compile.lkf - Mon Feb 01 17:29:29 2016
                                --------
 
 start 00008080 end 000080ff length   127 segment .const
-start 000082cc end 000093ce length  4354 segment .text
-start 000093ce end 0000943b length   109 segment .sm
+start 000082cd end 000093fe length  4401 segment .text
+start 000093fe end 0000946b length   109 segment .sm
 start 00004000 end 00004000 length     0 segment .eeprom
-start 00000000 end 00000019 length    25 segment .bsct, initialized
-start 00008116 end 0000812f length    25 segment .bsct, from
-start 00000019 end 000000ea length   209 segment .ubsct
-start 0000ea:0 end 0000ea:5 length     5 segment .bit, initialized
-start 0000812f end 00008130 length     1 segment .bit, from
-start 000000eb end 000000eb length     0 segment .share
+start 00000000 end 0000001a length    26 segment .bsct, initialized
+start 00008116 end 00008130 length    26 segment .bsct, from
+start 0000001a end 000000eb length   209 segment .ubsct
+start 0000eb:0 end 0000eb:5 length     5 segment .bit, initialized
+start 00008130 end 00008131 length     1 segment .bit, from
+start 000000ec end 000000ec length     0 segment .share
 start 00000100 end 00000217 length   279 segment .data, initialized
-start 00008130 end 00008247 length   279 segment .data, from
+start 00008131 end 00008248 length   279 segment .data, from
 start 00000217 end 0000023d length    38 segment .bss
 start 0000023d end 000002c2 length   133 segment uid, initialized
-start 00008247 end 000082cc length   133 segment uid, from
+start 00008248 end 000082cd length   133 segment uid, from
 start 00000000 end 000007d5 length  2005 segment .info.
 start 00008000 end 00008080 length   128 segment .const
 start 000080ff end 00008116 length    23 segment .init
@@ -31,121 +31,121 @@ start 000080ff end 00008116 length    23 segment .init
                                -------
 
 C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8:
-start 000082cc end 00008317 length    75 section .text
+start 000082cd end 00008318 length    75 section .text
 start 00000217 end 00000217 length     0 section .bss
-start 00000019 end 00000019 length     0 section .ubsct
+start 0000001a end 0000001a length     0 section .ubsct
 start 00000000 end 0000002f length    47 section .info.
 
 .\out\main.o:
-start 00008317 end 0000837a length    99 section .text
+start 00008318 end 0000837b length    99 section .text
 start 00000000 end 00000002 length     2 section .bsct
-start 00000019 end 0000001d length     4 section .ubsct
+start 0000001a end 0000001e length     4 section .ubsct
 start 0000002f end 000000a6 length   119 section .info.
 
 .\out\battery.o:
 start 000000a6 end 00000120 length   122 section .info.
 
 .\out\config.o:
-start 0000837a end 00008476 length   252 section .text
+start 0000837b end 00008477 length   252 section .text
 start 00000100 end 0000020b length   267 section .data
 start 00000217 end 0000023d length    38 section .bss
-start 00000002 end 0000000a length     8 section .bsct
+start 00000002 end 0000000b length     9 section .bsct
 start 00000120 end 00000199 length   121 section .info.
 start 00008080 end 000080f9 length   121 section .const
 
 .\out\host_service.o:
-start 00008476 end 00008790 length   794 section .text
-start 0000000a end 00000012 length     8 section .bsct
-start 0000001d end 000000c3 length   166 section .ubsct
+start 00008477 end 000087ac length   821 section .text
+start 0000000b end 00000013 length     8 section .bsct
+start 0000001e end 000000c4 length   166 section .ubsct
 start 00000199 end 00000218 length   127 section .info.
-start 0000ea:0 end 0000ea:2 length     2 section .bit
+start 0000eb:0 end 0000eb:2 length     2 section .bit
 
 .\out\input_service.o:
-start 00008790 end 00008b22 length   914 section .text
-start 000000c3 end 000000ca length     7 section .ubsct
+start 000087ac end 00008b3e length   914 section .text
+start 000000c4 end 000000cb length     7 section .ubsct
 start 00000218 end 00000298 length   128 section .info.
-start 0000ea:2 end 0000ea:3 length     1 section .bit
+start 0000eb:2 end 0000eb:3 length     1 section .bit
 
 .\out\security.o:
-start 00008b22 end 00008b4b length    41 section .text
+start 00008b3e end 00008b67 length    41 section .text
 start 0000020b end 00000217 length    12 section .data
 start 00000298 end 00000313 length   123 section .info.
-start 000093ce end 0000943b length   109 section .sm
+start 000093fe end 0000946b length   109 section .sm
 start 0000023d end 000002c2 length   133 section uid (.uid)
 start 000080f9 end 000080ff length     6 section .const
 
 .\out\rc_monitor.o:
-start 00008b4b end 00008d28 length   477 section .text
-start 00000012 end 00000013 length     1 section .bsct
-start 000000ca end 000000ce length     4 section .ubsct
+start 00008b67 end 00008d44 length   477 section .text
+start 00000013 end 00000014 length     1 section .bsct
+start 000000cb end 000000cf length     4 section .ubsct
 start 00000313 end 00000390 length   125 section .info.
-start 0000ea:3 end 0000ea:4 length     1 section .bit
+start 0000eb:3 end 0000eb:4 length     1 section .bit
 
 .\out\servo_output.o:
-start 00008d28 end 00009229 length  1281 section .text
-start 00000013 end 00000019 length     6 section .bsct
-start 000000ce end 000000e0 length    18 section .ubsct
+start 00008d44 end 00009259 length  1301 section .text
+start 00000014 end 0000001a length     6 section .bsct
+start 000000cf end 000000e1 length    18 section .ubsct
 start 00000390 end 0000040f length   127 section .info.
-start 0000ea:4 end 0000ea:5 length     1 section .bit
+start 0000eb:4 end 0000eb:5 length     1 section .bit
 
 .\out\board.o:
-start 00009229 end 00009235 length    12 section .text
+start 00009259 end 00009265 length    12 section .text
 start 0000040f end 00000487 length   120 section .info.
 
 .\out\storage.o:
-start 00009235 end 000092f2 length   189 section .text
+start 00009265 end 00009322 length   189 section .text
 start 00000487 end 00000501 length   122 section .info.
 
 (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)idiv.o:
-start 000092f2 end 00009310 length    30 section .text
+start 00009322 end 00009340 length    30 section .text
 start 00000501 end 0000052f length    46 section .info.
 
 (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)imul.o:
-start 00009310 end 00009331 length    33 section .text
+start 00009340 end 00009361 length    33 section .text
 start 0000052f end 0000055d length    46 section .info.
 
 (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lcmp.o:
-start 00009331 end 00009351 length    32 section .text
+start 00009361 end 00009381 length    32 section .text
 start 0000055d end 0000058b length    46 section .info.
 
 (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lgadc.o:
-start 00009351 end 00009361 length    16 section .text
+start 00009381 end 00009391 length    16 section .text
 start 0000058b end 000005ba length    47 section .info.
 
 (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lgsbc.o:
-start 00009361 end 00009377 length    22 section .text
+start 00009391 end 000093a7 length    22 section .text
 start 000005ba end 000005e9 length    47 section .info.
 
 (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lreg.o:
-start 000000e0 end 000000e4 length     4 section .ubsct
+start 000000e1 end 000000e5 length     4 section .ubsct
 start 000005e9 end 00000617 length    46 section .info.
 
 (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lzmp.o:
-start 00009377 end 00009389 length    18 section .text
+start 000093a7 end 000093b9 length    18 section .text
 start 00000617 end 00000645 length    46 section .info.
 
 (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)rtol.o:
-start 00009389 end 0000939b length    18 section .text
+start 000093b9 end 000093cb length    18 section .text
 start 00000645 end 00000673 length    46 section .info.
 
 (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)sdivx.o:
-start 0000939b end 000093c6 length    43 section .text
+start 000093cb end 000093f6 length    43 section .text
 start 00000673 end 000006a2 length    47 section .info.
 
 (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)utolx.o:
-start 000093c6 end 000093cd length     7 section .text
+start 000093f6 end 000093fd length     7 section .text
 start 000006a2 end 000006d1 length    47 section .info.
 
 (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)xreg.o:
-start 000000e4 end 000000e7 length     3 section .ubsct
+start 000000e5 end 000000e8 length     3 section .ubsct
 start 000006d1 end 000006ff length    46 section .info.
 
 (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)yreg.o:
-start 000000e7 end 000000ea length     3 section .ubsct
+start 000000e8 end 000000eb length     3 section .ubsct
 start 000006ff end 0000072d length    46 section .info.
 
 .\out\vector.o:
-start 000093cd end 000093ce length     1 section .text
+start 000093fd end 000093fe length     1 section .text
 start 0000072d end 000007a6 length   121 section .info.
 start 00008000 end 00008080 length   128 section .const
 
@@ -155,96 +155,97 @@ start 00008000 end 00008080 length   128 section .const
                              -----------
 
 .\out\board.o:
-_beep_notify                         2   (2)
-_board_int                           2   (2)
-_delay                               2   (2)
-_get_ch3_profile                >    2   (2)
-_get_ch3_state                       2   (2)
-_get_dip_state                       2   (2)
-_led                            >    2   (2)
-_reboot                              2   (2)
+_beep_notify                           2   (2)
+_board_int                             2   (2)
+_delay                                 2   (2)
+_get_ch3_profile                  >    2   (2)
+_get_ch3_state                         2   (2)
+_get_dip_state                         2   (2)
+_led                              >    2   (2)
+_reboot                                2   (2)
 
 .\out\config.o:
-L3_fresh_config_check                4   (4)
-_load_all_parameters                16   (3)
-_load_system_configs                13   (5)
-_save_system_configs                16   (5)
-_update_attr_status                 21   (5)
-_update_rtr_status                  21   (5)
+L3_fresh_config_check                  4   (4)
+_load_all_parameters                  16   (3)
+_load_system_configs                  13   (5)
+_save_system_configs                  16   (5)
+_update_attr_status                   21   (5)
+_update_rtr_status                    21   (5)
 
 .\out\host_service.o:
-L12_set_attr_flag                   28   (7)
-L31_get_sys_info                    34   (13)
-L51_reset_to_factroy                20   (13)
-L71_get_device_sn                    2   (2)
-L731_simulate_ch3_click         >    4   (2)
-_cmd_execution_done                  7   (5)
-_cmd_execution_ng                    7   (5)
-_cmd_frame_decode               >    3   (3)
-_host_cmd_init                       3   (3)
-_host_cmd_process                   36   (2) *** pointer() ***
-_send_ack_frame                      5   (5)
-_set_event_ack_ready                 2   (2)
+L12_set_attr_flag                     28   (7)
+L31_get_sys_info                      34   (13)
+L51_reset_to_factroy                  20   (13)
+L541_start_reversing_steel_setup  >    9   (2)
+L71_get_device_sn                      2   (2)
+L731_simulate_ch3_click           >    9   (2)
+_cmd_execution_done                    7   (5)
+_cmd_execution_ng                      7   (5)
+_cmd_frame_decode                 >    3   (3)
+_host_cmd_init                         3   (3)
+_host_cmd_process                     36   (2) *** pointer() ***
+_send_ack_frame                        5   (5)
+_set_event_ack_ready                   2   (2)
 
 .\out\input_service.o:
-L11_ch3_clicks_decode                4   (4)
-L31_input_process_thread            19   (15)
-L51_process_ch3_click_timeout       22   (3)
-L71_add_click                        2   (2)
-_input_ch3_handler                  26   (4)
-_process_simulate_ch3_clicks         2   (2)
+L11_ch3_clicks_decode                  4   (4)
+L31_input_process_thread              19   (15)
+L51_process_ch3_click_timeout         22   (3)
+L71_add_click                          2   (2)
+_input_ch3_handler                    26   (4)
+_process_simulate_ch3_clicks           2   (2)
 
 .\out\main.o:
-L11_check_no_signal                  2   (2)
-L5_service_systick                   4   (2)
-_diagnostics_service                 2   (2)
-_main                           >   38   (2)
+L11_check_no_signal                    2   (2)
+L5_service_systick                     4   (2)
+_diagnostics_service                   2   (2)
+_main                             >   38   (2)
 
 .\out\rc_monitor.o:
-L11_normalize_channel                7   (4)
-L31_initialize_channel               4   (4)
-_init_servo_reader                   2   (2)
-_output_raw_channels            >    4   (4)
-_read_rc_channels                    9   (2)
+L11_normalize_channel                  7   (4)
+L31_initialize_channel                 4   (4)
+_init_servo_reader                     2   (2)
+_output_raw_channels              >    4   (4)
+_read_rc_channels                      9   (2)
 
 .\out\security.o:
-L3_make_uid_signature               29   (18)
-L5_encrypte                          6   (6)
-L7_decrypt                           6   (6)
-_security_init                      31   (2)
-_verify_encrypted_uid               27   (21)
+L3_make_uid_signature                 29   (18)
+L5_encrypte                            6   (6)
+L7_decrypt                             6   (6)
+_security_init                        31   (2)
+_verify_encrypted_uid                 27   (21)
 
 .\out\servo_output.o:
-L11_enter_setup_mode                31   (3)
-L12_do_reversing_setup              23   (2)
-L13_do_steel_setup                  25   (4)
-L14_do_servo_output_setup           28   (7)
-L31_start_reversing_setup           23   (2)
-L32_start_steel_setup               23   (2)
-L33_start_servo_output_setup        26   (5)
-L34_calculate_servo_pulse           11   (8)
-L51_stop_reversing_setup             4   (2)
-L52_stop_steel_setup                 4   (2)
-L53_stop_servo_output_setup          4   (2)
-L54_calculate_servo_activeness       9   (9)
-L572_servo_output_manually      >   18   (7)
-L71_if_reversing_setup_done          2   (2)
-L72_if_steel_setup_done              2   (2)
-L73_if_servo_output_setup_done       2   (2)
-_check_setup_mode                   34   (3)
-_if_under_setup_actions              4   (2)
-_init_servo_output              >    8   (8)
-_input_user_acknowledge              2   (2)
-_update_servo_output                20   (9)
+L11_enter_setup_mode                  31   (3)
+L12_do_reversing_setup                23   (2)
+L13_do_steel_setup                    25   (4)
+L14_do_servo_output_setup             28   (7)
+L303_servo_output_manually        >   18   (7)
+L31_start_reversing_setup             23   (2)
+L32_start_steel_setup                 23   (2)
+L33_start_servo_output_setup          26   (5)
+L34_calculate_servo_pulse             11   (8)
+L51_stop_reversing_setup               4   (2)
+L52_stop_steel_setup                   4   (2)
+L53_stop_servo_output_setup            4   (2)
+L54_calculate_servo_activeness         9   (9)
+L71_if_reversing_setup_done            2   (2)
+L72_if_steel_setup_done                2   (2)
+L73_if_servo_output_setup_done         2   (2)
+_check_setup_mode                     34   (3)
+_if_under_setup_actions                4   (2)
+_init_servo_output                >    8   (8)
+_input_user_acknowledge                2   (2)
+_update_servo_output                  20   (9)
 
 .\out\storage.o:
-L3_storage_make_writable             3   (3)
-L5_storage_make_readonly             2   (2)
-_hw_storage_read                     8   (8)
-_hw_storage_write                   11   (8)
+L3_storage_make_writable               3   (3)
+L5_storage_make_readonly               2   (2)
+_hw_storage_read                       8   (8)
+_hw_storage_write                     11   (8)
 
 .\out\vector.o:
-_DefaultInterrupt               >    5   (5)
+_DefaultInterrupt                 >    5   (5)
 
 Stack size: 43
 
@@ -252,278 +253,284 @@ Stack size: 43
                               ---------
                               Call tree
                               ---------
-   1 > L572_servo_output_manually: (7)
+   1 > L303_servo_output_manually: (7)
    2      + L34_calculate_servo_pulse: (8)
        
-   3 > L731_simulate_ch3_click: (2)
-   4      + _process_simulate_ch3_clicks: (2)
+   3 > L541_start_reversing_steel_setup: (2)
+   4      + _cmd_execution_done: (5)
+   5      |    + _set_event_ack_ready: (2)
+          | 
+   6      + _cmd_execution_ng: (5)
+   7      |    + _set_event_ack_ready --> 5
+          | 
        
-   5 > _DefaultInterrupt: (5)
+   8 > L731_simulate_ch3_click: (2)
+   9      + _cmd_execution_done --> 4
+  10      + _cmd_execution_ng --> 6
+  11      + _process_simulate_ch3_clicks: (2)
+       
+  12 > _DefaultInterrupt: (5)
 
-   6 > __stext: (0)
+  13 > __stext: (0)
 
-   7 > _cmd_frame_decode: (3)
+  14 > _cmd_frame_decode: (3)
 
-   8 > _get_ch3_profile: (2)
+  15 > _get_ch3_profile: (2)
 
-   9 > _init_servo_output: (8)
+  16 > _init_servo_output: (8)
 
-  10 > _led: (2)
+  17 > _led: (2)
 
-  11 > _main: (2)
-  12      + L11_check_no_signal: (2)
-  13      + L5_service_systick: (2)
-  14      + _board_int: (2)
-  15      + _check_setup_mode: (3)
-  16      |    + L11_enter_setup_mode: (3)
-  17      |    |    + L12_do_reversing_setup: (2)
-  18      |    |    |    + _beep_notify: (2)
-  19      |    |    |    + _save_system_configs: (5)
-  20      |    |    |    |    + _hw_storage_write: (8)
-  21      |    |    |    |    |    + L3_storage_make_writable: (3)
-  22      |    |    |    |    |    + L5_storage_make_readonly: (2)
+  18 > _main: (2)
+  19      + L11_check_no_signal: (2)
+  20      + L5_service_systick: (2)
+  21      + _board_int: (2)
+  22      + _check_setup_mode: (3)
+  23      |    + L11_enter_setup_mode: (3)
+  24      |    |    + L12_do_reversing_setup: (2)
+  25      |    |    |    + _beep_notify: (2)
+  26      |    |    |    + _save_system_configs: (5)
+  27      |    |    |    |    + _hw_storage_write: (8)
+  28      |    |    |    |    |    + L3_storage_make_writable: (3)
+  29      |    |    |    |    |    + L5_storage_make_readonly: (2)
           |    |    |    |    | 
           |    |    |    | 
-  23      |    |    |    + _update_rtr_status: (5)
-  24      |    |    |    |    + L3_fresh_config_check: (4)
-  25      |    |    |    |    + _save_system_configs --> 19
+  30      |    |    |    + _update_rtr_status: (5)
+  31      |    |    |    |    + L3_fresh_config_check: (4)
+  32      |    |    |    |    + _save_system_configs --> 26
           |    |    |    | 
           |    |    | 
-  26      |    |    + L13_do_steel_setup: (4)
-  27      |    |    |    + L34_calculate_servo_pulse --> 2
-  28      |    |    |    + _save_system_configs --> 19
-  29      |    |    |    + _update_rtr_status --> 23
+  33      |    |    + L13_do_steel_setup: (4)
+  34      |    |    |    + L34_calculate_servo_pulse --> 2
+  35      |    |    |    + _save_system_configs --> 26
+  36      |    |    |    + _update_rtr_status --> 30
           |    |    | 
-  30      |    |    + L14_do_servo_output_setup: (7)
-  31      |    |    |    + L34_calculate_servo_pulse --> 2
-  32      |    |    |    + _beep_notify --> 18
-  33      |    |    |    + _save_system_configs --> 19
-  34      |    |    |    + _update_rtr_status --> 23
+  37      |    |    + L14_do_servo_output_setup: (7)
+  38      |    |    |    + L34_calculate_servo_pulse --> 2
+  39      |    |    |    + _beep_notify --> 25
+  40      |    |    |    + _save_system_configs --> 26
+  41      |    |    |    + _update_rtr_status --> 30
           |    |    | 
-  35      |    |    + L31_start_reversing_setup: (2)
-  36      |    |    |    + _update_rtr_status --> 23
+  42      |    |    + L31_start_reversing_setup: (2)
+  43      |    |    |    + _update_rtr_status --> 30
           |    |    | 
-  37      |    |    + L32_start_steel_setup: (2)
-  38      |    |    |    + _update_rtr_status --> 23
+  44      |    |    + L32_start_steel_setup: (2)
+  45      |    |    |    + _update_rtr_status --> 30
           |    |    | 
-  39      |    |    + L33_start_servo_output_setup: (5)
-  40      |    |    |    + _beep_notify --> 18
-  41      |    |    |    + _update_attr_status: (5)
-  42      |    |    |    |    + L3_fresh_config_check --> 24
-  43      |    |    |    |    + _save_system_configs --> 19
+  46      |    |    + L33_start_servo_output_setup: (5)
+  47      |    |    |    + _beep_notify --> 25
+  48      |    |    |    + _update_attr_status: (5)
+  49      |    |    |    |    + L3_fresh_config_check --> 31
+  50      |    |    |    |    + _save_system_configs --> 26
           |    |    |    | 
-  44      |    |    |    + _update_rtr_status --> 23
+  51      |    |    |    + _update_rtr_status --> 30
           |    |    | 
-  45      |    |    + L51_stop_reversing_setup: (2)
-  46      |    |    |    + _beep_notify --> 18
+  52      |    |    + L51_stop_reversing_setup: (2)
+  53      |    |    |    + _beep_notify --> 25
           |    |    | 
-  47      |    |    + L52_stop_steel_setup: (2)
-  48      |    |    |    + _beep_notify --> 18
+  54      |    |    + L52_stop_steel_setup: (2)
+  55      |    |    |    + _beep_notify --> 25
           |    |    | 
-  49      |    |    + L53_stop_servo_output_setup: (2)
-  50      |    |    |    + _beep_notify --> 18
+  56      |    |    + L53_stop_servo_output_setup: (2)
+  57      |    |    |    + _beep_notify --> 25
           |    |    | 
-  51      |    |    + L71_if_reversing_setup_done: (2)
-  52      |    |    + L72_if_steel_setup_done: (2)
-  53      |    |    + L73_if_servo_output_setup_done: (2)
-  54      |    |    + _load_system_configs: (5)
-  55      |    |    |    + _hw_storage_read: (8)
+  58      |    |    + L71_if_reversing_setup_done: (2)
+  59      |    |    + L72_if_steel_setup_done: (2)
+  60      |    |    + L73_if_servo_output_setup_done: (2)
+  61      |    |    + _load_system_configs: (5)
+  62      |    |    |    + _hw_storage_read: (8)
           |    |    | 
           |    | 
-  56      |    + _get_dip_state: (2)
+  63      |    + _get_dip_state: (2)
           | 
-  57      + _diagnostics_service: (2)
-  58      + _host_cmd_init: (3)
-  59      + _host_cmd_process: (2)
-  60      |    + (L12_set_attr_flag) ...
-  61      |    + (L31_get_sys_info) ...
-  62      |    + (L51_reset_to_factroy) ...
-  63      |    + (L71_get_device_sn) ...
-  64      |    + _send_ack_frame: (5)
+  64      + _diagnostics_service: (2)
+  65      + _host_cmd_init: (3)
+  66      + _host_cmd_process: (2)
+  67      |    + (L12_set_attr_flag) ...
+  68      |    + (L31_get_sys_info) ...
+  69      |    + (L51_reset_to_factroy) ...
+  70      |    + (L71_get_device_sn) ...
+  71      |    + _send_ack_frame: (5)
           | 
-  65      + _init_servo_reader: (2)
-  66      + _input_ch3_handler: (4)
-  67      |    + L51_process_ch3_click_timeout: (3)
-  68      |    |    + L31_input_process_thread: (15)
-  69      |    |    |    + L11_ch3_clicks_decode: (4)
-  70      |    |    |    + _beep_notify --> 18
+  72      + _init_servo_reader: (2)
+  73      + _input_ch3_handler: (4)
+  74      |    + L51_process_ch3_click_timeout: (3)
+  75      |    |    + L31_input_process_thread: (15)
+  76      |    |    |    + L11_ch3_clicks_decode: (4)
+  77      |    |    |    + _beep_notify --> 25
           |    |    | 
-  71      |    |    + _if_under_setup_actions: (2)
-  72      |    |    |    + L71_if_reversing_setup_done --> 51
-  73      |    |    |    + L72_if_steel_setup_done --> 52
-  74      |    |    |    + L73_if_servo_output_setup_done --> 53
+  78      |    |    + _if_under_setup_actions: (2)
+  79      |    |    |    + L71_if_reversing_setup_done --> 58
+  80      |    |    |    + L72_if_steel_setup_done --> 59
+  81      |    |    |    + L73_if_servo_output_setup_done --> 60
           |    |    | 
-  75      |    |    + _input_user_acknowledge: (2)
+  82      |    |    + _input_user_acknowledge: (2)
           |    | 
-  76      |    + L71_add_click: (2)
-  77      |    + _get_ch3_state: (2)
+  83      |    + L71_add_click: (2)
+  84      |    + _get_ch3_state: (2)
           | 
-  78      + _load_all_parameters: (3)
-  79      |    + L3_fresh_config_check --> 24
-  80      |    + _load_system_configs --> 54
+  85      + _load_all_parameters: (3)
+  86      |    + L3_fresh_config_check --> 31
+  87      |    + _load_system_configs --> 61
           | 
-  81      + _read_rc_channels: (2)
-  82      |    + L11_normalize_channel: (4)
-  83      |    + L31_initialize_channel: (4)
+  88      + _read_rc_channels: (2)
+  89      |    + L11_normalize_channel: (4)
+  90      |    + L31_initialize_channel: (4)
           | 
-  84      + _security_init: (2)
-  85      |    + L3_make_uid_signature: (18)
-  86      |    |    + L5_encrypte: (6)
-  87      |    |    + _hw_storage_write --> 20
-  88      |    |    + _reboot: (2)
+  91      + _security_init: (2)
+  92      |    + L3_make_uid_signature: (18)
+  93      |    |    + L5_encrypte: (6)
+  94      |    |    + _hw_storage_write --> 27
+  95      |    |    + _reboot: (2)
           |    | 
-  89      |    + L7_decrypt: (6)
-  90      |    + _save_system_configs --> 19
+  96      |    + L7_decrypt: (6)
+  97      |    + _save_system_configs --> 26
           | 
-  91      + _update_servo_output: (9)
-  92      |    + L34_calculate_servo_pulse --> 2
-  93      |    + L54_calculate_servo_activeness: (9)
+  98      + _update_servo_output: (9)
+  99      |    + L34_calculate_servo_pulse --> 2
+ 100      |    + L54_calculate_servo_activeness: (9)
           | 
-  94      + _verify_encrypted_uid: (21)
-  95      |    + L5_encrypte --> 86
+ 101      + _verify_encrypted_uid: (21)
+ 102      |    + L5_encrypte --> 93
           | 
        
-  96 > _output_raw_channels: (4)
+ 103 > _output_raw_channels: (4)
 
-  97   L11_ch3_clicks_decode --> 69
+ 104   L11_ch3_clicks_decode --> 76
 
-  98   L11_check_no_signal --> 12
+ 105   L11_check_no_signal --> 19
 
-  99   L11_enter_setup_mode --> 16
+ 106   L11_enter_setup_mode --> 23
 
- 100   L11_normalize_channel --> 82
+ 107   L11_normalize_channel --> 89
 
- 101   L12_do_reversing_setup --> 17
+ 108   L12_do_reversing_setup --> 24
 
- 102   L12_set_attr_flag: (7)
- 103      + _update_attr_status --> 41
+ 109   L12_set_attr_flag: (7)
+ 110      + _update_attr_status --> 48
        
- 104   L13_do_steel_setup --> 26
+ 111   L13_do_steel_setup --> 33
 
- 105   L14_do_servo_output_setup --> 30
+ 112   L14_do_servo_output_setup --> 37
 
- 106   L31_get_sys_info: (13)
- 107      + _cmd_execution_done: (5)
- 108      |    + _set_event_ack_ready: (2)
-          | 
- 109      + _cmd_execution_ng: (5)
- 110      |    + _set_event_ack_ready --> 108
-          | 
- 111      + _save_system_configs --> 19
- 112      + _set_event_ack_ready --> 108
- 113      + _update_rtr_status --> 23
+ 113   L31_get_sys_info: (13)
+ 114      + _cmd_execution_done --> 4
+ 115      + _cmd_execution_ng --> 6
+ 116      + _save_system_configs --> 26
+ 117      + _set_event_ack_ready --> 5
+ 118      + _update_rtr_status --> 30
        
- 114   L31_initialize_channel --> 83
+ 119   L31_initialize_channel --> 90
 
- 115   L31_input_process_thread --> 68
+ 120   L31_input_process_thread --> 75
 
- 116   L31_start_reversing_setup --> 35
+ 121   L31_start_reversing_setup --> 42
 
- 117   L32_start_steel_setup --> 37
+ 122   L32_start_steel_setup --> 44
 
- 118   L33_start_servo_output_setup --> 39
+ 123   L33_start_servo_output_setup --> 46
 
- 119   L34_calculate_servo_pulse --> 2
+ 124   L34_calculate_servo_pulse --> 2
 
- 120   L3_fresh_config_check --> 24
+ 125   L3_fresh_config_check --> 31
 
- 121   L3_make_uid_signature --> 85
+ 126   L3_make_uid_signature --> 92
 
- 122   L3_storage_make_writable --> 21
+ 127   L3_storage_make_writable --> 28
 
- 123   L51_process_ch3_click_timeout --> 67
+ 128   L51_process_ch3_click_timeout --> 74
 
- 124   L51_reset_to_factroy: (13)
- 125      + _cmd_execution_ng --> 109
- 126      + _delay: (2)
- 127      + _reboot --> 88
- 128      + _set_event_ack_ready --> 108
+ 129   L51_reset_to_factroy: (13)
+ 130      + _cmd_execution_ng --> 6
+ 131      + _delay: (2)
+ 132      + _reboot --> 95
+ 133      + _set_event_ack_ready --> 5
        
- 129   L51_stop_reversing_setup --> 45
+ 134   L51_stop_reversing_setup --> 52
 
- 130   L52_stop_steel_setup --> 47
+ 135   L52_stop_steel_setup --> 54
 
- 131   L53_stop_servo_output_setup --> 49
+ 136   L53_stop_servo_output_setup --> 56
 
- 132   L54_calculate_servo_activeness --> 93
+ 137   L54_calculate_servo_activeness --> 100
 
- 133   L5_encrypte --> 86
+ 138   L5_encrypte --> 93
 
- 134   L5_service_systick --> 13
+ 139   L5_service_systick --> 20
 
- 135   L5_storage_make_readonly --> 22
+ 140   L5_storage_make_readonly --> 29
 
- 136   L71_add_click --> 76
+ 141   L71_add_click --> 83
 
- 137   L71_get_device_sn: (2)
+ 142   L71_get_device_sn: (2)
 
- 138   L71_if_reversing_setup_done --> 51
+ 143   L71_if_reversing_setup_done --> 58
 
- 139   L72_if_steel_setup_done --> 52
+ 144   L72_if_steel_setup_done --> 59
 
- 140   L73_if_servo_output_setup_done --> 53
+ 145   L73_if_servo_output_setup_done --> 60
 
- 141   L7_decrypt --> 89
+ 146   L7_decrypt --> 96
 
- 142   _beep_notify --> 18
+ 147   _beep_notify --> 25
 
- 143   _board_int --> 14
+ 148   _board_int --> 21
 
- 144   _check_setup_mode --> 15
+ 149   _check_setup_mode --> 22
 
- 145   _cmd_execution_done --> 107
+ 150   _cmd_execution_done --> 4
 
- 146   _cmd_execution_ng --> 109
+ 151   _cmd_execution_ng --> 6
 
- 147   _delay --> 126
+ 152   _delay --> 131
 
- 148   _diagnostics_service --> 57
+ 153   _diagnostics_service --> 64
 
- 149   _get_ch3_state --> 77
+ 154   _get_ch3_state --> 84
 
- 150   _get_dip_state --> 56
+ 155   _get_dip_state --> 63
 
- 151   _host_cmd_init --> 58
+ 156   _host_cmd_init --> 65
 
- 152   _host_cmd_process --> 59
+ 157   _host_cmd_process --> 66
 
- 153   _hw_storage_read --> 55
+ 158   _hw_storage_read --> 62
 
- 154   _hw_storage_write --> 20
+ 159   _hw_storage_write --> 27
 
- 155   _if_under_setup_actions --> 71
+ 160   _if_under_setup_actions --> 78
 
- 156   _init_servo_reader --> 65
+ 161   _init_servo_reader --> 72
 
- 157   _input_ch3_handler --> 66
+ 162   _input_ch3_handler --> 73
 
- 158   _input_user_acknowledge --> 75
+ 163   _input_user_acknowledge --> 82
 
- 159   _load_all_parameters --> 78
+ 164   _load_all_parameters --> 85
 
- 160   _load_system_configs --> 54
+ 165   _load_system_configs --> 61
 
- 161   _process_simulate_ch3_clicks --> 4
+ 166   _process_simulate_ch3_clicks --> 11
 
- 162   _read_rc_channels --> 81
+ 167   _read_rc_channels --> 88
 
- 163   _reboot --> 88
+ 168   _reboot --> 95
 
- 164   _save_system_configs --> 19
+ 169   _save_system_configs --> 26
 
- 165   _security_init --> 84
+ 170   _security_init --> 91
 
- 166   _send_ack_frame --> 64
+ 171   _send_ack_frame --> 71
 
- 167   _set_event_ack_ready --> 108
+ 172   _set_event_ack_ready --> 5
 
- 168   _update_attr_status --> 41
+ 173   _update_attr_status --> 48
 
- 169   _update_rtr_status --> 23
+ 174   _update_rtr_status --> 30
 
- 170   _update_servo_output --> 91
+ 175   _update_servo_output --> 98
 
- 171   _verify_encrypted_uid --> 94
+ 176   _verify_encrypted_uid --> 101
 
 
 
@@ -653,7 +660,7 @@ _DM_CSR2                       00007f99   defined in .\out\security.o
                                           *** not used ***
 _DM_ENFCTR                     00007f9a   defined in .\out\security.o
                                           *** not used ***
-_DefaultInterrupt              000093cd   defined in .\out\vector.o section .text
+_DefaultInterrupt              000093fd   defined in .\out\vector.o section .text
 _EXTI_CR1                      000050a0   defined in .\out\security.o
                                           *** not used ***
 _EXTI_CR2                      000050a1   defined in .\out\security.o
@@ -1030,7 +1037,7 @@ _WWDG_WR                       000050d2   defined in .\out\security.o
                                           *** not used ***
 __endmem                       000006ff   defined in command file
                                           *** not used ***
-__endzp                        000000ea   defined in command file section .ubsct
+__endzp                        000000eb   defined in command file section .ubsct
                                           used in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8
 __idesc__                      000080ff   defined in linker section .init
                                           used in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8
@@ -1044,25 +1051,25 @@ __stack                        000007ff   defined in command file
                                           used in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8
 __startmem                     0000023d   defined in command file section .bss
                                           *** not used ***
-__stext                        000082cc   defined in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8 section .text
+__stext                        000082cd   defined in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8 section .text
                                           used in .\out\vector.o
 __vectab                       00008000   defined in .\out\vector.o section .const
                                           *** not used ***
-_beep_notify                   00009232   defined in .\out\board.o section .text
+_beep_notify                   00009262   defined in .\out\board.o section .text
                                           used in .\out\input_service.o
                                                   .\out\servo_output.o
-_board_int                     00009229   defined in .\out\board.o section .text
+_board_int                     00009259   defined in .\out\board.o section .text
                                           used in .\out\main.o
 _ch3_actions                   00000100   defined in .\out\config.o section .data, initialized
                                           used in .\out\input_service.o
-_check_setup_mode              00008e3e   defined in .\out\servo_output.o section .text
+_check_setup_mode              00008e5a   defined in .\out\servo_output.o section .text
                                           used in .\out\main.o
-_cmd_execution_done            00008505   defined in .\out\host_service.o section .text
-_cmd_execution_ng              0000852e   defined in .\out\host_service.o section .text
-_cmd_frame_decode              00008476   defined in .\out\host_service.o section .text
+_cmd_execution_done            00008506   defined in .\out\host_service.o section .text
+_cmd_execution_ng              0000852f   defined in .\out\host_service.o section .text
+_cmd_frame_decode              00008477   defined in .\out\host_service.o section .text
 _copy_right                    00000002   defined in .\out\config.o section .bsct, initialized
                                           *** not used ***
-_delay                         0000922b   defined in .\out\board.o section .text
+_delay                         0000925b   defined in .\out\board.o section .text
                                           used in .\out\host_service.o
 _dev_config                    000001c7   defined in .\out\config.o section .data, initialized
                                           used in .\out\main.o
@@ -1070,12 +1077,12 @@ _dev_config                    000001c7   defined in .\out\config.o section .dat
                                                   .\out\input_service.o
                                                   .\out\rc_monitor.o
                                                   .\out\servo_output.o
-_diagnostics_service           0000834c   defined in .\out\main.o section .text
-_exit                          00008315   defined in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8 section .text
-_get_ch3_profile               00009230   defined in .\out\board.o section .text
-_get_ch3_state                 0000922c   defined in .\out\board.o section .text
+_diagnostics_service           0000834d   defined in .\out\main.o section .text
+_exit                          00008316   defined in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8 section .text
+_get_ch3_profile               00009260   defined in .\out\board.o section .text
+_get_ch3_state                 0000925c   defined in .\out\board.o section .text
                                           used in .\out\input_service.o
-_get_dip_state                 0000922e   defined in .\out\board.o section .text
+_get_dip_state                 0000925e   defined in .\out\board.o section .text
                                           used in .\out\servo_output.o
 _global_flags                  00000004   defined in .\out\config.o section .bsct, initialized
                                           used in .\out\main.o
@@ -1083,32 +1090,32 @@ _global_flags                  00000004   defined in .\out\config.o section .bsc
                                                   .\out\input_service.o
                                                   .\out\rc_monitor.o
                                                   .\out\servo_output.o
-_host_cmd_init                 00008706   defined in .\out\host_service.o section .text
+_host_cmd_init                 00008722   defined in .\out\host_service.o section .text
                                           used in .\out\main.o
-_host_cmd_process              0000875a   defined in .\out\host_service.o section .text
+_host_cmd_process              00008776   defined in .\out\host_service.o section .text
                                           used in .\out\main.o
-_hw_storage_read               00009235   defined in .\out\storage.o section .text
+_hw_storage_read               00009265   defined in .\out\storage.o section .text
                                           used in .\out\config.o
-_hw_storage_write              0000924f   defined in .\out\storage.o section .text
+_hw_storage_write              0000927f   defined in .\out\storage.o section .text
                                           used in .\out\config.o .\out\security.o
-_if_under_setup_actions        00008e1c   defined in .\out\servo_output.o section .text
+_if_under_setup_actions        00008e38   defined in .\out\servo_output.o section .text
                                           used in .\out\input_service.o
-_init_servo_output             00008d28   defined in .\out\servo_output.o section .text
-_init_servo_reader             00008b4b   defined in .\out\rc_monitor.o section .text
+_init_servo_output             00008d44   defined in .\out\servo_output.o section .text
+_init_servo_reader             00008b67   defined in .\out\rc_monitor.o section .text
                                           used in .\out\main.o
-_input_ch3_handler             00008790   defined in .\out\input_service.o section .text
+_input_ch3_handler             000087ac   defined in .\out\input_service.o section .text
                                           used in .\out\main.o
-_input_user_acknowledge        00008e31   defined in .\out\servo_output.o section .text
+_input_user_acknowledge        00008e4d   defined in .\out\servo_output.o section .text
                                           used in .\out\input_service.o
-_led                           00009234   defined in .\out\board.o section .text
-_load_all_parameters           00008400   defined in .\out\config.o section .text
+_led                           00009264   defined in .\out\board.o section .text
+_load_all_parameters           00008401   defined in .\out\config.o section .text
                                           used in .\out\main.o
-_load_system_configs           000083ae   defined in .\out\config.o section .text
+_load_system_configs           000083af   defined in .\out\config.o section .text
                                           used in .\out\servo_output.o
-_main                          00008351   defined in .\out\main.o section .text
+_main                          00008352   defined in .\out\main.o section .text
                                           used in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8
-_output_raw_channels           00008bca   defined in .\out\rc_monitor.o section .text
-_process_simulate_ch3_clicks   0000883c   defined in .\out\input_service.o section .text
+_output_raw_channels           00008be6   defined in .\out\rc_monitor.o section .text
+_process_simulate_ch3_clicks   00008858   defined in .\out\input_service.o section .text
                                           used in .\out\host_service.o
 _product_info                  00008080   defined in .\out\config.o section .const
                                           *** not used ***
@@ -1116,69 +1123,69 @@ _rc_channel                    000001a0   defined in .\out\config.o section .dat
                                           used in .\out\input_service.o
                                                   .\out\rc_monitor.o
                                                   .\out\servo_output.o
-_read_rc_channels              00008b50   defined in .\out\rc_monitor.o section .text
+_read_rc_channels              00008b6c   defined in .\out\rc_monitor.o section .text
                                           used in .\out\main.o
-_reboot                        0000922a   defined in .\out\board.o section .text
+_reboot                        0000925a   defined in .\out\board.o section .text
                                           used in .\out\host_service.o
                                                   .\out\security.o
-_save_system_configs           000083d7   defined in .\out\config.o section .text
+_save_system_configs           000083d8   defined in .\out\config.o section .text
                                           used in .\out\host_service.o
                                                   .\out\security.o
                                                   .\out\servo_output.o
-_security_init                 00008b22   defined in .\out\security.o section .text
+_security_init                 00008b3e   defined in .\out\security.o section .text
                                           used in .\out\main.o
-_send_ack_frame                00008726   defined in .\out\host_service.o section .text
+_send_ack_frame                00008742   defined in .\out\host_service.o section .text
 _servo_output_endpoint         00000217   defined in .\out\config.o section .bss
                                           used in .\out\servo_output.o
 _servo_outputs                 00000140   defined in .\out\config.o section .data, initialized
                                           used in .\out\input_service.o
                                                   .\out\servo_output.o
-_set_event_ack_ready           00008701   defined in .\out\host_service.o section .text
+_set_event_ack_ready           0000871d   defined in .\out\host_service.o section .text
 _th_actions                    0000021d   defined in .\out\config.o section .bss
-_update_attr_status            00008394   defined in .\out\config.o section .text
+_update_attr_status            00008395   defined in .\out\config.o section .text
                                           used in .\out\host_service.o
                                                   .\out\servo_output.o
-_update_rtr_status             0000837a   defined in .\out\config.o section .text
+_update_rtr_status             0000837b   defined in .\out\config.o section .text
                                           used in .\out\host_service.o
                                                   .\out\servo_output.o
-_update_servo_output           00008dd0   defined in .\out\servo_output.o section .text
+_update_servo_output           00008dec   defined in .\out\servo_output.o section .text
                                           used in .\out\main.o
 _verify_encrypted_uid          0000023d   defined in .\out\security.o section uid (.uid), initialized
                                           used in .\out\main.o
-c_idiv                         000092f2   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)idiv.o section .text
+c_idiv                         00009322   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)idiv.o section .text
                                           used in .\out\input_service.o
-c_imul                         00009310   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)imul.o section .text
+c_imul                         00009340   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)imul.o section .text
                                           used in .\out\rc_monitor.o
                                                   .\out\servo_output.o
-c_lcmp                         00009331   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lcmp.o section .text
+c_lcmp                         00009361   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lcmp.o section .text
                                           used in .\out\servo_output.o
-c_lgadc                        00009351   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lgadc.o section .text
+c_lgadc                        00009381   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lgadc.o section .text
                                           used in .\out\servo_output.o
-c_lgsbc                        00009361   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lgsbc.o section .text
+c_lgsbc                        00009391   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lgsbc.o section .text
                                           used in .\out\main.o .\out\rc_monitor.o
-c_lreg                         000000e0   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lreg.o section .ubsct
+c_lreg                         000000e1   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lreg.o section .ubsct
                                           used in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lcmp.o
                                                   (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)rtol.o
                                                   (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)utolx.o
-c_lzmp                         00009377   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lzmp.o section .text
+c_lzmp                         000093a7   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)lzmp.o section .text
                                           used in .\out\main.o .\out\rc_monitor.o
-c_rtol                         00009389   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)rtol.o section .text
+c_rtol                         000093b9   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)rtol.o section .text
                                           used in .\out\rc_monitor.o
-c_sdivx                        000093a1   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)sdivx.o section .text
+c_sdivx                        000093d1   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)sdivx.o section .text
                                           *** not used ***
-c_smodx                        0000939b   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)sdivx.o section .text
+c_smodx                        000093cb   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)sdivx.o section .text
                                           used in .\out\input_service.o
-c_uitolx                       000093c6   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)utolx.o section .text
+c_uitolx                       000093f6   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)utolx.o section .text
                                           used in .\out\rc_monitor.o
                                                   .\out\servo_output.o
-c_x                            000000e4   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)xreg.o section .ubsct
+c_x                            000000e5   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)xreg.o section .ubsct
                                           used in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8
                                                   .\out\host_service.o
                                                   .\out\rc_monitor.o
                                                   .\out\storage.o
                                                   (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)imul.o
                                                   (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)sdivx.o
-c_y                            000000e7   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)yreg.o section .ubsct
+c_y                            000000e8   defined in (C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\libm0.sm8)yreg.o section .ubsct
                                           used in C:\Program Files (x86)\COSMIC\CXSTM8_32K/Lib\crtsi0.sm8
                                                   .\out\host_service.o
                                                   .\out\input_service.o

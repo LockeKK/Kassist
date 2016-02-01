@@ -164,6 +164,12 @@ void check_setup_mode(void)
 		return;
     }
 
+	if (global_flags.host_config)
+	{		
+		enter_setup_mode(global_flags.host_config);
+		return;
+	}
+
 	dip = get_dip_state();
 
 	if (dip_switch_value != dip)
@@ -308,6 +314,10 @@ static void do_reversing_setup(void)
 		update_rtr_status(REVERSING_ST, CONFIGED, true);		
 		update_rtr_status(REVERSING_TH, CONFIGED, true);
 		beep_notify(TASK_DONE);
+		if (global_flags.host_config)
+		{
+			global_flags.host_config = 0;
+		}
     }
 }
 
@@ -371,7 +381,11 @@ static void do_steel_setup(void)
 			servo_output_endpoint.left = steel_setup_ep.left;
 			save_system_configs(SERVO_ENDPOINTS);
 			update_rtr_status(SERVO_ENDPOINTS, CONFIGED, true);
-			global_flags.steel_setup = STEEL_SETUP_OFF;
+			global_flags.steel_setup = STEEL_SETUP_OFF;			
+			if (global_flags.host_config)
+			{
+				global_flags.host_config = 0;
+			}
 			break;
 	
 		default:
