@@ -75,7 +75,7 @@ void main(void)
 		service_systick();
 		read_rc_channels();
 		host_cmd_process();		
-		check_setup_mode();
+		setup_mode_service();
 		input_ch3_handler();
 		update_servo_output();
 		check_no_signal();

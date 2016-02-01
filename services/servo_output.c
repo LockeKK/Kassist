@@ -153,7 +153,7 @@ void input_user_acknowledge(u8 ch3_clicks)
 		user_confirmed = false;
 }
 
-void check_setup_mode(void)
+void setup_mode_service(void)
 {
 	static u8 dip_switch_value = NORMAL_MODE;
 	static u32 dip_switch_counter = 0;

@@ -389,7 +389,7 @@ extern void init_servo_output(void);
 extern void update_servo_output(void);
 extern bool if_under_setup_actions(void);
 extern void input_user_acknowledge(u8 ch3_clicks);
-extern void check_setup_mode(void);
+extern void setup_mode_service(void);
 extern void init_servo_reader(void);
 extern void output_raw_channels(u16 result[3]);
 extern void read_rc_channels(void);
