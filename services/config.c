@@ -2,7 +2,7 @@
 #include "board.h"
 #include <string.h>
 
-static void fresh_config_check(void);
+static void fresh_config_items(void);
 
 const u8 *copy_right = "locke.huang@gmail.com";
 const PRODUCT_INFO_T product_info = {
@@ -193,11 +193,10 @@ GLOBAL_FLAGS_T global_flags = {
 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, sys_info
 };
 
-
 void update_rtr_status(u8 index, u8 tag, bool save)
 {
 	config_check[index].state = tag;
-	fresh_config_check();
+	fresh_config_items();
 	if (save)	
 		save_system_configs(CONFIG_CHECK);
 }
@@ -206,7 +205,7 @@ void update_rtr_status(u8 index, u8 tag, bool save)
 void update_attr_status(u8 index, u8 tag, bool save)
 {
 	config_check[index].attr = tag;
-	fresh_config_check();
+	fresh_config_items();
 	if (save)	
 		save_system_configs(CONFIG_CHECK);
 }
@@ -252,10 +251,10 @@ void load_all_parameters(void)
 			load_system_configs(i);
 		}
 	}
-	fresh_config_check();
+	fresh_config_items();
 }
 
-static void fresh_config_check(void)
+static void fresh_config_items(void)
 {
 	u8 i;
 	bool ready_to_go = true;
