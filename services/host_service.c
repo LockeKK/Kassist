@@ -227,7 +227,27 @@ static void get_device_sn(void)
 
 }
 
+/*
+TxBuf:
+[4]: Command type;
+[5]: 1, enable, 0, disable
+[6]: clicks number
+*/
+static void simulate_ch3_click(void)
+{
+	global_flags.host_click = cmd_frame_buffer[5];
+	if (global_flags.host_click)
+		process_simulate_ch3_clicks(cmd_frame_buffer[6]);
+}
+
+
 /* only used after PWM0~3 setting before postion setting*/
+/*
+TxBuf:
+[4]: Command type;
+[5~8]: position
+[9~12]: mandatroy or not
+*/
 static void set_attr_flag(void)
 {
 	u8 i;
@@ -235,7 +255,8 @@ static void set_attr_flag(void)
 	u8 *tag = &cmd_frame_buffer[9];
 	
 	for (i=0; i < CH_MAX; i++)
-		update_attr_status(target[i], tag[i], true);
+		update_attr_status(target[i], tag[i], 
+						   i == (CH_MAX - 1));
 }
 
 void set_event_ack_ready(void)
@@ -267,10 +288,22 @@ void send_ack_frame(u8 ack_length)
 
 void host_cmd_process(void)
 {
+static u16 host_disconnect_counter;
+
+    if (global_flags.systick)
+	{
+        if (host_disconnect_counter++ ==
+			dev_config.host_disconnect_timeout)
+		{
+            global_flags.host_click = false;
+        }
+    }
+	
 	if (cmd_frame_received )
 	{
 		cmd_process[CMD_TYPE]();
 		cmd_frame_received = false;
+		host_disconnect_counter = 0;
 	}
 
 	if (ack_frame_ready)

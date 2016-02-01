@@ -291,7 +291,8 @@ typedef struct {
     u16 no_signal_timeout;
 	u16 dip_state_timeout;
 	u16 ch3_turnover_timeout;
-    u16 ch3_multi_click_timeout;
+    u16 ch3_multi_click_timeout;	
+    u16 host_disconnect_timeout;
     u16 servo_pulse_min;
     u16 servo_pulse_max;
     u16 initial_endpoint_delta;
@@ -355,7 +356,8 @@ typedef struct {
     u16 rc_is_initializing : 1;
     u16 servo_output_setup : 3;
     u16 reversing_setup : 2;
-    u16 steel_setup : 3;
+    u16 steel_setup : 3;	
+    u16 host_click : 1;
 	SYS_INFO_T *si;
 } GLOBAL_FLAGS_T;
 
@@ -391,6 +393,7 @@ extern void init_servo_reader(void);
 extern void output_raw_channels(u16 result[3]);
 extern void read_rc_channels(void);
 extern void input_ch3_handler(void);
+extern void process_simulate_ch3_clicks(u8 clicks);
 extern void update_rtr_status(u8 index, u8 tag, bool save);
 extern void update_attr_status(u8 index, u8 tag, bool save);
 extern void load_all_parameters(void);

@@ -30,6 +30,9 @@ static void add_click(void);
 
 void input_ch3_handler(void)
 {
+	if (global_flags.host_click)
+		goto process;
+
     if (global_flags.systick) {
         if (ch3_click_counter) {
             --ch3_click_counter;
@@ -74,11 +77,17 @@ void input_ch3_handler(void)
             add_click();
         }
     }
-
+	
+process:
     process_ch3_click_timeout();
 }
 
-static void input_process_thread(u8 ch3_clicks)
+void process_simulate_ch3_clicks(u8 clicks)
+{
+	ch3_clicks = clicks;
+	ch3_click_counter = 0;
+}
+static void input_process_thread(u8 clicks)
 {
 	u8 action = NO_ACTION;
 	u8 ch;
@@ -94,13 +103,13 @@ static void input_process_thread(u8 ch3_clicks)
 	}
 	
 	ea = ch3_actions[global_flags.ch3_action_profile];
-	ch3_clicks = ch3_clicks_decode(ch3_clicks);
-	ch = ea[ch3_clicks].channel;
-	action = ea[ch3_clicks].actions;
+	clicks = ch3_clicks_decode(clicks);
+	ch = ea[clicks].channel;
+	action = ea[clicks].actions;
 	pos_configs = &servo_outputs[ch].pos_config;
 	sout = &servo_outputs[ch];
 	current = (u8)pos_configs->current;
-	beep_notify(ea[ch3_clicks].beep);
+	beep_notify(ea[clicks].beep);
 	
 	switch (action)
 	{
@@ -204,21 +213,21 @@ static void input_process_thread(u8 ch3_clicks)
 	return;
 }
 
-static u8 ch3_clicks_decode(u8 ch3_clicks)
+static u8 ch3_clicks_decode(u8 clicks)
 {
 	u8 actions;
 	static u16 ch3_turnover_timeout;	
 	static bool ch3_click_is_turnover;
 	
-	ch3_clicks -= 1;
+	clicks -= 1;
 
 	if (ch3_click_is_turnover == false)
 	{
-		if (ch3_clicks < CH3_TURNOVER)
+		if (clicks < CH3_TURNOVER)
 		{
-			actions = ch3_clicks;
+			actions = clicks;
 		} 
-		else if (ch3_clicks == CH3_TURNOVER)
+		else if (clicks == CH3_TURNOVER)
 		{
 			ch3_click_is_turnover = true;
 			actions = CH3_TURNOVER;
@@ -232,11 +241,11 @@ static u8 ch3_clicks_decode(u8 ch3_clicks)
 	}
 	else
 	{
-		if (ch3_clicks < CH3_TURNOVER)
+		if (clicks < CH3_TURNOVER)
 		{
-			actions = (u8)(ch3_clicks + CH3_TO_OFFSET);
+			actions = (u8)(clicks + CH3_TO_OFFSET);
 		} 
-		else if (ch3_clicks == CH3_TURNOVER)
+		else if (clicks == CH3_TURNOVER)
 		{
 			ch3_click_is_turnover = false;
 			actions = CH3_TO_OFF;

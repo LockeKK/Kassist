@@ -95,8 +95,9 @@ DEVICE_CONFIG_T dev_config = {
 /* startup_time */ 				(2000 / SYSTICK_IN_MS),
 /* no_signal_timeout */ 		(500  / SYSTICK_IN_MS),
 /* dip_state_change_timeout */	(5000 / SYSTICK_IN_MS),
-/* ch3_multi_click_timeout */	(300  / SYSTICK_IN_MS),
 /* ch3_turnover_timeout */		(2000 / SYSTICK_IN_MS),
+/* ch3_multi_click_timeout */	(300  / SYSTICK_IN_MS),
+/* host_disconnect_timeout */	(15000),
 /* servo_pulse_min */			(600),
 /* servo_pulse_max */			(2500),
 /* initial_endpoint_delta */	(250),
@@ -189,7 +190,7 @@ static const SYS_INFO_T sys_info[] = {
 };
 
 GLOBAL_FLAGS_T global_flags = {
-0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, sys_info
+0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, sys_info
 };
 
 
