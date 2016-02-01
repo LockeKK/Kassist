@@ -39,15 +39,6 @@ typedef _Bool 					bool;
 // 3.3V     (12)
 // ****************************************************************************
 
-
-// The ROM_MAGIC marker is used to identify the location of ROM constants when
-// parsing a light controller binary by an external tool
-#define ROM_MAGIC 0x6372424c                // LBrc (LANE Boys RC) in little endian
-
-#define ST 0
-#define TH 1
-#define CH3 2
-
 // Number of positions of our virtual light switch. Includes the "off"
 // position 0.
 // NOTE: if you change this value you need to adjust CAR_LIGHT_FUNCTION_T
@@ -120,10 +111,10 @@ typedef struct {
 } GAMMA_TABLE_T;
 
 enum {
-	RC_THROTTLE,
-	RC_WHEEL,
-	RC_CH3,
-	RC_CLICKS_MAX
+	ST = 0,
+	TH,
+	CH3,
+	RC_MAX
 };
 
 enum {
@@ -302,10 +293,8 @@ typedef enum {
 	IGNORE = 'N',
     DEFAULT = 'I',
     CONFIGED = 'D',    
-    ADJUST = CONFIGED,
-    OPTIONAL = 'O',
-    MANDATORY = 'M',  
-    CONDITIONAL = 'C'
+    CONDITIONAL = 'C',
+    MANDATORY = 'M' 
 } INIT_CONFIG_STATE_T;
 
 typedef struct {
@@ -369,14 +358,14 @@ extern const PRODUCT_INFO_T product_info;
 @near extern EVENT_ACTIONS_T ch3_actions[MAX_CH3_PROFILE][CH3_CLICKS_MAX];
 @near extern EVENT_ACTIONS_T th_actions[MAX_AG_PROFILE][TH_KEY_MAX];
 @near extern SERVO_OUTPUTS_T servo_outputs[CH_MAX];
-@near extern RC_CHANNEL_T rc_channel[3];
+@near extern RC_CHANNEL_T rc_channel[RC_MAX];
 @near extern SERVO_ENDPOINTS_T servo_output_endpoint;
 #else
 extern DEVICE_CONFIG_T dev_config;
 extern EVENT_ACTIONS_T ch3_actions[MAX_CH3_PROFILE][CH3_CLICKS_MAX];
 extern EVENT_ACTIONS_T th_actions[MAX_AG_PROFILE][TH_KEY_MAX];
 extern SERVO_OUTPUTS_T servo_outputs[CH_MAX];
-extern RC_CHANNEL_T rc_channel[3];
+extern RC_CHANNEL_T rc_channel[RC_MAX];
 extern SERVO_ENDPOINTS_T servo_output_endpoint;
 #endif
 #define SERVO_OUTPUT_SIZE		(sizeof(servo_outputs)/CH_MAX)

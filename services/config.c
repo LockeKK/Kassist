@@ -71,9 +71,9 @@ SERVO_OUTPUTS_T servo_outputs[CH_MAX] = {
 };
 
 #ifdef COSMIC
-@near RC_CHANNEL_T rc_channel[3] = {
+@near RC_CHANNEL_T rc_channel[RC_MAX] = {
 #else
-RC_CHANNEL_T rc_channel[3] = {
+RC_CHANNEL_T rc_channel[RC_MAX] = {
 #endif
     {0, 0, 0, false, {1250, 1500, 1450}},
 	{0, 0, 0, false, {1250, 1500, 1450}},

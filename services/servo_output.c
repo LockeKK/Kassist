@@ -281,11 +281,6 @@ static void do_reversing_setup(void)
 
     if (global_flags.reversing_setup & REVERSING_SETUP_STEERING) {
         if (rc_channel[ST].absolute > 50) {
-            // 50% or more steering input: terminate the steering reversing setup.
-            // We were expecting the user to turn 'left', which should give us a
-            // negative reading if the 'reversed' flag is correct. If we are
-            // getting a positive reading we therefore have to reverse the
-            // steering rc_channel.
             if (rc_channel[ST].normalized > 0) {
                 rc_channel[ST].reversed = (u8)!!rc_channel[ST].reversed;
 
@@ -296,11 +291,6 @@ static void do_reversing_setup(void)
 
     if (global_flags.reversing_setup & REVERSING_SETUP_THROTTLE) {
         if (rc_channel[TH].absolute > 20) {
-            // 20% or more throttle input: terminate the throttle reversing setup.
-            // We were expecting the user to push the throttle 'forward', which
-            // should give a positive reading if the 'reversed' flag is correct.
-            // If we are reading a negative value we therefore have to reverse
-            // the throttle rc_channel.
             if (rc_channel[TH].normalized < 0) {
                 rc_channel[TH].reversed = (u8)!!rc_channel[TH].reversed;
             }

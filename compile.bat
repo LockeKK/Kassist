@@ -11,6 +11,7 @@ cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co
 cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\services\security.c
 cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\services\rc_monitor.c
 cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\services\servo_output.c
+cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\services\notification.c
 cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac main.c
 cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\driver\board.c
 cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\driver\storage.c
