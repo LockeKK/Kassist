@@ -199,6 +199,8 @@ static void enter_setup_mode(u8 dip)
 		goto setup_phase;
 	}
 
+	beep_notify(DIP_SWITHED);
+	
 	/* Users break out during the setup */
 	if (if_reversing_setup_done() == false)
 	{

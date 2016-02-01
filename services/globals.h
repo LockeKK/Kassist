@@ -243,11 +243,18 @@ typedef enum {
     STEEL_SETUP_RIGHT = 0x04
 } STEEL_SETUP_T;
 
+#if 1
+#define BEEP(order, dash, dot)		(order<<7|dash<<3|dot)
+
 typedef enum {
-    TASK_DONE = 0,
-    TASK_NG = 0x01,
-    TASK_WARNNING = 0x02
+	BEEP_OFF = BEEP(0, 0, 0),
+    TASK_DONE = BEEP(0, 1, 0),    
+    TASK_NG = BEEP(0, 2, 0),
+	DIP_SWITHED = BEEP(0, 0, 2),
+	BATTERY_LOW = BEEP(0, 3, 0)
 } BEEP_TYPE_T;
+
+#endif
 
 typedef enum {
     CONFIG_NOT_VAILD = 0	
@@ -372,7 +379,6 @@ extern SERVO_ENDPOINTS_T servo_output_endpoint;
 
 
 
-#define BEEP(dash, dot)		(dash<<4|dot)
 
 extern void init_servo_output(void);
 extern void update_servo_output(void);

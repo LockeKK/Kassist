@@ -51,12 +51,12 @@ u8 get_ch3_profile(void)
 	return 0;
 }
 
-u8 beep_notify(u8 beep)
+void led(u8 led)
 {
-	return 0;
+
 }
 
-void led(u8 led)
+void hw_beep_swith(bool on)
 {
 
 }
