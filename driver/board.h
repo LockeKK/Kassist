@@ -6,7 +6,6 @@ extern void uart_send(u8 *data, u8 length);
 extern void reboot(void);
 extern void delay(u16 ms);
 extern bool get_ch3_state(void);
-extern void beep_notify(u8 beep);
 extern void hw_beep_swith(bool on);
 extern void led(u8 led);
 extern u8 get_dip_state(void);

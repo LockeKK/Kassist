@@ -69,7 +69,8 @@ void main(void)
 	load_all_parameters();	
 	init_servo_reader();
 	verify_encrypted_uid();
-
+	beep_notify(POWER_ON);
+	
 	while(1)
 	{
 		service_systick();
@@ -80,6 +81,7 @@ void main(void)
 		update_servo_output();
 		check_no_signal();
 		diagnostics_service();
+		notification_service();
 	}
 }
 

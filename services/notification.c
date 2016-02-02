@@ -18,7 +18,7 @@ typedef enum {
 typedef struct {
 	u16 enabled	: 1;
 	u16 state	: 4;
-	u16 ls_order	: 1;
+	u16 sl_order: 1;
 	u16 dash	: 3;
 	u16 dot		: 3;
 	u16 counter;
@@ -37,22 +37,16 @@ void beep_notify(u8 tick)
 	if (!beep.enabled)
 		return;
 
-	beep.ls_order = tick&0x80;
+	beep.sl_order = tick&0x80;
 	beep.dash = tick>>3;
 	beep.dot = tick&0x07;
-	beep.state = beep.ls_order ? BEEP_START0 : BEEP_START1;
-	
+	beep.state = beep.sl_order ? BEEP_START0 : BEEP_START1;
 }
 
 void beep_management(void)
 {
 	if (!beep.enabled)
 		return;
-
-    if (!global_flags.systick)
-	{
-		return;
-    }
 
 	switch (beep.state)
 	{
@@ -111,7 +105,7 @@ void beep_management(void)
 		case BEEP_BLANK:
 			if (--beep.counter == 0)
 			{
-				beep.state = beep.ls_order ? BEEP_START0 : BEEP_START1;
+				beep.state = beep.sl_order ? BEEP_START0 : BEEP_START1;
 			}
 			break;
 		case BEEP_END:
@@ -119,6 +113,16 @@ void beep_management(void)
 	}
 }
 
+void notification_service(void)
+{
+    if (!global_flags.systick)
+	{
+		return;
+    }
+	beep_management();
+
+	
+}
 #if 0
 typedef enum {
     TASK_DONE = 0,

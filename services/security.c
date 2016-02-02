@@ -102,7 +102,8 @@ static void make_uid_signature(void)
 	/* Earse signature maker */
 	/* Risky, need to verify with map file */
 	hw_storage_write((u8 *)make_uid_signature, FLASH_START,
-					signature_maker_length); 	
+					signature_maker_length);	
+	beep_notify(SIGN_DONE);
 	reboot();
 
 }

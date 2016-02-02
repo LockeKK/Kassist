@@ -251,7 +251,9 @@ typedef enum {
     TASK_DONE = BEEP(0, 1, 0),    
     TASK_NG = BEEP(0, 2, 0),
 	DIP_SWITHED = BEEP(0, 0, 2),
-	BATTERY_LOW = BEEP(0, 3, 0)
+	BATTERY_LOW = BEEP(0, 3, 0),	
+	POWER_ON = BEEP(0, 0, 3),	
+	SIGN_DONE = BEEP(0, 3, 3)
 } BEEP_TYPE_T;
 
 #endif
@@ -402,6 +404,8 @@ extern void send_ack_frame(u8 ack_length);
 extern void host_cmd_process(void);
 extern void security_init(void);
 extern void verify_encrypted_uid(void);
+extern void notification_service(void);
+extern void beep_notify(u8 beep);
 
 
 
