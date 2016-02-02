@@ -32,7 +32,6 @@ void beep_ctrl(bool on)
 	beep.enabled = on;
 }
 
-
 void beep_notify(u8 tick)
 {
 	if (!beep.enabled)
@@ -113,15 +112,6 @@ void beep_management(void)
 			break;
 	}
 }
-
-
-typedef enum {
-	SWITCH_ON = 0X4,
-	SWITCH_OFF = 0,
-	CONFIG_NOT_READY = 0X01,
-	POSITION_NOT_READY = 0X02,
-	READY_TO_GO = 0X03
-} LED_BLIND_T;
 
 typedef enum {
 	LED_START = 0,

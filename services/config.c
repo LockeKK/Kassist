@@ -279,6 +279,13 @@ static void fresh_config_items(void)
 
 	global_flags.ready_to_go = ready_to_go; 
 	global_flags.ready_for_mp = ready_for_mp;
+
+	if (global_flags.ready_to_go)
+		led_notify(READY_TO_GO);
+	else if (global_flags.ready_for_mp)
+		led_notify(POSITION_NOT_READY);
+	else
+		led_notify(CONFIG_NOT_READY);
 }
 
 #if 0

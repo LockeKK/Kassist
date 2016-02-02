@@ -243,7 +243,6 @@ typedef enum {
     STEEL_SETUP_RIGHT = 0x04
 } STEEL_SETUP_T;
 
-#if 1
 #define BEEP(order, dash, dot)		(order<<7|dash<<3|dot)
 
 typedef enum {
@@ -256,10 +255,12 @@ typedef enum {
 	SIGN_DONE = BEEP(0, 3, 3)
 } BEEP_TYPE_T;
 
-#endif
-
 typedef enum {
-    CONFIG_NOT_VAILD = 0	
+	SWITCH_ON = 0X01,
+	SWITCH_OFF = 0X02,
+	CONFIG_NOT_READY = 0X03,
+	POSITION_NOT_READY = 0X04,
+	READY_TO_GO = 0X05
 } LED_TYPE_T;
 
 typedef enum {
@@ -406,6 +407,7 @@ extern void security_init(void);
 extern void verify_encrypted_uid(void);
 extern void notification_service(void);
 extern void beep_notify(u8 beep);
+extern void led_notify(u8 mode);
 
 
 
