@@ -51,7 +51,7 @@ u8 get_ch3_profile(void)
 	return 0;
 }
 
-void led(u8 led)
+void hw_led_swith(bool on)
 {
 
 }

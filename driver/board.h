@@ -7,7 +7,7 @@ extern void reboot(void);
 extern void delay(u16 ms);
 extern bool get_ch3_state(void);
 extern void hw_beep_swith(bool on);
-extern void led(u8 led);
+extern void hw_led_swith(bool on);
 extern u8 get_dip_state(void);
 extern void hw_storage_read(u8 *ee_addr, void *ram_addr, u16 length);
 extern void hw_storage_write(u8 *ee_addr, void *ram_addr, u16 length);

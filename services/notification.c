@@ -3,7 +3,7 @@
 
 
 typedef enum {
-	BEEP_START0,		
+	BEEP_START0 = 0,		
 	BEEP_START1,
 	BEEP_DASH,
 	BEEP_DOT,
@@ -17,14 +17,15 @@ typedef enum {
 
 typedef struct {
 	u16 enabled	: 1;
-	u16 state	: 4;
+	u16 state	: 3;
 	u16 sl_order: 1;
-	u16 dash	: 3;
-	u16 dot		: 3;
+	
+	u8 dash;
+	u8 dot;
 	u16 counter;
 } BEEP_T;
 
-BEEP_T beep;
+static BEEP_T beep;
 
 void beep_ctrl(bool on)
 {
@@ -38,8 +39,8 @@ void beep_notify(u8 tick)
 		return;
 
 	beep.sl_order = tick&0x80;
-	beep.dash = tick>>3;
-	beep.dot = tick&0x07;
+	beep.dash = (u8)(tick>>3);
+	beep.dot = (u8)(tick&0x07);
 	beep.state = beep.sl_order ? BEEP_START0 : BEEP_START1;
 }
 
@@ -113,6 +114,166 @@ void beep_management(void)
 	}
 }
 
+
+typedef enum {
+	SWITCH_ON = 0X4,
+	SWITCH_OFF = 0,
+	CONFIG_NOT_READY = 0X01,
+	POSITION_NOT_READY = 0X02,
+	READY_TO_GO = 0X03
+} LED_BLIND_T;
+
+typedef enum {
+	LED_START = 0,
+	LED_ON,
+	LED_OFF,
+	LED_BLANK,
+	LED_END
+} LED_STATE_T;
+
+#define	LED_TMO 				(100  / SYSTICK_IN_MS)
+typedef struct {
+	u8 enabled : 1;
+	u8 state : 3;
+	u8 on;
+	u8 off;
+	u8 cycle;
+	u8 blank;
+	u16 counter;
+} LED_T;
+
+static LED_T led;
+
+void led_ctrl(bool on)
+{
+	led.enabled = on;
+}
+
+void led_notify(u8 mode)
+{
+	if (!led.enabled)
+		return;
+
+	switch (mode)
+	{
+	case SWITCH_ON:
+		led.on = 1;
+		led.off = 0;
+		led.cycle = 0;
+		led.blank = 0;
+		led.state = LED_START;
+		break;
+	case SWITCH_OFF:
+		led.on = 0;
+		led.off = 1;
+		led.cycle = 0;
+		led.blank = 0;
+		led.state = LED_START;
+		break;
+	case CONFIG_NOT_READY:
+		led.on = 3;
+		led.off = 3;
+		led.cycle = 3;
+		led.blank = 6;
+		led.state = LED_START;
+		break;
+	case POSITION_NOT_READY:
+		led.on = 3;
+		led.off = 3;
+		led.cycle = 2;
+		led.blank = 6;
+		led.state = LED_START;
+		break;
+	case READY_TO_GO:
+		led.on = 3;
+		led.off = 3;
+		led.cycle = 1;
+		led.blank = 0;
+		led.state = LED_START;
+		break;
+	}
+
+}
+
+void led_management(void)
+{
+	static u8 cycle;
+
+	if (!led.enabled)
+		return;
+	
+	switch (led.state)
+	{
+		case LED_START:
+			if (led.on)
+			{
+				led.state = LED_ON;
+				led.counter = led.on * LED_TMO;
+				cycle = led.cycle;
+				hw_led_swith(true);
+			}
+			else if (led.off)
+			{
+				led.state = LED_END;
+				hw_led_swith(false);
+			}
+			else
+				led.state = LED_END;
+			break;
+
+		case LED_ON:
+			if (--led.counter == 0)
+			{
+				if (led.off)
+				{
+					led.state = LED_OFF;
+					led.counter = led.off * LED_TMO;
+					hw_led_swith(false);
+				}
+				else
+				{
+					led.state = LED_END;
+				}
+			}
+			break;
+
+		case LED_OFF:
+			if (--led.counter == 0)
+			{
+				if (--cycle)
+				{
+					led.state = LED_ON;
+					led.counter = led.on * LED_TMO;
+					hw_led_swith(true);
+				}
+				else
+				{
+					if (led.blank)
+					{
+						led.state = LED_BLANK;
+						led.counter = led.blank* LED_TMO;
+					}
+					else
+					{
+						led.state = LED_START;
+					}
+				}
+			}
+			break;
+
+		case LED_BLANK:
+			if (--led.counter == 0)
+			{
+				led.state = LED_START;
+			}
+			break;
+
+		case LED_END:
+			break;
+	}
+}
+
+
 void notification_service(void)
 {
     if (!global_flags.systick)
@@ -120,26 +281,5 @@ void notification_service(void)
 		return;
     }
 	beep_management();
-
-	
+	led_management();
 }
-#if 0
-typedef enum {
-    TASK_DONE = 0,
-    TASK_NG = 0x01,
-	UNCONFIGED,
-	READY_TO_GO,
-	READY_FOR_MP,
-	
-
-
-
-	
-} LED_BLIND_T;
-
-#endif
-
-
-
-
-
