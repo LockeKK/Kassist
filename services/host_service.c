@@ -12,9 +12,6 @@ static void reset_to_factroy(void);
 static void get_device_sn(void);
 static void set_attr_flag(void);
 
-
-
-
 void cmd_frame_decode(u8 data)
 {
 	static frame_decode_stage_t decode_stage;
@@ -112,7 +109,6 @@ void cmd_execution_done(void)
 	buf[index++] = CMD_ACK_OK;
 	
 	set_event_ack_ready();
-
 }
 
 void cmd_execution_ng(void)
@@ -313,7 +309,7 @@ void send_ack_frame(u8 ack_length)
 
 void host_cmd_process(void)
 {
-static u16 host_disconnect_counter;
+	static u16 host_disconnect_counter;
 
     if (global_flags.systick)
 	{

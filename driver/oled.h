@@ -1,19 +1,12 @@
 #ifndef _OLED_H_
 #define _OLED_H_
 
-#define F14x16_MODE		1
-#define F8x16_MODE		0
+#define F14x16_MODE		0
+#define F8x16_MODE		1
 #define F6x8_MODE		0
-
+#include "stm8s_type.h"
 #include "board.h"
 #include "stdint.h"
-
-#define s8     char
-#define u8    unsigned char
-#define SHORT16   int
-#define u16  unsigned int
-#define uint      unsigned int
-
 
 #define LED_RST PIOD6
 #define LED_DC  PIOD7

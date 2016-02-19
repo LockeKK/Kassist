@@ -1,6 +1,8 @@
 #ifndef __COMMAND_H
 #define __COMMAND_H
 
+#include "stm8s_type.h"
+#if 0
 typedef unsigned char 			u8;
 typedef unsigned short 			u16;
 typedef short 					s16;
@@ -8,7 +10,7 @@ typedef unsigned long 			u32;
 typedef _Bool 					bool;
 #define	true					(1)
 #define false					(0)
-
+#endif
 #define SYSTICK_IN_MS 			(20)
 
 // Suppress unused parameter or variable warning
@@ -243,16 +245,16 @@ typedef enum {
     STEEL_SETUP_RIGHT = 0x04
 } STEEL_SETUP_T;
 
-#define BEEP(order, dash, dot)		(order<<7|dash<<3|dot)
+#define BEEP_T(order, dash, dot)		(order<<7|dash<<3|dot)
 
 typedef enum {
-	BEEP_OFF = BEEP(0, 0, 0),
-    TASK_DONE = BEEP(0, 1, 0),    
-    TASK_NG = BEEP(0, 2, 0),
-	DIP_SWITHED = BEEP(0, 0, 2),
-	BATTERY_LOW = BEEP(0, 3, 0),	
-	POWER_ON = BEEP(0, 0, 3),	
-	SIGN_DONE = BEEP(0, 3, 3)
+	BEEP_OFF = BEEP_T(0, 0, 0),
+    TASK_DONE = BEEP_T(0, 1, 0),    
+    TASK_NG = BEEP_T(0, 2, 0),
+	DIP_SWITHED = BEEP_T(0, 0, 2),
+	BATTERY_LOW = BEEP_T(0, 3, 0),	
+	POWER_ON = BEEP_T(0, 0, 3),	
+	SIGN_DONE = BEEP_T(0, 3, 3)
 } BEEP_TYPE_T;
 
 typedef enum {

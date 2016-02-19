@@ -659,6 +659,7 @@ void LED_PXx16MixStr(u8 ucIdxX, u8 ucIdxY, u8 ucDataStr[])
 } 
 #endif
 
+#if F6x8_MODE
 void LED_PrintChar(u8 ucIdxX, u8 ucIdxY, s8 cData)
 {
     u16 i, j, k, usData;
@@ -684,7 +685,7 @@ void LED_PrintChar(u8 ucIdxX, u8 ucIdxY, s8 cData)
     return;
 }
 
-void LED_PrintShort(u8 ucIdxX, u8 ucIdxY, SHORT16 sData)
+void LED_PrintShort(u8 ucIdxX, u8 ucIdxY, u16 sData)
 {
     u16 i, j, k, l, m, usData;  
     if(sData < 0)
@@ -711,6 +712,7 @@ void LED_PrintShort(u8 ucIdxX, u8 ucIdxY, SHORT16 sData)
 
     return;
 }
+#endif
 
 void LED_PrintImage(u8 *pucTable, u16 usRowNum, u16 usColumnNum)
 {

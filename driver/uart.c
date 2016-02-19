@@ -65,7 +65,7 @@ static void hw_uart_tx(u8 *data, u8 length)
 
 @interrupt void hw_uart_rx_interrupt(void)
 {
-	int8 rxdata;
+	u8 rxdata;
 	uart_rx_callback(rxdata);
 }
 

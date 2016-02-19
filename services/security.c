@@ -1,6 +1,6 @@
 #include "globals.h"
 #include "board.h"
-#include "stm8.h"
+#include "stm8s.h"
 
 /*
 Reading out UID is very serious. Security will be cracked by replace
@@ -29,7 +29,7 @@ locate and crack the zip block, or so rear clues can lead a successful crack.
 #define INIT_SIGNATURE1		(0X23)
 
 static void make_uid_signature(void);
-static u16 encrypte(u8 *out, const u8 *in, u16 size);
+static void encrypte(u8 *out, const u8 *in, u16 size);
 static void decrypt(u8 *out, const u8 *in, u16 size);
 
 static u16 const signature_maker_length; /*defined by link*/
@@ -83,14 +83,16 @@ static void make_uid_signature(void)
 	u8 *secure;
 
 	/* make the signature */
-	length = encrypte(buf, UID_ADDR, sizeof(buf));
+	length = sizeof(buf);
+	encrypte(buf, UID_ADDR, length);
 	hw_storage_write(signature, buf, length);
 
 	/* encrypte "verify_encrypted_uid" and overwrite */
 	/* We need to know the address in RAM and ROM */
 	secure = (u8 *)(verify_encrypted_uid);
-	length = encrypte(secure, SECURITY_AREA_ROM, 
-						signature_orig_length);
+	
+	length = signature_orig_length;
+	encrypte(secure, SECURITY_AREA_ROM, length);
 
 	/* overwrite the original "verify_encrypted_uid" */
 	hw_storage_write(SECURITY_AREA_ROM, secure, length);
@@ -118,21 +120,21 @@ Note: verify_encrypted_uid() is RAM runnable.
 	u8 i = 10;
 	u8 *p = FLASH_START;
 
-	FLASH_PUKR = 0x56;
-	FLASH_PUKR = 0xAE;
+	FLASH->PUKR = 0x56;
+	FLASH->PUKR = 0xAE;
 	do {
-		if (BCHK(FLASH_IAPSR, 1))
+		if (ValBit(FLASH->IAPSR, 1))
 			break;
 	}	while (--i);
 
     do {
-	    BSET(FLASH_CR2, 6);
-	    BRES(FLASH_NCR2, 6);		
+	    SetBit(FLASH->CR2, 6);
+	    ClrBit(FLASH->NCR2, 6);		
 		p[0] = 'F';
 		p[1] = 'U';
 		p[2] = 'C';
 		p[3] = 'K';
-	    while (!BCHK(FLASH_IAPSR, 2));
+	    while (!ValBit(FLASH->IAPSR, 2));
 		p += 4;
 		if (p >= FLASH_END)
 			p = FLASH_END;
@@ -141,12 +143,11 @@ Note: verify_encrypted_uid() is RAM runnable.
 
 void verify_encrypted_uid(void)
 {
-	u16 length;
 	u8 buf[12];
 	u8 i;
 	
-	length = encrypte(buf, UID_ADDR, 12);
-	for (i = 0; i < length; i++)
+	encrypte(buf, UID_ADDR, 12);
+	for (i = 0; i < 12; i++)
 	{
 		if (buf[i] != signature[i])
 		{
@@ -158,14 +159,26 @@ void verify_encrypted_uid(void)
 }
 #pragma section ()
 
-static u16 encrypte(u8 *out, const u8 *in, u16 size)
+void encrypte(u8 *out, const u8 *in, u16 size)
 {
-	return 0;
+	u16 i;
+
+	for(i = 0; i < size -1 ; i++) 
+	{
+		out[i] = (u8)(in[i]<<4|in[i+1]>>4);
+	}
+	out[i] = (u8)(in[i]<<4|in[0]>>4);
 }
 
-static void decrypt(u8 *out, const u8 *in, u16 size)
+ 
+void decrypt(u8 *out, const u8 *in, u16 size)
 {
-
+	u16 i;
+	
+	for (i = 1; i < size ; i++)
+	{
+		out[i] = (u8)(in[i-1] << 4 | in[i] >> 4);
+	}
+	out[0] = (u8)(in[i-1] << 4 | in[0] >> 4);
 }
-
 
