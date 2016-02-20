@@ -410,6 +410,7 @@ extern void verify_encrypted_uid(void);
 extern void notification_service(void);
 extern void beep_notify(u8 beep);
 extern void led_notify(u8 mode);
+extern void cmd_frame_decode(u8 data);
 
 
 

@@ -35,6 +35,8 @@ struct intr_vector {
 
 
 extern void _stext();     /* startup routine */
+extern void hw_uart_rx_interrupt(void);
+extern void timer_interrupt(void);
 
 
 struct intr_vector const _vectab[] = {
@@ -61,7 +63,7 @@ struct intr_vector const _vectab[] = {
 	INTR_DEFAULT,		/* 18 */
 	INTR_DEFAULT,		/* 19 I2C - interrupt */
 	INTR_DEFAULT,		/* 20 UART2 - Tx complete */
-	INTR_DEFAULT,		/* 21 UART2 - Receiver register DATA FULL */
+	INTR_VEC(hw_uart_rx_interrupt),		/* 21 UART2 - Receiver register DATA FULL */
 	INTR_DEFAULT,		/* 22 ADC1 - end of conversion */
 	INTR_DEFAULT,		/* 23 TIM4 - update/overflow */
 	INTR_DEFAULT,		/* 24 Flash - EOP/WR_PG_DIS */

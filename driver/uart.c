@@ -18,17 +18,11 @@
 
 
 
-#include "timer.h"
-#include "lcd.h"
+#include "stm8s.h"
+#include "globals.h"
 
-/* UART Configuration
-Baudrate: 115200bps
-Frame: 1+8+1
-*/
-
-/* UART HAL */
-
-static void (*uart_rx_callback)(char);
+static void (*uart_rx_callback)(u8);
+static void hw_uart_int(void);
 
 void uart_int(void)
 {
@@ -38,34 +32,32 @@ void uart_int(void)
 
 void uart_send(u8 *data, u8 length)
 {
-	while(hw_uart_tx_ready);
-	hw_uart_tx(data, length);
+	while(length--)
+	{
+		while(!(UART2->SR & UART2_SR_TXE));
+		UART2->DR = *data++;
+	}
 }
 
 /* UART driver, fully depends on platforms */
-static void hw_uart_int()
+static void hw_uart_int(void)
 {
-
-}
-
-static bool hw_uart_tx_ready(void)
-{
-
-}
-
-static void hw_uart_tx(u8 *data, u8 length)
-{
-
-}
-
-@interrupt void hw_uart_tx_interrupt(void)
-{
-
+	UART2->CR1 &= ~(UART2_CR1_M);
+	UART2->CR3 |= (0<<4) & UART2_CR3_STOP;	// 1 stop bit	
+	UART2->BRR2 = 3 & UART2_BRR2_DIVF;		//57600 Bd	
+	UART2->BRR1 = 2;	
+	UART2->CR2 |= UART2_CR2_TEN | UART2_CR2_REN |
+				  UART2_CR2_RIEN;
 }
 
 @interrupt void hw_uart_rx_interrupt(void)
 {
-	u8 rxdata;
-	uart_rx_callback(rxdata);
-}
+	u8 rx_data;
+	
+	if (UART2->SR & 0x0F)
+		return;
 
+	rx_data = UART2->DR;
+
+	uart_rx_callback(rx_data);
+}
