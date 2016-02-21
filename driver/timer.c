@@ -84,51 +84,86 @@ static void hw_timer_int(void)
 	TIM4->SR1 &= (u8)(~TIM4_SR1_UIF);
 }
 
+typedef struct{
+	u8 *srx;
+	u8 *ccrxh;
+	u8 *ccrxl;
+	u8 *ccerx;
+	u8 srx_mask;
+	u8 ccerx_mask;
+} TIMER2_REG_T;
+
+const TIMER2_REG_T timer2_reg[RC_MAX] =
+{
+	{
+		&TIM2->SR1, &TIM2->CCR1H, &TIM2->CCR1L, &TIM2->CCER1,
+		TIM2_SR1_CC1IF, TIM2_CCER1_CC1P
+	},
+	{
+		&TIM2->SR1, &TIM2->CCR2H, &TIM2->CCR2L, &TIM2->CCER1,
+		TIM2_SR1_CC2IF, TIM2_CCER1_CC2P
+	},
+	{
+		&TIM2->SR1, &TIM2->CCR3H, &TIM2->CCR3L, &TIM2->CCER2,
+		TIM2_SR1_CC3IF, TIM2_CCER2_CC3P
+	}
+};
+
+
 @interrupt void timer2_rc_handler(void)
 {
-    static @near u16 start[3] = {0, 0, 0};
-    static @near u16 result[3] = {0, 0, 0};
+    static @near u16 start[RC_MAX] = {0, 0, 0};
+    static @near u16 result[RC_MAX] = {0, 0, 0};
     static @near u8 channel_flags = 0;
     u16 capture_value;
 	u8 low, high;
+	u8 i;
+	TIMER2_REG_T *p;
 
-#if 1
-    if (TIM2->SR1 & TIM2_SR1_CC1IF) 
+
+	for (i = 1; i <= RC_MAX; i++)
 	{
-		high = TIM2->CCR1H;
-		low = TIM2->CCR1L;
-
-		capture_value = (u16)(low);
-		capture_value |= (u16)((u16)high << 8);
-
-        if (TIM2->CCER1 & TIM2_CCER1_CC1P)
+		p = &timer2_reg[i-1];
+		if (*p->srx & p->srx_mask)
 		{
-            // Falling edge triggered
-			if (start[0] > capture_value)
+			high = *p->ccrxh;
+			low = *p->ccrxl;
+	
+			capture_value = (u16)(low);
+			capture_value |= (u16)((u16)high << 8);
+	
+			if (*p->ccerx & p->ccerx_mask)
 			{
-				// Compensate for wrap-around
-				//capture_value += LPC_SCT->MATCHREL[0].L + 1;
+				// Falling edge triggered
+				if (start[i-1] > capture_value)
+				{
+					// Compensate for wrap-around
+					result[i-1] = U16_MAX - start[i-1] + capture_value;
+				}
+				else
+				{
+					result[i-1] = capture_value - start[i-1];
+				}
 			}
-            result[0] = capture_value - start[0];
-        }
-        else 
-		{
-			// Rising edge triggered
-			start[0] = capture_value;
-			if (channel_flags & (1 << 0))
+			else 
 			{
-				timer_callback(result);
-				channel_flags = (1 << 0);
+				// Rising edge triggered
+				start[i-1] = capture_value;
+				if (channel_flags & (1 << i))
+				{
+					timer_callback(result);
+					channel_flags = (u8)(1 << i);
+				}
+				channel_flags |= (u8)(1 << i);
 			}
-			channel_flags |= (1 << 0);
+	
+			//Toggle the edge
+			*p->ccerx ^= p->ccerx_mask;
+	
+			//Clear the interrupt
+			*p->srx &= (u8)(~p->srx_mask);
 		}
+	}
 
-		//Toggle the edge
-        TIM2->CCER1 ^= TIM2_CCER1_CC1P;
-
-		//Clear the interrupt
-        TIM2->SR1 &= (u8)(~TIM2_SR1_CC1IF);
-    }
-#endif
 }
 
