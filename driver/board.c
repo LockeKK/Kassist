@@ -17,16 +17,11 @@
 
 #include <string.h>
 #include "board.h"
+#include "oled.h"
 #include "stm8s.h"
 
 
 #define HW_RESET_ADDR	(0X8000)
-
-
-void board_int(void)
-{
-	//uart_int();
-}
 
 void reboot(void)
 {
@@ -369,3 +364,304 @@ void pwm_update(u8 channel, u16 duty)
 
 }
 
+/** @addtogroup GPIO_Exported_Types
+  * @{
+  */
+
+/**
+  * @brief  GPIO modes
+  *
+  * Bits definitions:
+  * - Bit 7: 0 = INPUT mode
+  *          1 = OUTPUT mode
+  *          1 = PULL-UP (input) or PUSH-PULL (output)
+  * - Bit 5: 0 = No external interrupt (input) or No slope control (output)
+  *          1 = External interrupt (input) or Slow control enabled (output)
+  * - Bit 4: 0 = Low level (output)
+  *          1 = High level (output push-pull) or HI-Z (output open-drain)
+  */
+typedef enum
+{
+  GPIO_MODE_IN_FL_NO_IT      = (uint8_t)0x00,  /*!< Input floating, no external interrupt */
+  GPIO_MODE_IN_PU_NO_IT      = (uint8_t)0x40,  /*!< Input pull-up, no external interrupt */
+  GPIO_MODE_IN_FL_IT         = (uint8_t)0x20,  /*!< Input floating, external interrupt */
+  GPIO_MODE_IN_PU_IT         = (uint8_t)0x60,  /*!< Input pull-up, external interrupt */
+  GPIO_MODE_OUT_OD_LOW_FAST  = (uint8_t)0xA0,  /*!< Output open-drain, low level, 10MHz */
+  GPIO_MODE_OUT_PP_LOW_FAST  = (uint8_t)0xE0,  /*!< Output push-pull, low level, 10MHz */
+  GPIO_MODE_OUT_OD_LOW_SLOW  = (uint8_t)0x80,  /*!< Output open-drain, low level, 2MHz */
+  GPIO_MODE_OUT_PP_LOW_SLOW  = (uint8_t)0xC0,  /*!< Output push-pull, low level, 2MHz */
+  GPIO_MODE_OUT_OD_HIZ_FAST  = (uint8_t)0xB0,  /*!< Output open-drain, high-impedance level,10MHz */
+  GPIO_MODE_OUT_PP_HIGH_FAST = (uint8_t)0xF0,  /*!< Output push-pull, high level, 10MHz */
+  GPIO_MODE_OUT_OD_HIZ_SLOW  = (uint8_t)0x90,  /*!< Output open-drain, high-impedance level, 2MHz */
+  GPIO_MODE_OUT_PP_HIGH_SLOW = (uint8_t)0xD0   /*!< Output push-pull, high level, 2MHz */
+}GPIO_Mode_TypeDef;
+
+/**
+  * @brief  Definition of the GPIO pins. Used by the @ref GPIO_Init function in
+  * order to select the pins to be initialized.
+  */
+
+typedef enum
+{
+  GPIO_PIN_0    = ((uint8_t)0x01),  /*!< Pin 0 selected */
+  GPIO_PIN_1    = ((uint8_t)0x02),  /*!< Pin 1 selected */
+  GPIO_PIN_2    = ((uint8_t)0x04),  /*!< Pin 2 selected */
+  GPIO_PIN_3    = ((uint8_t)0x08),   /*!< Pin 3 selected */
+  GPIO_PIN_4    = ((uint8_t)0x10),  /*!< Pin 4 selected */
+  GPIO_PIN_5    = ((uint8_t)0x20),  /*!< Pin 5 selected */
+  GPIO_PIN_6    = ((uint8_t)0x40),  /*!< Pin 6 selected */
+  GPIO_PIN_7    = ((uint8_t)0x80),  /*!< Pin 7 selected */
+  GPIO_PIN_LNIB = ((uint8_t)0x0F),  /*!< Low nibble pins selected */
+  GPIO_PIN_HNIB = ((uint8_t)0xF0),  /*!< High nibble pins selected */
+  GPIO_PIN_ALL  = ((uint8_t)0xFF)   /*!< All pins selected */
+}GPIO_Pin_TypeDef;
+
+/**
+  * @}
+  */
+
+/* Exported constants --------------------------------------------------------*/
+/* Exported macros -----------------------------------------------------------*/
+/* Private macros ------------------------------------------------------------*/
+
+/** @addtogroup GPIO_Private_Macros
+  * @{
+  */
+
+/**
+  * @brief  Macro used by the assert function to check the different functions parameters.
+  */
+
+/**
+  * @brief  Macro used by the assert function in order to check the different
+  * values of GPIOMode_TypeDef.
+  */
+#define IS_GPIO_MODE_OK(MODE) \
+  (((MODE) == GPIO_MODE_IN_FL_NO_IT)    || \
+   ((MODE) == GPIO_MODE_IN_PU_NO_IT)    || \
+   ((MODE) == GPIO_MODE_IN_FL_IT)       || \
+   ((MODE) == GPIO_MODE_IN_PU_IT)       || \
+   ((MODE) == GPIO_MODE_OUT_OD_LOW_FAST)  || \
+   ((MODE) == GPIO_MODE_OUT_PP_LOW_FAST)  || \
+   ((MODE) == GPIO_MODE_OUT_OD_LOW_SLOW)  || \
+   ((MODE) == GPIO_MODE_OUT_PP_LOW_SLOW)  || \
+   ((MODE) == GPIO_MODE_OUT_OD_HIZ_FAST)  || \
+   ((MODE) == GPIO_MODE_OUT_PP_HIGH_FAST)  || \
+   ((MODE) == GPIO_MODE_OUT_OD_HIZ_SLOW)  || \
+   ((MODE) == GPIO_MODE_OUT_PP_HIGH_SLOW))
+
+/**
+  * @brief  Macro used by the assert function in order to check the different
+  * values of GPIO_Pins.
+  */
+#define IS_GPIO_PIN_OK(PIN)  ((PIN) != (uint8_t)0x00)
+
+void GPIO_DeInit(GPIO_TypeDef* GPIOx)
+{
+  GPIOx->ODR = GPIO_ODR_RESET_VALUE; /* Reset Output Data Register */
+  GPIOx->DDR = GPIO_DDR_RESET_VALUE; /* Reset Data Direction Register */
+  GPIOx->CR1 = GPIO_CR1_RESET_VALUE; /* Reset Control Register 1 */
+  GPIOx->CR2 = GPIO_CR2_RESET_VALUE; /* Reset Control Register 2 */
+}
+
+/**
+  * @brief  Initializes the GPIOx according to the specified parameters.
+  * @param  GPIOx : Select the GPIO peripheral number (x = A to I).
+  * @param  GPIO_Pin : This parameter contains the pin number, it can be any value
+  *         of the @ref GPIO_Pin_TypeDef enumeration.
+  * @param  GPIO_Mode : This parameter can be a value of the
+  *         @Ref GPIO_Mode_TypeDef enumeration.
+  * @retval None
+  */
+
+void GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef GPIO_Pin, GPIO_Mode_TypeDef GPIO_Mode)
+{  
+  /* Reset corresponding bit to GPIO_Pin in CR2 register */
+  GPIOx->CR2 &= (uint8_t)(~(GPIO_Pin));
+  
+  /*-----------------------------*/
+  /* Input/Output mode selection */
+  /*-----------------------------*/
+  
+  if ((((uint8_t)(GPIO_Mode)) & (uint8_t)0x80) != (uint8_t)0x00) /* Output mode */
+  {
+    if ((((uint8_t)(GPIO_Mode)) & (uint8_t)0x10) != (uint8_t)0x00) /* High level */
+    {
+      GPIOx->ODR |= (uint8_t)GPIO_Pin;
+    } 
+    else /* Low level */
+    {
+      GPIOx->ODR &= (uint8_t)(~(GPIO_Pin));
+    }
+    /* Set Output mode */
+    GPIOx->DDR |= (uint8_t)GPIO_Pin;
+  } 
+  else /* Input mode */
+  {
+    /* Set Input mode */
+    GPIOx->DDR &= (uint8_t)(~(GPIO_Pin));
+  }
+  
+  /*------------------------------------------------------------------------*/
+  /* Pull-Up/Float (Input) or Push-Pull/Open-Drain (Output) modes selection */
+  /*------------------------------------------------------------------------*/
+  
+  if ((((uint8_t)(GPIO_Mode)) & (uint8_t)0x40) != (uint8_t)0x00) /* Pull-Up or Push-Pull */
+  {
+    GPIOx->CR1 |= (uint8_t)GPIO_Pin;
+  } 
+  else /* Float or Open-Drain */
+  {
+    GPIOx->CR1 &= (uint8_t)(~(GPIO_Pin));
+  }
+  
+  /*-----------------------------------------------------*/
+  /* Interrupt (Input) or Slope (Output) modes selection */
+  /*-----------------------------------------------------*/
+  
+  if ((((uint8_t)(GPIO_Mode)) & (uint8_t)0x20) != (uint8_t)0x00) /* Interrupt or Slow slope */
+  {
+    GPIOx->CR2 |= (uint8_t)GPIO_Pin;
+  } 
+  else /* No external interrupt or No slope control */
+  {
+    GPIOx->CR2 &= (uint8_t)(~(GPIO_Pin));
+  }
+}
+
+/**
+  * @brief  Writes data to the specified GPIO data port.
+  * @note   The port must be configured in output mode.
+  * @param  GPIOx : Select the GPIO peripheral number (x = A to I).
+  * @param  GPIO_PortVal : Specifies the value to be written to the port output
+  *         data register.
+  * @retval None
+  */
+void GPIO_Write(GPIO_TypeDef* GPIOx, uint8_t PortVal)
+{
+  GPIOx->ODR = PortVal;
+}
+
+/**
+  * @brief  Writes high level to the specified GPIO pins.
+  * @note   The port must be configured in output mode.  
+  * @param  GPIOx : Select the GPIO peripheral number (x = A to I).
+  * @param  PortPins : Specifies the pins to be turned high to the port output.
+  *         data register.
+  * @retval None
+  */
+void GPIO_WriteHigh(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef PortPins)
+{
+  GPIOx->ODR |= (uint8_t)PortPins;
+}
+
+/**
+  * @brief  Writes low level to the specified GPIO pins.
+  * @note   The port must be configured in output mode.  
+  * @param  GPIOx : Select the GPIO peripheral number (x = A to I).
+  * @param  PortPins : Specifies the pins to be turned low to the port output.
+  *         data register.
+  * @retval None
+  */
+void GPIO_WriteLow(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef PortPins)
+{
+  GPIOx->ODR &= (uint8_t)(~PortPins);
+}
+
+/**
+  * @brief  Writes reverse level to the specified GPIO pins.
+  * @note   The port must be configured in output mode.
+  * @param  GPIOx : Select the GPIO peripheral number (x = A to I).
+  * @param  PortPins : Specifies the pins to be reversed to the port output.
+  *         data register.
+  * @retval None
+  */
+void GPIO_WriteReverse(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef PortPins)
+{
+  GPIOx->ODR ^= (uint8_t)PortPins;
+}
+
+/**
+  * @brief  Reads the specified GPIO output data port.
+  * @note   The port must be configured in input mode.  
+  * @param  GPIOx : Select the GPIO peripheral number (x = A to I).
+  * @retval GPIO output data port value.
+  */
+uint8_t GPIO_ReadOutputData(GPIO_TypeDef* GPIOx)
+{
+  return ((uint8_t)GPIOx->ODR);
+}
+
+/**
+  * @brief  Reads the specified GPIO input data port.
+  * @note   The port must be configured in input mode.   
+  * @param  GPIOx : Select the GPIO peripheral number (x = A to I).
+  * @retval GPIO input data port value.
+  */
+uint8_t GPIO_ReadInputData(GPIO_TypeDef* GPIOx)
+{
+  return ((uint8_t)GPIOx->IDR);
+}
+
+/**
+  * @brief  Reads the specified GPIO input data pin.
+  * @param  GPIOx : Select the GPIO peripheral number (x = A to I).
+  * @param  GPIO_Pin : Specifies the pin number.
+  * @retval BitStatus : GPIO input pin status.
+  */
+BitStatus GPIO_ReadInputPin(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef GPIO_Pin)
+{
+  return ((BitStatus)(GPIOx->IDR & (uint8_t)GPIO_Pin));
+}
+
+/**
+  * @brief  Configures the external pull-up on GPIOx pins.
+  * @param  GPIOx : Select the GPIO peripheral number (x = A to I).
+  * @param  GPIO_Pin : Specifies the pin number
+  * @param  NewState : The new state of the pull up pin.
+  * @retval None
+  */
+void GPIO_ExternalPullUpConfig(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef GPIO_Pin, FunctionalState NewState)
+{  
+  if (NewState != DISABLE) /* External Pull-Up Set*/
+  {
+    GPIOx->CR1 |= (uint8_t)GPIO_Pin;
+  } else /* External Pull-Up Reset*/
+  {
+    GPIOx->CR1 &= (uint8_t)(~(GPIO_Pin));
+  }
+}
+
+/* LCD Chip Select I/O definition */
+#define LCD_CS_PORT (GPIOF)
+#define LCD_CS_PIN  (GPIO_PIN_0)
+
+/* LCD Backlight I/O definition */
+#define LCD_BACKLIGHT_PORT (GPIOF)
+#define LCD_BACKLIGHT_PIN  (GPIO_PIN_4)
+
+void spi_init(void)
+{
+	/* Set LCD ChipSelect pin in Output push-pull low level (chip select disabled) */
+	GPIO_Init(LCD_CS_PORT, LCD_CS_PIN, GPIO_MODE_OUT_PP_LOW_FAST);
+	
+	/* Set LCD backlight pin in Output push-pull low level (backlight off) */
+	GPIO_Init(LCD_BACKLIGHT_PORT, LCD_BACKLIGHT_PIN, GPIO_MODE_OUT_PP_LOW_FAST);
+
+}
+
+void spi_send(u8 cData)
+{
+	/*MSB first*/
+	GPIO_WriteHigh(LCD_CS_PORT, LCD_CS_PIN);
+	SPI->DR = cData;
+	while ((SPI->SR & SPI_SR_TXE) == 0);
+	GPIO_WriteLow(LCD_CS_PORT, LCD_CS_PIN);
+
+}
+void board_int(void)
+{
+	uart_int();
+	spi_init();
+	LED_Init();
+}

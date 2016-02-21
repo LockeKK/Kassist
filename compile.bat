@@ -14,6 +14,7 @@ cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co
 cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\services\notification.c
 cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac main.c
 cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\driver\board.c
+cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\driver\oled.c
 cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\driver\vector.c
 clnk -l"%TOOLSET%/Lib" -o kassit.sm8 -mkassit.map compile.lkf
 cvdwarf kassit.sm8

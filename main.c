@@ -1,5 +1,4 @@
 /*
-    main - main program, initialize and start
     Copyright (C) 2016 Locke Huang(locke.huang@gmail.com)
 
     This program is free software: you can redistribute it and/or modify
@@ -35,8 +34,6 @@ static void service_systick(void)
     //SysTick->CTRL |= (1 << 1);      // Re-enable the system tick interrupt
 }
 
-
-
 static void check_no_signal(void)
 {
     static u16 no_signal_timeout = 0;
@@ -60,6 +57,7 @@ void diagnostics_service(void)
 	{
 		//led(CONFIG_NOT_VAILD);
 	}
+	LED_P8x16Str(0, 0, (u8 *)&systick_count);
 }
 void main(void) 
 {

@@ -21,12 +21,12 @@
 #define F14x16_MODE		0
 #define F8x16_MODE		1
 #define F6x8_MODE		0
+
 #include "stm8s_type.h"
 #include "board.h"
-#include "stdint.h"
 
-#define LED_RST PIOD6
-#define LED_DC  PIOD7
+#define LED_RST //PIOD6
+#define LED_DC  //PIOD7
 
 
 #define LED_IMAGE_WHITE       1
@@ -39,9 +39,6 @@
 
 
 /* OLED driver support */
-extern void spi_send(char cData);
-
-
 void LED_Init(void);
 void LED_Fill(u8 ucData);
 void LED_P8x16Str(u8 ucIdxX, u8 ucIdxY, u8 ucDataStr[]);

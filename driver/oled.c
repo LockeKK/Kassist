@@ -16,9 +16,10 @@
 */
 
 #include "oled.h"
+#include "board.h"
 
 #if F6x8_MODE
-const unsigned char F6x8[][6] =
+const u8 F6x8[][6] =
 {
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },   //sp0
     { 0x00, 0x00, 0x00, 0x2f, 0x00, 0x00 },   // !1
@@ -116,11 +117,11 @@ const unsigned char F6x8[][6] =
 #endif
 
 #if F14x16_MODE
-const  unsigned char F14x16_Idx[] = 
+const u8 F14x16_Idx[] = 
 {
 };
 
-const  unsigned char F14x16[] = 
+const u8 F14x16[] = 
 {  
 
 };
@@ -128,7 +129,7 @@ const  unsigned char F14x16[] =
 
 
 #if F8x16_MODE
-const  unsigned char F8X16[]=
+const u8 F8X16[]=
 {
     0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,// 0
     0x00,0x00,0x00,0xF8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x33,0x30,0x00,0x00,0x00,//!1
@@ -228,8 +229,6 @@ const  unsigned char F8X16[]=
 };
 #endif
 
-
-
 void LED_WrDat(u8 ucData);
 void LED_WrCmd(u8 ucCmd);
 void LED_SetPos(u8 ucIdxX, u8 ucIdxY);
@@ -257,21 +256,21 @@ void SetNop(void);
 
 void LED_WrDat(u8 cData)
 {
-	LED_DC  = 1;
+	//LED_DC  = 1;
 	spi_send(cData);
 }
 
 void LED_WrCmd(u8 ucCmd)
 {
-	LED_DC  = 0;
+	//LED_DC  = 0;
 	spi_send(ucCmd);
 }
 
 void LED_SetPos(u8 ucIdxX, u8 ucIdxY)
 { 
-    LED_WrCmd(0xb0 + ucIdxY);
-    LED_WrCmd(((ucIdxX & 0xf0) >> 4) | 0x10);
-    LED_WrCmd((ucIdxX & 0x0f) | 0x00); 
+    LED_WrCmd((u8)(0xb0 + ucIdxY));
+    LED_WrCmd((u8)((ucIdxX & 0xf0) >> 4 | 0x10));
+    LED_WrCmd((u8)((ucIdxX & 0x0f) | 0x00)); 
 } 
 
 void LED_Fill(u8 ucData)
@@ -280,7 +279,7 @@ void LED_Fill(u8 ucData)
     
     for(ucPage = 0; ucPage < 8; ucPage++)
     {
-        LED_WrCmd(0xb0 + ucPage);  //0xb0+0~7表示页0~7
+        LED_WrCmd((u8)(0xb0 + ucPage));  //0xb0+0~7表示页0~7
         LED_WrCmd(0x00);           //0x00+0~16表示将128列分成16组其地址在某组中的第几列
         LED_WrCmd(0x10);           //0x10+0~16表示将128列分成16组其地址所在第几组
         for(ucColumn = 0; ucColumn < 128; ucColumn++)
@@ -294,9 +293,9 @@ void LED_Fill(u8 ucData)
 
 void SetStartColumn(u8 ucData)
 {
-    LED_WrCmd(0x00+ucData % 16);   // Set Lower Column Start Address for Page Addressing Mode
+    LED_WrCmd((u8)(0x00+ucData % 16));   // Set Lower Column Start Address for Page Addressing Mode
                                    // Default => 0x00
-    LED_WrCmd(0x10+ucData / 16);   // Set Higher Column Start Address for Page Addressing Mode
+    LED_WrCmd((u8)(0x10+ucData / 16));   // Set Higher Column Start Address for Page Addressing Mode
                                    // Default => 0x10
 }
 
@@ -333,7 +332,7 @@ void SetPageAddress(u8 a, u8 b)
 
 void SetStartLine(u8 ucData)
 {
-    LED_WrCmd(0x40|ucData); // Set Display Start Line
+    LED_WrCmd((u8)(0x40|ucData)); // Set Display Start Line
                             // Default => 0x40 (0x00)
 }
 
@@ -346,7 +345,7 @@ void SetContrastControl(u8 ucData)
 void SetChargePump(u8 ucData)
 {
     LED_WrCmd(0x8D);        // Set Charge Pump
-    LED_WrCmd(0x10|ucData); // Default => 0x10
+    LED_WrCmd((u8)(0x10|ucData)); // Default => 0x10
                             // 0x10 (0x00) => Disable Charge Pump
                             // 0x14 (0x04) => Enable Charge Pump
 }
@@ -355,7 +354,7 @@ void SetChargePump(u8 ucData)
 
 void SetSegmentRemap(u8 ucData)
 {
-    LED_WrCmd(0xA0|ucData); // Set Segment Re-Map
+    LED_WrCmd((u8)(0xA0|ucData)); // Set Segment Re-Map
                             // Default => 0xA0
                             // 0xA0 (0x00) => Column Address 0 Mapped to SEG0
                             // 0xA1 (0x01) => Column Address 0 Mapped to SEG127
@@ -363,7 +362,7 @@ void SetSegmentRemap(u8 ucData)
 
 void SetEntireDisplay(u8 ucData)
 {
-    LED_WrCmd(0xA4|ucData); // Set Entire Display On / Off
+    LED_WrCmd((u8)(0xA4|ucData)); // Set Entire Display On / Off
                             // Default => 0xA4
                             // 0xA4 (0x00) => Normal Display
                             // 0xA5 (0x01) => Entire Display On
@@ -371,7 +370,7 @@ void SetEntireDisplay(u8 ucData)
 
 void SetInverseDisplay(u8 ucData)
 {
-    LED_WrCmd(0xA6|ucData); // Set Inverse Display On/Off
+    LED_WrCmd((u8)(0xA6|ucData)); // Set Inverse Display On/Off
                             // Default => 0xA6
                             // 0xA6 (0x00) => Normal Display
                             // 0xA7 (0x01) => Inverse Display On
@@ -387,7 +386,7 @@ void SetMultiplexRatio(u8 ucData)
 
 void SetDisplayOnOff(u8 ucData)
 {
-    LED_WrCmd(0xAE|ucData); // Set Display On/Off
+    LED_WrCmd((u8)(0xAE|ucData)); // Set Display On/Off
                             // Default => 0xAE
                             // 0xAE (0x00) => Display Off
                             // 0xAF (0x01) => Display On
@@ -397,13 +396,13 @@ void SetDisplayOnOff(u8 ucData)
 
 void SetStartPage(u8 ucData)
 {
-    LED_WrCmd(0xB0|ucData); // Set Page Start Address for Page Addressing Mode
+    LED_WrCmd((u8)(0xB0|ucData)); // Set Page Start Address for Page Addressing Mode
                             // Default => 0xB0 (0x00)
 }
 
 void SetCommonRemap(u8 ucData)
 {
-    LED_WrCmd(0xC0|ucData); // Set COM Output Scan Direction
+    LED_WrCmd((u8)(0xC0|ucData)); // Set COM Output Scan Direction
                             // Default => 0xC0
                             // 0xC0 (0x00) => Scan from COM0 to 63
                             // 0xC8 (0x08) => Scan from COM63 to 0
@@ -438,7 +437,7 @@ void SetPrechargePeriod(u8 ucData)
 void SetCommonConfig(u8 ucData)
 {
     LED_WrCmd(0xDA);        // Set COM Pins Hardware Configuration
-    LED_WrCmd(0x02|ucData); // Default => 0x12 (0x10)
+    LED_WrCmd((u8)(0x02|ucData)); // Default => 0x12 (0x10)
                             // Alternative COM Pin Configuration
                             // Disable COM Left/Right Re-Map
 }
@@ -454,13 +453,21 @@ void SetNop(void)
     LED_WrCmd(0xE3);        // Command for No Operation
 }
 
+static void delay_ms(u16 nCount)
+{
+  /* Decrement nCount value */
+  while (nCount != 0)
+  {   
+    nCount--;
+  }
+}
 
 void LED_Init(void)        
 {
-    LED_RST = 0;    
-    _delay_ms(1);
-    LED_RST = 1;
-     _delay_ms(1);
+	//LED_RST = 0;    
+	delay_ms(1);
+	//LED_RST = 1;
+	delay_ms(1);
 
     SetDisplayOnOff(0x00);     // Display Off (0x00/0x01)
     SetDisplayClock(0x80);     // Set Clock as 100 Frames/Sec
@@ -468,7 +475,7 @@ void LED_Init(void)
     SetDisplayOffset(0x00);    // Shift Mapping RAM Counter (0x00~0x3F)
     SetStartLine(0x00);        // Set Mapping RAM Display Start Line (0x00~0x3F)
     SetChargePump(0x04);       // Enable Embedded DC/DC Converter (0x00/0x04)
-    _delay_ms(100);
+    delay_ms(100);
     SetAddressingMode(0x02);   // Set Page Addressing Mode (0x00/0x01/0x02)
     SetSegmentRemap(0x01);     // Set SEG/Column Mapping     0x00左右反置 0x01正常
     SetCommonRemap(0x08);      // Set COM/Row Scan Direction 0x00上下反置 0x08正常
@@ -542,7 +549,7 @@ void LED_P8x16Str(u8 ucIdxX, u8 ucIdxY, u8 ucDataStr[])
     
     for (j = 0; ucDataStr[j] != '\0'; j++)
     {    
-        ucDataTmp = ucDataStr[j] - 32;
+        ucDataTmp = (u8)(ucDataStr[j] - 32);
         if(ucIdxX > 120)
         {
             ucIdxX = 0;
@@ -552,14 +559,14 @@ void LED_P8x16Str(u8 ucIdxX, u8 ucIdxY, u8 ucDataStr[])
         
         for(i = 0; i < 8; i++) 
         {
-            LED_WrDat((&F8X16[(ucDataTmp << 4) + i]));
+            LED_WrDat((F8X16[(ucDataTmp << 4) + i]));
         }
         
-        LED_SetPos(ucIdxX, ucIdxY + 1);   
+        LED_SetPos(ucIdxX, (u8)(ucIdxY + 1));   
         
         for(i = 0; i < 8; i++) 
         {
-            LED_WrDat((&F8X16[(ucDataTmp << 4) + i + 8]));
+            LED_WrDat((F8X16[(ucDataTmp << 4) + i + 8]));
         }
         ucIdxX += 8;
         
@@ -749,10 +756,10 @@ void LED_PrintImage(u8 *pucTable, u16 usRowNum, u16 usColumnNum)
             ucData = 0;
             for(k = 0; k < 8; k++)
             {
-                ucData = ucData >> 1;
+                ucData = (u8)(ucData >> 1);
                 if((pucTable + (usRowTmp + k) * usColumnNum)[j] == LED_IMAGE_WHITE)
                 {
-                    ucData = ucData | 0x80;
+                    ucData = (u8)(ucData | 0x80);
                 }
                 
             }
@@ -767,14 +774,14 @@ void LED_PrintImage(u8 *pucTable, u16 usRowNum, u16 usColumnNum)
         ucData = 0;
         for(k = 0; k < n; k++)
         {
-            ucData = ucData >> 1;
+            ucData = (u8)(ucData >> 1);
             if((pucTable + (usRowTmp + k) * usColumnNum)[j] == LED_IMAGE_WHITE)
             {
-                ucData = ucData | 0x80;
+                ucData = (u8)(ucData | 0x80);
             }
             
         }
-        ucData = ucData >> (8 - n);
+        ucData = (u8)(ucData >> (8 - n));
         LED_WrDat(ucData);
     }
 
