@@ -1,6 +1,6 @@
 /*
     vector - interrupt vector table
-    Copyright (C) 2011 Pavel Semerad
+    Copyright (C) 2016 Locke Huang(locke.huang@gmail.com)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
