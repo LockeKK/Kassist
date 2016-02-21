@@ -365,19 +365,21 @@ typedef struct {
 
 extern GLOBAL_FLAGS_T global_flags;
 extern const PRODUCT_INFO_T product_info;
+extern volatile u32 systick_count;
+
 #ifdef COSMIC
 @near extern DEVICE_CONFIG_T dev_config;
 @near extern EVENT_ACTIONS_T ch3_actions[MAX_CH3_PROFILE][CH3_CLICKS_MAX];
 @near extern EVENT_ACTIONS_T th_actions[MAX_AG_PROFILE][TH_KEY_MAX];
 @near extern SERVO_OUTPUTS_T servo_outputs[CH_MAX];
-@near extern RC_CHANNEL_T rc_channel[RC_MAX];
+@near volatile extern RC_CHANNEL_T rc_channel[RC_MAX];
 @near extern SERVO_ENDPOINTS_T servo_output_endpoint;
 #else
 extern DEVICE_CONFIG_T dev_config;
 extern EVENT_ACTIONS_T ch3_actions[MAX_CH3_PROFILE][CH3_CLICKS_MAX];
 extern EVENT_ACTIONS_T th_actions[MAX_AG_PROFILE][TH_KEY_MAX];
 extern SERVO_OUTPUTS_T servo_outputs[CH_MAX];
-extern RC_CHANNEL_T rc_channel[RC_MAX];
+extern volatile RC_CHANNEL_T rc_channel[RC_MAX];
 extern SERVO_ENDPOINTS_T servo_output_endpoint;
 #endif
 #define SERVO_OUTPUT_SIZE		(sizeof(servo_outputs)/CH_MAX)

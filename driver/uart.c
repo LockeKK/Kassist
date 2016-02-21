@@ -42,7 +42,7 @@ void uart_send(u8 *data, u8 length)
 /* UART driver, fully depends on platforms */
 static void hw_uart_int(void)
 {
-	UART2->CR1 &= ~(UART2_CR1_M);
+	UART2->CR1 &= (u8)~(UART2_CR1_M);
 	UART2->CR3 |= (0<<4) & UART2_CR3_STOP;	// 1 stop bit	
 	UART2->BRR2 = 3 & UART2_BRR2_DIVF;		//57600 Bd	
 	UART2->BRR1 = 2;	

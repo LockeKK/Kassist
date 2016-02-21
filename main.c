@@ -19,7 +19,7 @@
 #include "globals.h"
 #include "board.h"
 
-static volatile u32 systick_count;
+volatile u32 systick_count;
 
 static void service_systick(void)
 {

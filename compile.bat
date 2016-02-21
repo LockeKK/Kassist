@@ -18,7 +18,7 @@ cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co
 ::cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\driver\oled.c
 ::cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\driver\pwm.c
 ::cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\driver\spi.c
-::cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\driver\timer.c
+cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\driver\timer.c
 cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\driver\uart.c
 cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\driver\vector.c
 clnk -l"%TOOLSET%/Lib" -o kassit.sm8 -mkassit.map compile.lkf
