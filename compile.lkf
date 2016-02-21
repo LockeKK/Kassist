@@ -16,8 +16,8 @@
 
 crtsi0.sm8
 .\out\main.o .\out\battery.o .\out\config.o .\out\host_service.o .\out\input_service.o
-.\out\security.o .\out\rc_monitor.o .\out\servo_output.o .\out\board.o .\out\storage.o
-.\out\notification.o .\out\uart.o .\out\timer.o
+.\out\security.o .\out\rc_monitor.o .\out\servo_output.o .\out\board.o
+.\out\notification.o
 
 libis0.sm8
 libm0.sm8
