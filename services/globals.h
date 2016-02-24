@@ -317,19 +317,19 @@ typedef struct{
 } SYS_INFO_T;
 
 typedef struct {
-    u16 systick : 1;               // Set for one mainloop every 20 ms
-    u16 rc_update_event : 1;      // Set for one mainloop every time servo pulses were received
-    u16 ch3_action_profile : 1;		// dip setting ,only read at boot, command could select ontime
-    u16 ag_action_profile : 1;		// only command could select ontime
-    u16 no_signal : 1;
+	u16 systick : 1;               // Set for one mainloop every 20 ms
+	u16 rc_update_event : 1;      // Set for one mainloop every time servo pulses were received
+	u16 ch3_action_profile : 1;		// dip setting ,only read at boot, command could select ontime
+	u16 ag_action_profile : 1;		// only command could select ontime
+	u16 no_signal : 1;
 	u16 ready_to_go : 1;
 	u16 ready_for_mp : 1;
-    u16 rc_is_initializing : 1;
-    u16 servo_output_setup : 3;
-    u16 reversing_setup : 2;
-    u16 steel_setup : 3;	
-    u16 host_click : 1;	
-    u8 host_config;
+	u16 rc_is_initializing : 1;
+	u16 host_click : 1;
+	u8 servo_output_setup : 3;
+	u8 reversing_setup : 2;
+	u8 steel_setup : 3;
+	u8 host_config;
 	SYS_INFO_T *si;
 } GLOBAL_FLAGS_T;
 
