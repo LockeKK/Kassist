@@ -46,7 +46,7 @@ TH reversing setup is for gear, throttle icon UI;
 void init_servo_output(void)
 {
 	u8 i;
-	u16 servo_pulse = 0;
+	u16 servo_pulse = 1500;
 	u8 temp;
 
 	/* Parameters initlization */
