@@ -19,6 +19,44 @@
 #include "board.h"
 #include <string.h>
 
+typedef enum {
+	FRAME_BOF0,
+	FRAME_BOF1,
+	FRAME_ADDR,
+	FRAME_LENGTH,
+	FRAME_DATA,
+	FRAME_CHKSUM
+} FRAME_DECODE_STAGE_T;
+
+typedef struct {
+    u16 bof;
+    u8 dst:4;
+	u8 src:4;	
+	u8 length;
+	u8 *buf;
+	u8 chksum;
+} cmd_frame;
+
+/*
+[#][@][ADDR][Length][CMD][...][CHKSUM]
+[0][1]  [2]   [3]    [4]  [5]
+*/
+#define FRAME_BOF0_KEY				('$')
+#define FRAME_BOF1_KEY				('@')
+#define FRAME_TO_ME(data)			(!!(data&0x0f)==0x01)
+#define ACK_HOST					(0)
+#define MAX_FRAME_SIZE				(80)
+#define NM_OF_BOF					(2)
+#define CMD_TYPE					((u8)(cmd_frame_buffer[0]))
+#define CMD_ACK						((u8)(cmd_frame_buffer[0]+0X80))
+#define CMD_ACK_OK					((u8)0x55)
+#define CMD_ACK_NA					((u8)0x66)
+#define CMD_ACK_NG					((u8)0x77)
+#define HEAD_OF_ACK					(&ack_frame_buffer[3])
+#define HEAD_OF_CMD					(&cmd_frame_buffer[4])
+#define CMD_GET						('R')
+#define CMD_SET						('W')
+
 static volatile bool cmd_frame_received;
 static bool ack_frame_ready;
 #ifdef COSMIC
@@ -56,7 +94,6 @@ void host_cmd_init(void)
 	ack_frame_buffer[index++] = FRAME_BOF0_KEY;
 	ack_frame_buffer[index++] = FRAME_BOF1_KEY;
 	ack_frame_buffer[index++] = ACK_HOST;
-
 }
 
 void host_cmd_process(void)
@@ -88,7 +125,7 @@ void host_cmd_process(void)
 
 void cmd_frame_decode(u8 data)
 {
-	static frame_decode_stage_t decode_stage;
+	static FRAME_DECODE_STAGE_T decode_stage;
 	static u8 chksum;
 	static u8 total_length;
 	static u8 rx_length;
@@ -338,7 +375,7 @@ static void set_attr_flag(void)
 	u8 *target = &cmd_frame_buffer[5];
 	u8 *tag = &cmd_frame_buffer[9];
 	
-	for (i=0; i < CH_MAX; i++)
+	for (i = 0; i < CH_MAX; i++)
 		update_attr_status(target[i], tag[i], 
 						   i == (CH_MAX - 1));
 	cmd_execution_done();

@@ -19,15 +19,7 @@
 #define __COMMAND_H
 
 #include "stm8s_type.h"
-#if 0
-typedef unsigned char 			u8;
-typedef unsigned short 			u16;
-typedef short 					s16;
-typedef unsigned long 			u32;
-typedef _Bool 					bool;
-#define	true					(1)
-#define false					(0)
-#endif
+
 #define SYSTICK_IN_MS 			(20)
 
 // Suppress unused parameter or variable warning
@@ -80,49 +72,11 @@ typedef _Bool 					bool;
 #define MAX_CH3_PROFILE (2)
 #define MAX_AG_PROFILE 	(2)
 
-
-typedef enum {
-	FRAME_BOF0,
-	FRAME_BOF1,
-	FRAME_ADDR,
-	FRAME_LENGTH,
-	FRAME_DATA,
-	FRAME_CHKSUM
-} frame_decode_stage_t;
-/*
-[#][@][ADDR][Length][CMD][...][CHKSUM]
-[0][1]  [2]   [3]    [4]  [5]
-*/
-#define FRAME_BOF0_KEY				('$')
-#define FRAME_BOF1_KEY				('@')
-#define FRAME_TO_ME(data)			(!!(data&0x0f)==0x01)
-#define ACK_HOST					(0)
-#define MAX_FRAME_SIZE				(80)
-#define NM_OF_BOF					(2)
-#define CMD_TYPE					((u8)(cmd_frame_buffer[0]))
-#define CMD_ACK						((u8)(cmd_frame_buffer[0]+0X80))
-#define CMD_ACK_OK					((u8)0x55)
-#define CMD_ACK_NA					((u8)0x66)
-#define CMD_ACK_NG					((u8)0x77)
-#define HEAD_OF_ACK					(&ack_frame_buffer[3])
-#define HEAD_OF_CMD					(&cmd_frame_buffer[4])
-#define CMD_GET						('R')
-#define CMD_SET						('W')
-
 typedef struct {
     u8 protype;
     u8 hw_ver;
 	u8 sw_ver;
 } PRODUCT_INFO_T;
-
-typedef struct {
-    u16 bof;
-    u8 dst:4;
-	u8 src:4;	
-	u8 length;
-	u8 *buf;
-	u8 chksum;
-} cmd_frame;
 
 typedef struct {
     u8 gamma_value[4];
@@ -265,21 +219,21 @@ typedef enum {
 #define BEEP_T(order, dash, dot)		(order<<7|dash<<3|dot)
 
 typedef enum {
-	BEEP_OFF = BEEP_T(0, 0, 0),
-    TASK_DONE = BEEP_T(0, 1, 0),    
-    TASK_NG = BEEP_T(0, 2, 0),
+	BEEP_OFF 	= BEEP_T(0, 0, 0),
+    TASK_DONE 	= BEEP_T(0, 1, 0),    
+    TASK_NG 	= BEEP_T(0, 2, 0),
 	DIP_SWITHED = BEEP_T(0, 0, 2),
 	BATTERY_LOW = BEEP_T(0, 3, 0),	
-	POWER_ON = BEEP_T(0, 0, 3),	
-	SIGN_DONE = BEEP_T(0, 3, 3)
+	POWER_ON 	= BEEP_T(0, 0, 3),	
+	SIGN_DONE 	= BEEP_T(0, 3, 3)
 } BEEP_TYPE_T;
 
 typedef enum {
-	SWITCH_ON = 0X01,
-	SWITCH_OFF = 0X02,
-	CONFIG_NOT_READY = 0X03,
-	POSITION_NOT_READY = 0X04,
-	READY_TO_GO = 0X05
+	SWITCH_ON 			= 0X01,
+	SWITCH_OFF 			= 0X02,
+	CONFIG_NOT_READY 	= 0X03,
+	POSITION_NOT_READY 	= 0X04,
+	READY_TO_GO 		= 0X05
 } LED_TYPE_T;
 
 typedef enum {
@@ -400,9 +354,6 @@ extern SERVO_ENDPOINTS_T servo_output_endpoint;
 #endif
 #define SERVO_OUTPUT_SIZE		(sizeof(servo_outputs)/CH_MAX)
 
-
-
-
 extern void init_servo_output(void);
 extern void update_servo_output(void);
 extern bool if_under_setup_actions(void);
@@ -428,8 +379,6 @@ extern void beep_notify(u8 beep);
 extern void led_notify(u8 mode);
 extern void cmd_frame_decode(u8 data);
 extern u16 servo_output_manually(u8 channel, s16 normalized);
-
-
 
 #define EEPROM_ADDR_BASE				(0x4000)
 #define EEPROM_RESERVED					(0x10)
