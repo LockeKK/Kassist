@@ -263,7 +263,7 @@ static u8 ch3_clicks_decode(u8 clicks)
 		}
 	}
 
-	if(ch3_click_is_turnover && dev_config.flags.turnover_tmo_en)
+	if(ch3_click_is_turnover && dev_config.ch3_turnover_timeout)
 	{
 		--ch3_turnover_timeout;
         if (ch3_turnover_timeout == 0) {

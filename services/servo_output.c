@@ -510,7 +510,7 @@ static u16 calculate_servo_activeness(u8 ch)
 	return servo_pulse;
 }
 
-static void servo_output_manually(u8 channel, s16 normalized)
+void servo_output_manually(u8 channel, s16 normalized)
 {
 	u16 servo_pulse;
 

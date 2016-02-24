@@ -62,6 +62,7 @@ void diagnostics_service(void)
 void main(void) 
 {
 	board_int();
+#if 1	
 	host_cmd_init();
 	security_init();	
 	load_all_parameters();	
@@ -81,5 +82,6 @@ void main(void)
 		diagnostics_service();
 		notification_service();
 	}
+#endif	
 }
 

@@ -659,9 +659,65 @@ void spi_send(u8 cData)
 	GPIO_WriteLow(LCD_CS_PORT, LCD_CS_PIN);
 
 }
+static void delay_ms(u16 nCount)
+{
+  /* Decrement nCount value */
+  while (nCount != 0)
+  {   
+    nCount--;
+  }
+}
+#define to_HSE	0xB4			// definition of clock blocks (to be copied to SWR)
+#define	to_LSI	0xD2
+#define	to_HSI	0xE1
+#define ALL_LEDs 	((u8)0x0F)					// LEDs mask (EVAL board)
+#define BUTTON ((u8)0x01)						// Button mask (EVAL board)
+#define CLK_SWITCH_TIMEOUT ((u16)0x491)	//timeout for clock switching
+
+u8 switch_clock_system(u8 clck) 
+{	
+	u16 Tout= CLK_SWITCH_TIMEOUT;		
+	CLK->SWCR &= ~CLK_SWCR_SWIF;					// manual switch mode	CLK->SWR= clck;	   
+	while ( !(CLK->SWCR & CLK_SWCR_SWIF)  &&  Tout)		
+	Tout--; 											// wait for targed block is ready		
+
+	if(Tout)
+	{		
+		CLK->SWCR|= CLK_SWCR_SWEN;					// new block is ready - make switch!		
+		return(TRUE);									// return SUCCES!	
+	}	
+	else 
+	{		
+		CLK->SWCR &= ~CLK_SWCR_SWBSY;				// reswitch to original clock source		
+		return(FALSE);									// return switching wasn't succesfull	
+	}
+}
+
 void board_int(void)
 {
-	uart_int();
-	spi_init();
-	LED_Init();
+	//uart_int();
+	//spi_init();
+	//LED_Init();
+	
+	u32 i = 0;
+#if 0
+	CLK->CKDIVR &= (u8)~(CLK_CKDIVR_CPUDIV);			// fcpu= fmaster (CPUDIV= 0)	
+	CLK->CKDIVR &= (u8)~(CLK_CKDIVR_HSIDIV);			// fhsi= fhsirc (HSIDIV= 0)	
+	CLK->CCOR |= (u8)((4<<1) & CLK_CCOR_CCOSEL);		// fcpu -> CCO pin	
+	CLK->CCOR |= (u8)(CLK_CCOR_CCOEN);
+	switch_clock_system(to_HSI);
+#endif
+	
+	GPIO_Init(GPIOE, GPIO_PIN_5, GPIO_MODE_OUT_PP_LOW_FAST);
+
+	while(i++)
+	{
+		if(i%2)
+		GPIO_WriteLow(GPIOE, GPIO_PIN_5);
+		else
+		GPIO_WriteHigh(GPIOE, GPIO_PIN_5);
+		delay_ms(1000);	
+	}
+
+	
 }

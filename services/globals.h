@@ -174,7 +174,7 @@ enum {
     NORMAL_MODE		= 0b111,
     REVERSING_SETUP	= 0b110,
     STEEL_SETUP		= 0b100,
-    PWM0_SETUP		= 0b000,
+    PWM0_SETUP		= 0b000, /*Must be 0*/
     PWM1_SETUP 		= 0b001,
     PWM2_SETUP 		= 0b010,
     PWM3_SETUP 		= 0b011
@@ -304,7 +304,6 @@ typedef struct {
     struct {
         u16 ch3_is_local_switch : 1;
         u16 ch3_is_momentary : 1;
-		u16 turnover_tmo_en : 1;
 		u16 action_beep_en : 1;	
     } flags;
     u16 startup_time;
@@ -430,6 +429,7 @@ extern void notification_service(void);
 extern void beep_notify(u8 beep);
 extern void led_notify(u8 mode);
 extern void cmd_frame_decode(u8 data);
+extern void servo_output_manually(u8 channel, s16 normalized);
 
 
 

@@ -106,7 +106,6 @@ DEVICE_CONFIG_T dev_config = {
 /* flags */ 	{
 /* ch3_is_local_switch */		false,
 /* ch3_is_momentary */			false,
-/* turnover_tmo_en */			true,
 /* action_beep_en */			true,
     			},
 /* startup_time */ 				(2000 / SYSTICK_IN_MS),

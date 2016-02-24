@@ -21,13 +21,20 @@
 
 static volatile bool cmd_frame_received;
 static bool ack_frame_ready;
+#ifdef COSMIC
+@near static volatile u8 cmd_frame_buffer[MAX_FRAME_SIZE];
+@near static volatile u8 ack_frame_buffer[MAX_FRAME_SIZE];
+#else
 static volatile u8 cmd_frame_buffer[MAX_FRAME_SIZE];
 static volatile u8 ack_frame_buffer[MAX_FRAME_SIZE];
+#endif
 
-static void get_sys_info(void);
+static void config_sys_info(void);
 static void reset_to_factroy(void);
 static void get_device_sn(void);
 static void set_attr_flag(void);
+static void start_reversing_steel_setup(void);
+static void start_pwm0to3_setup(void);
 
 void cmd_frame_decode(u8 data)
 {
@@ -110,10 +117,12 @@ void cmd_frame_decode(u8 data)
 }
 
 static void (*cmd_process[])(void) = {
-/*0x00*/	get_sys_info,
+/*0x00*/	config_sys_info,
 			get_device_sn,
 			reset_to_factroy,
-			set_attr_flag
+			set_attr_flag,
+			start_reversing_steel_setup,
+			start_pwm0to3_setup
 };
 
 void cmd_execution_done(void)
@@ -147,7 +156,7 @@ TxBuf:
 [6]: Get(0) or set(1)
 [7]: Head of data
 */
-static void get_sys_info(void)
+static void config_sys_info(void)
 {
 	u8 index = 0;	
 	u8 length;
@@ -278,6 +287,30 @@ static void start_reversing_steel_setup(void)
 	}
 }
 
+/*
+TxBuf:
+[4]: Command type;
+[5]: PWM0~3_SETUP
+*/
+static void start_pwm0to3_setup(void)
+{
+	u8 channel;
+	s16 normalized;
+
+	if (cmd_frame_buffer[5] >= (u8)PWM0_SETUP &&
+		cmd_frame_buffer[5] <= (u8)PWM3_SETUP)
+	{
+		global_flags.host_config = cmd_frame_buffer[5];
+		channel = cmd_frame_buffer[6];
+		normalized = *(s16 *)&cmd_frame_buffer[7];
+		servo_output_manually(channel, normalized);
+		cmd_execution_done();
+	}
+	else
+	{
+		cmd_execution_ng();
+	}
+}
 
 /* NOTE: Must be used after PWM0~3 setting before postion setting*/
 /*
