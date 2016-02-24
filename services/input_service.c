@@ -99,7 +99,7 @@ static void input_process_thread(u8 clicks)
 	u8 action = NO_ACTION;
 	u8 ch;
 	u8 i, j, next, current;
-	bool done = false;
+	bool done;
 	POS_CONFIG_T *pos_configs;
 	SERVO_OUTPUTS_T *sout;
 	EVENT_ACTIONS_T *ea;
@@ -123,22 +123,24 @@ static void input_process_thread(u8 clicks)
 		case POS_INC:
 			if (pos_configs->cycle_en)
 			{
+				next = (u8)pos_configs->current;
 				/*jump the postions of exclude */				
 				for (i = 0; i < sout->max_nb; i++)
 				{
-					next = (u8)(((u8)pos_configs->current + (u8)1) % sout->max_nb);
+					done = true;
+					next = (u8)((next + 1) % sout->max_nb);
 					for (j = 0; j < MAX_EXMP; j++)
 					{
 						if (pos_configs->exclude[j] != NA &&
-							pos_configs->exclude[j] != next)
+							pos_configs->exclude[j] == next)
 						{
-							pos_configs->current = next;
-							done = true;
+							done = false;
 							break;
 						}
 					}
 					if (done)
 					{
+						pos_configs->current = next;
 						break;
 					}
 				}
@@ -155,23 +157,25 @@ static void input_process_thread(u8 clicks)
 		case POS_DEC:			
 			if (pos_configs->cycle_en)
 			{
+				next = (u8)pos_configs->current;
 				/*jump the postions of exclude */				
 				for (i = 0; i < sout->max_nb; i++)
 				{
-					next = (u8)((pos_configs->current + sout->max_nb - 1) %
+					done = true;
+					next = (u8)((next + sout->max_nb - 1) %
 							sout->max_nb);
 					for (j = 0; j < MAX_EXMP; j++)
 					{
 						if (pos_configs->exclude[j] != NA &&
-							pos_configs->exclude[j] != next)
+							pos_configs->exclude[j] == next)
 						{
-							pos_configs->current = next;
-							done = true;
+							done = false;
 							break;
 						}
 					}
 					if (done)
 					{
+						pos_configs->current = next;
 						break;
 					}
 				}
