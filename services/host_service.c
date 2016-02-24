@@ -198,49 +198,12 @@ out:
 
 }
 
-
-/*
-TxBuf:
-[4]: Command type;
-[5]: config info index
-[6]: Get(0) or set(1)
-[7]: Head of data
-*/
 static void reset_to_factroy(void)
 {
-	u8 index = 0;	
-	u8 length;
-	u8 *tx_buf = HEAD_OF_ACK;
-	u8 *rx_buf = &cmd_frame_buffer[7];
-	u8 wr = cmd_frame_buffer[6];
-	u8 target = cmd_frame_buffer[5];
-	SYS_INFO_T *si = global_flags.si;
-	
-	if (CMD_TYPE != 0)
-		goto out;
-
-	if (target >= CONFIG_ITEMS_MAX)
-		goto out;
-
-	if (wr & si->attr == false)
-		goto out;
-
-	if (wr == CMD_GET)
-	{
-		si += target;
-		tx_buf[index++] = (u8)(2 + si->size); 		
-		tx_buf[index++] = CMD_ACK;
-		memcpy((u8 *)(tx_buf + index), si->ram, si->size);				
-		set_event_ack_ready();
-		delay(100);
-		reboot();
-	} 
-	else
-	{
-out:
-		cmd_execution_ng();
-	}
-
+	reset_all_parameters();
+	set_event_ack_ready();
+	delay(100);
+	reboot();
 }
 
 static void get_device_sn(void)
@@ -354,7 +317,7 @@ void send_ack_frame(u8 ack_length)
 		chksum += ack_frame_buffer[i];
 
 	ack_frame_buffer[i] = chksum;
-	//uart_send(ack_frame_buffer, i);
+	uart_send(ack_frame_buffer, i);
 }
 
 void host_cmd_process(void)

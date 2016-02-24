@@ -25,7 +25,7 @@
 
 void reboot(void)
 {
-	//WWDG_CR, T6;
+	//WWDG->CR = WWDG_CR_WDGA | (u8)0x30;
 }
 
 void delay(u16 ms)

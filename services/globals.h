@@ -416,6 +416,7 @@ extern void process_simulate_ch3_clicks(u8 clicks);
 extern void update_rtr_status(u8 index, u8 tag, bool save);
 extern void update_attr_status(u8 index, u8 tag, bool save);
 extern void load_all_parameters(void);
+extern void reset_all_parameters(void);
 extern void load_system_configs(u8 index);
 extern void save_system_configs(u8 index);
 extern void cmd_execution_done(void);

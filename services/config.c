@@ -270,6 +270,18 @@ void load_all_parameters(void)
 	fresh_config_items();
 }
 
+void reset_all_parameters(void)
+{
+	u8 i;
+
+	for (i = DEVICE_CONFIG; i < CONFIG_ITEMS_MAX; i++)
+	{
+		config_check[i].state = DEFAULT;
+	}
+	save_system_configs(CONFIG_CHECK);
+	fresh_config_items();
+}
+
 static void fresh_config_items(void)
 {
 	u8 i;
