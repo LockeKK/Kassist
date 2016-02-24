@@ -187,12 +187,12 @@ static void input_process_thread(u8 clicks)
 
 		case POS_DEFAULT:
 			if(pos_configs->default_en)
-				pos_configs->current = pos_configs->pos_default;
+				pos_configs->current = pos_configs->default_pos;
 			break;
 
 		case POS_SPEC:			
 			if(pos_configs->specific_en)
-				pos_configs->current = pos_configs->pos_spec;
+				pos_configs->current = pos_configs->specific_pos;
 			break;						
 
 		case CH3_TOGGLE:

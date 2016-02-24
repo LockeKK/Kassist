@@ -361,7 +361,13 @@ void pwm_setup(pwm_t *p_pwm)
 
 void pwm_update(u8 channel, u16 duty)
 {
-
+	if(duty == 0)
+	{
+		/*stop output pwm*/
+	}
+	else
+	{
+	}
 }
 
 /** @addtogroup GPIO_Exported_Types

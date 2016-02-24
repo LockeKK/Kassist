@@ -47,7 +47,7 @@ void init_servo_output(void)
 {
 	u8 i;
 	u16 servo_pulse = 1500;
-	u8 temp;
+	u8 pos;
 
 	/* Parameters initlization */
 	for(i = 0; i < CH_MAX; i++)
@@ -57,9 +57,9 @@ void init_servo_output(void)
 			switch (servo_outputs[i].type)
 			{
 				case SERVO_TYPE_MP:					
-					temp = (u8)servo_outputs[i].pos_config.pos_default;
-					servo_outputs[i].pos_config.current = temp;
-					servo_pulse = servo_outputs[i].position[temp];
+					pos = (u8)servo_outputs[i].pos_config.default_pos;
+					servo_outputs[i].pos_config.current = pos;
+					servo_pulse = servo_outputs[i].position[pos];
 
 					servo_counter[i] = servo_outputs[i].sp.active_tmo;				
 					servo_active[i] = true;
@@ -69,11 +69,10 @@ void init_servo_output(void)
 				case SERVO_TYPE_SWITCH:					
 					servo_outputs[i].position[0] = servo_output_endpoint.centre;					
 					servo_outputs[i].position[1] = servo_output_endpoint.right;
-					servo_outputs[i].pos_config.toggle = 0;
-					servo_outputs[i].pos_config.current;
-					temp = (u8)servo_outputs[i].pos_config.pos_default;
-					servo_outputs[i].pos_config.current = temp;
-					servo_pulse = servo_outputs[i].position[temp];
+					servo_outputs[i].pos_config.toggle = false;
+					pos = (u8)servo_outputs[i].pos_config.default_pos;
+					servo_outputs[i].pos_config.current = pos;
+					servo_pulse = servo_outputs[i].position[pos];
 					break;
 					
 			}
@@ -101,12 +100,12 @@ void update_servo_output(void)
 		sout = &servo_outputs[ch];			
 		pos_configs = &servo_outputs[ch].pos_config;
 
+		if (sout->enabled == false)
+			continue;
+
 		if (sout->mp_setup_done == false)
 			continue;
 
-		if (sout->enabled == false)
-			continue;
-		
 		switch (ch)
 		{
 			case SERVO_TYPE_MP:
@@ -271,19 +270,19 @@ static void do_reversing_setup(void)
     if (global_flags.reversing_setup & REVERSING_SETUP_STEERING) {
         if (rc_channel[ST].absolute > 50) {
             if (rc_channel[ST].normalized > 0) {
-                rc_channel[ST].reversed = (u8)!!rc_channel[ST].reversed;
+                rc_channel[ST].reversed = (u8)(rc_channel[ST].reversed ? false : true);
 
             }
-            global_flags.reversing_setup -= REVERSING_SETUP_STEERING;
+            global_flags.reversing_setup &= ~REVERSING_SETUP_STEERING;
         }
     }
 
     if (global_flags.reversing_setup & REVERSING_SETUP_THROTTLE) {
         if (rc_channel[TH].absolute > 20) {
             if (rc_channel[TH].normalized < 0) {
-                rc_channel[TH].reversed = (u8)!!rc_channel[TH].reversed;
+                rc_channel[TH].reversed = (u8)(rc_channel[ST].reversed ? false : true);
             }
-            global_flags.reversing_setup -= REVERSING_SETUP_THROTTLE;
+            global_flags.reversing_setup &= ~REVERSING_SETUP_THROTTLE;
         }
     }
 
@@ -433,7 +432,7 @@ static void do_servo_output_setup(SERVO_OUTPUTS_T *sout)
 	if (global_flags.servo_output_setup == SERVO_OUTPUT_SETUP_START)
 	{
 		sout->position[sout->index++] = servo_pulse;
-		/*TODO: need user pre-define max_nb*/
+
 		if (sout->index == sout->max_nb)
 		{
 			sout->mp_setup_done = true;
@@ -491,30 +490,35 @@ static u16 calculate_servo_activeness(u8 ch)
 	
 	if (sout->sp.idle_tmo && global_flags.systick) 
 	{
-		if (--servo_counter[ch] == 0)
+		if (--servo_counter[ch])
 		{
-			if (servo_active[ch]) 
-			{
-				servo_counter[ch] = sout->sp.idle_tmo;
-				servo_active[ch] = false;				
-				servo_pulse = 0;
-			}
-			else
-			{
-				servo_counter[ch] = sout->sp.active_tmo;				
-				servo_active[ch] = true;
-			}
+			goto out;
+		}
+
+		if (servo_active[ch])
+		{
+			servo_counter[ch] = sout->sp.idle_tmo;
+			servo_active[ch] = false;
+			servo_pulse = 0;
+		}
+		else
+		{
+			servo_counter[ch] = sout->sp.active_tmo;
+			servo_active[ch] = true;
 		}
 	}
 
+out:
 	return servo_pulse;
 }
 
-void servo_output_manually(u8 channel, s16 normalized)
+u16 servo_output_manually(u8 channel, s16 normalized)
 {
 	u16 servo_pulse;
 
 	servo_pulse = calculate_servo_pulse(normalized);
 	pwm_update(channel, servo_pulse);
+
+	return servo_pulse;
 }
 

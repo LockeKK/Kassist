@@ -29,12 +29,62 @@ static volatile u8 cmd_frame_buffer[MAX_FRAME_SIZE];
 static volatile u8 ack_frame_buffer[MAX_FRAME_SIZE];
 #endif
 
+static void send_ack_frame(u8 ack_length);
+static void set_event_ack_ready(void);
+static void cmd_execution_done(void);
+static void cmd_execution_ng(void);
 static void config_sys_info(void);
 static void reset_to_factroy(void);
 static void get_device_sn(void);
 static void set_attr_flag(void);
 static void start_reversing_steel_setup(void);
 static void start_pwm0to3_setup(void);
+
+static void (*cmd_process[])(void) = {
+/*0x00*/	config_sys_info,
+			get_device_sn,
+			reset_to_factroy,
+			start_reversing_steel_setup,
+			set_attr_flag,
+			start_pwm0to3_setup
+};
+
+void host_cmd_init(void)
+{
+	u8 index = 0;
+
+	ack_frame_buffer[index++] = FRAME_BOF0_KEY;
+	ack_frame_buffer[index++] = FRAME_BOF1_KEY;
+	ack_frame_buffer[index++] = ACK_HOST;
+
+}
+
+void host_cmd_process(void)
+{
+	static u16 host_disconnect_counter;
+
+	if (global_flags.systick)
+	{
+		if (host_disconnect_counter++ ==
+			dev_config.host_disconnect_timeout)
+		{
+			global_flags.host_click = false;
+		}
+	}
+
+	if (cmd_frame_received )
+	{
+		cmd_process[CMD_TYPE]();
+		cmd_frame_received = false;
+		host_disconnect_counter = 0;
+	}
+
+	if (ack_frame_ready)
+	{
+		send_ack_frame(1);
+		ack_frame_ready = false;
+	}
+}
 
 void cmd_frame_decode(u8 data)
 {
@@ -116,16 +166,7 @@ void cmd_frame_decode(u8 data)
 
 }
 
-static void (*cmd_process[])(void) = {
-/*0x00*/	config_sys_info,
-			get_device_sn,
-			reset_to_factroy,
-			set_attr_flag,
-			start_reversing_steel_setup,
-			start_pwm0to3_setup
-};
-
-void cmd_execution_done(void)
+static void cmd_execution_done(void)
 {
 	u8 index = 0;	
 	u8 *buf = HEAD_OF_ACK;
@@ -137,7 +178,7 @@ void cmd_execution_done(void)
 	set_event_ack_ready();
 }
 
-void cmd_execution_ng(void)
+static void cmd_execution_ng(void)
 {
 	u8 index = 0;	
 	u8 *buf = HEAD_OF_ACK;
@@ -181,7 +222,7 @@ static void config_sys_info(void)
 		tx_buf[index++] = (u8)(2 + si->size); 		
 		tx_buf[index++] = CMD_ACK;
 		memcpy((u8 *)(tx_buf + index), si->ram, si->size);				
-		set_event_ack_ready();				
+		cmd_execution_done();
 	} 
 	else if (wr == CMD_SET)
 	{
@@ -201,7 +242,7 @@ out:
 static void reset_to_factroy(void)
 {
 	reset_all_parameters();
-	set_event_ack_ready();
+	cmd_execution_done();
 	delay(100);
 	reboot();
 }
@@ -259,6 +300,10 @@ static void start_pwm0to3_setup(void)
 {
 	u8 channel;
 	s16 normalized;
+	u16 servo_pulse;
+
+	u8 index = 0;
+	u8 *tx_buf = HEAD_OF_ACK;
 
 	if (cmd_frame_buffer[5] >= (u8)PWM0_SETUP &&
 		cmd_frame_buffer[5] <= (u8)PWM3_SETUP)
@@ -266,8 +311,13 @@ static void start_pwm0to3_setup(void)
 		global_flags.host_config = cmd_frame_buffer[5];
 		channel = cmd_frame_buffer[6];
 		normalized = *(s16 *)&cmd_frame_buffer[7];
-		servo_output_manually(channel, normalized);
-		cmd_execution_done();
+		servo_pulse = servo_output_manually(channel, normalized);
+
+		tx_buf[index++] = (u8)(4);
+		tx_buf[index++] = CMD_ACK;
+		tx_buf[index++] = (u8)servo_pulse;
+		tx_buf[index++] = (u8)servo_pulse>>8;
+		send_ack_frame(index);
 	}
 	else
 	{
@@ -291,58 +341,22 @@ static void set_attr_flag(void)
 	for (i=0; i < CH_MAX; i++)
 		update_attr_status(target[i], tag[i], 
 						   i == (CH_MAX - 1));
+	cmd_execution_done();
 }
 
-void set_event_ack_ready(void)
+static void set_event_ack_ready(void)
 {
 	ack_frame_ready = true;
 }
 
-void host_cmd_init(void)
-{
-	u8 index = 0;
-	
-	ack_frame_buffer[index++] = FRAME_BOF0_KEY;
-	ack_frame_buffer[index++] = FRAME_BOF1_KEY;
-	ack_frame_buffer[index++] = ACK_HOST;
-
-}
-
-void send_ack_frame(u8 ack_length)
+static void send_ack_frame(u8 ack_length)
 {
 	u8 chksum = 0;
 	u8 i;
 
-	for (i=0; i<4+ack_length; i++)
+	for (i = 0; i < 4 + ack_length; i++)
 		chksum += ack_frame_buffer[i];
 
 	ack_frame_buffer[i] = chksum;
 	uart_send(ack_frame_buffer, i);
-}
-
-void host_cmd_process(void)
-{
-	static u16 host_disconnect_counter;
-
-    if (global_flags.systick)
-	{
-        if (host_disconnect_counter++ ==
-			dev_config.host_disconnect_timeout)
-		{
-            global_flags.host_click = false;
-        }
-    }
-	
-	if (cmd_frame_received )
-	{
-		cmd_process[CMD_TYPE]();
-		cmd_frame_received = false;
-		host_disconnect_counter = 0;
-	}
-
-	if (ack_frame_ready)
-	{
-		send_ack_frame(1);
-		ack_frame_ready = false;
-	}
 }

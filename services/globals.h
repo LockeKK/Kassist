@@ -204,11 +204,11 @@ typedef struct {
 	u16 cycle_en		: 1; /*User*/
 	u16 default_en 		: 1; /*User*/	
 	u16 specific_en 	: 1; /*User*/
-	u16 pos_default 	: 4; /*User*/
-	u16 pos_spec 		: 4; /*User*/	
+	u16 default_pos 	: 4; /*User*/
+	u16 specific_pos 	: 4; /*User*/
 	u16 current	 		: 4; /* init to default*/
 	u16 toggle	 		: 1; /* init to 0 */
-	u16 mp_update	 	: 1; /* init, only for mp */
+	u16 mp_update	 	: 1; /* init, only for mp, mp has changed */
 	u8 exclude[MAX_EXMP]; /*User*/
 } POS_CONFIG_T;
 
@@ -419,10 +419,7 @@ extern void load_all_parameters(void);
 extern void reset_all_parameters(void);
 extern void load_system_configs(u8 index);
 extern void save_system_configs(u8 index);
-extern void cmd_execution_done(void);
-extern void set_event_ack_ready(void);
 extern void host_cmd_init(void);
-extern void send_ack_frame(u8 ack_length);
 extern void host_cmd_process(void);
 extern void security_init(void);
 extern void verify_encrypted_uid(void);
@@ -430,7 +427,7 @@ extern void notification_service(void);
 extern void beep_notify(u8 beep);
 extern void led_notify(u8 mode);
 extern void cmd_frame_decode(u8 data);
-extern void servo_output_manually(u8 channel, s16 normalized);
+extern u16 servo_output_manually(u8 channel, s16 normalized);
 
 
 
