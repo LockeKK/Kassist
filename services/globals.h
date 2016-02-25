@@ -29,25 +29,43 @@
 
 
 // ****************************************************************************
-// IO pins: (LPC812 in TSSOP16 package)
+// IO pins: (STM8S105 in LQFP32 package) [XX] is alternate function
 //
-// PIO0_0   (16, TDO, ISP-Rx)   Steering input / Rx
-// PIO0_1   (9,  TDI)           TLC5940 GSCLK
-// PIO0_2   (6,  TMS, SWDIO)    TLC5940 SCLK
-// PIO0_3   (5,  TCK, SWCLK)    TLC5940 XLAT
-// PIO0_4   (4,  TRST, ISP-Tx)  Throttle input / Tx
-// PIO0_5   (3,  RESET)         NC (test point)
-// PIO0_6   (15)                TLC5940 BLANK
-// PIO0_7   (14)                TLC5940 SIN
-// PIO0_8   (11, XTALIN)        NC
-// PIO0_9   (10, XTALOUT)       Switched light output (for driving a load via a MOSFET)
-// PIO0_10  (8,  Open drain)    NC
-// PIO0_11  (7,  Open drain)    NC
-// PIO0_12  (2,  ISP-entry)     OUT / ISP
-// PIO0_13  (1)                 CH3 input
+// 1		(NRST)									ISP
+// 2		(OSCIN/PA1)								TLC5940 GSCLK
+// 3		(OSCOUT/PA2)							TLC5940 XLAT
+// 4		(VSS)									GND
+// 5		(VCAP)									Power
+// 6		(VDD)									Power
+// 7		(VDDIO)									Power
+// 8		(AIN12/PF4)								LCD Reset
+// 9		(VDDA)									Power
+// 10		(VSSA)									Power
+// 11		(AIN5/PB5, [SDA])						DIP2
+// 12		(AIN4/PB4, [SCL])						DIP1
+// 13		(AIN3/PB3, [TIM1_ETR])					DIP0
+// 14		(AIN2/PB2, [TIM1_CH3N])					TLC5940 BLANK
+// 15		(AIN1/PB1, [TIM1_CH2N])					KEY
+// 16		(AIN0/PB0, [TIM1_CH1N])					Vbat
+// 17		(PE5, SPI_NSS)							LCD CS
+// 18		(PC1/TIM1_CH1/UART2_CK)					PWM0 output
+// 19		(PC2/TIM1_CH2)							PWM1 output
+// 20		(PC3/TIM1_CH3)							PWM2 output
+// 21		(PC4/TIM1_CH4)							PWM3 output
+// 22		(PC5/SPI_SCK)							LCD SCK/TLC5940 SCLK
+// 23		(PC6/SPI_MOSI)							LCD SIN/TLC5940 SIN
+// 24		(PC7/SPI_MISO)							LCD DC
+// 25		(PD0/TIM3_CH2, [TIM1_BKIN, CLK_CCO])	LED
+// 26		(PD1/SWIM)								ISP
+// 27		(PD2/TIM3_CH1, [TIM2_CH3])				RC CH3 input
+// 28		(PD3/TIM2_CH2, [ADC_ETR])				RC Throttle input
+// 29		(PD4/TIM2_CH1, [BEEP])					RC Steel input
+// 30		(PD5/UART_TX)							UART/WIFI TX
+// 31		(PD6/UART_RX)							UART/WIFI RX
+// 32		(PD7/TLI, [TIM1_CH4])					BEEP
 //
 // GND      (13)
-// 3.3V     (12)
+// 5V     	(12)
 // ****************************************************************************
 
 // Number of positions of our virtual light switch. Includes the "off"
