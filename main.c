@@ -63,9 +63,9 @@ void main(void)
 {
 	board_int();
 #if 1	
-	host_cmd_init();
 	security_init();	
-	load_all_parameters();	
+	load_all_parameters();
+	host_cmd_init();
 	init_servo_reader();
 	verify_encrypted_uid();
 	beep_notify(POWER_ON);
@@ -81,6 +81,7 @@ void main(void)
 		check_no_signal();
 		diagnostics_service();
 		notification_service();
+		battery_guard_service();
 	}
 #endif	
 }

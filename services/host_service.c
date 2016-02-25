@@ -59,13 +59,9 @@ typedef struct {
 
 static volatile bool cmd_frame_received;
 static bool ack_frame_ready;
-#ifdef COSMIC
-@near static volatile u8 cmd_frame_buffer[MAX_FRAME_SIZE];
-@near static volatile u8 ack_frame_buffer[MAX_FRAME_SIZE];
-#else
-static volatile u8 cmd_frame_buffer[MAX_FRAME_SIZE];
-static volatile u8 ack_frame_buffer[MAX_FRAME_SIZE];
-#endif
+
+NEAR static volatile u8 cmd_frame_buffer[MAX_FRAME_SIZE];
+NEAR static volatile u8 ack_frame_buffer[MAX_FRAME_SIZE];
 
 static void send_ack_frame(u8 ack_length);
 static void set_event_ack_ready(void);

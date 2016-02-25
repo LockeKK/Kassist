@@ -28,11 +28,7 @@ const PRODUCT_INFO_T product_info = {
 /* sw_ver */	1,
 };
 
-#ifdef COSMIC
-@near EVENT_ACTIONS_T ch3_actions[MAX_CH3_PROFILE][CH3_CLICKS_MAX] = {
-#else
-EVENT_ACTIONS_T ch3_actions[MAX_CH3_PROFILE][CH3_CLICKS_MAX] = {
-#endif
+NEAR EVENT_ACTIONS_T ch3_actions[MAX_CH3_PROFILE][CH3_CLICKS_MAX] = {
 	{
 		{CH3_SINGLE, 		POS_INC,			CH_PWM0,	BEEP_T(0, 0, 1)	},
 		{CH3_DOUBLE, 		POS_DEC,			CH_PWM0,	BEEP_T(0, 0, 2)	},
@@ -55,21 +51,14 @@ EVENT_ACTIONS_T ch3_actions[MAX_CH3_PROFILE][CH3_CLICKS_MAX] = {
 		{CH3_TO_OFF,		NO_ACTION,			CH_NONE,	BEEP_T(0, 1, 1)	}
 	}
 };
-#ifdef COSMIC
-@near EVENT_ACTIONS_T th_actions[MAX_AG_PROFILE][TH_KEY_MAX];// = {
-#else
-EVENT_ACTIONS_T th_actions[MAX_AG_PROFILE][TH_KEY_MAX];// = {
-#endif
+
+NEAR EVENT_ACTIONS_T th_actions[MAX_AG_PROFILE][TH_KEY_MAX];// = {
 	//{TH_KEY0, POS_INC},
 	//{TH_KEY1, POS_DEC},
 	//{TH_KEY2, NO_ACTION},
 	//{TH_KEY3, NO_ACTION}
 //};
-#ifdef COSMIC
-@near SERVO_OUTPUTS_T servo_outputs[CH_MAX] = {
-#else
-SERVO_OUTPUTS_T servo_outputs[CH_MAX] = {
-#endif
+NEAR SERVO_OUTPUTS_T servo_outputs[CH_MAX] = {
 	{CH_PWM0, false, 4, 0, SERVO_TYPE_MP, 		{1500, 1800, 2000}, false, 
 		{1, 1, 0, 0, 0, 0, 0, 0, {0}}, 	{1000, 9000}
 	},
@@ -87,26 +76,19 @@ SERVO_OUTPUTS_T servo_outputs[CH_MAX] = {
 	}
 };
 
-#ifdef COSMIC
-@near volatile RC_CHANNEL_T rc_channel[RC_MAX] = {
-#else
-volatile RC_CHANNEL_T rc_channel[RC_MAX] = {
-#endif
+NEAR volatile RC_CHANNEL_T rc_channel[RC_MAX] = {
     {0, 0, 0, false, {1250, 1500, 1450}},
 	{0, 0, 0, false, {1250, 1500, 1450}},
     {0, 0, 0, false, {1250, 1500, 1450}}
 };
 
 /*saved in eeprom*/
-#ifdef COSMIC
-@near DEVICE_CONFIG_T dev_config = {
-#else
-DEVICE_CONFIG_T dev_config = {
-#endif
+NEAR DEVICE_CONFIG_T dev_config = {
 /* flags */ 	{
 /* ch3_is_local_switch */		false,
 /* ch3_is_momentary */			false,
 /* action_beep_en */			true,
+/* battery_guard_en */			true,
     			},
 /* startup_time */ 				(2000 / SYSTICK_IN_MS),
 /* no_signal_timeout */ 		(500  / SYSTICK_IN_MS),
@@ -117,19 +99,14 @@ DEVICE_CONFIG_T dev_config = {
 /* servo_pulse_min */			(600),
 /* servo_pulse_max */			(2500),
 /* initial_endpoint_delta */	(250),
+/* low_vbat_threshold */		(64),	
+/* idle_timeout */				(3),
 };
 
-#ifdef COSMIC
-@near SERVO_ENDPOINTS_T servo_output_endpoint;
-#else
-SERVO_ENDPOINTS_T servo_output_endpoint;
-#endif
+NEAR SERVO_ENDPOINTS_T servo_output_endpoint;
+
 /* 'D'-> Done, 'I'-> Default, 'N' -> Ingore */
-#ifdef COSMIC
-@near static CONFIG_CHECK_T config_check[] ={
-#else
-static CONFIG_CHECK_T config_check[] ={
-#endif
+NEAR static CONFIG_CHECK_T config_check[] ={
 /*
 ready_rtr_mp: all mandatory items are configed except positions
 all_config_done: all mandatory items are configed
@@ -206,7 +183,22 @@ static const SYS_INFO_T sys_info[] = {
 };
 
 GLOBAL_FLAGS_T global_flags = {
-0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, sys_info
+/* systick */					0,
+/* rc_update_event */			0,
+/* ch3_action_profile */		0,
+/* ag_action_profile */			0,
+/* no_signal */					1,
+/* ready_to_go */				0,
+/* ready_for_mp */				0,
+/* rc_is_initializing */		1,
+/* host_click */				0,
+/* sys_idle */					0,
+/* servo_output_setup */		0,
+/* reversing_setup */			0,
+/* steel_setup */				0,
+/* host_config */				0,
+/* vbat */						0,
+/* SYS_INFO_T */				sys_info
 };
 
 void update_rtr_status(u8 index, u8 tag, bool save)

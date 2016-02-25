@@ -20,13 +20,18 @@
 
 #include "stm8s_type.h"
 
-#define SYSTICK_IN_MS 			(20)
+#define COSMIC
 
 // Suppress unused parameter or variable warning
 #ifndef UNUSED
 #define UNUSED(x) ((void)(x))
 #endif
 
+#ifdef COSMIC
+#define NEAR	@near
+#else
+#define NEAR
+#endif
 
 // ****************************************************************************
 // IO pins: (STM8S105 in LQFP32 package) [XX] is alternate function
@@ -76,7 +81,8 @@
 
 #define MAX_LIGHT_PROGRAMS 25
 #define MAX_LIGHT_PROGRAM_VARIABLES 100
-#define COSMIC
+
+#define SYSTICK_IN_MS 			(20)
 
 
 // Convenience functions for min/max
@@ -238,11 +244,12 @@ typedef enum {
 
 typedef enum {
 	BEEP_OFF 	= BEEP_T(0, 0, 0),
-    TASK_DONE 	= BEEP_T(0, 1, 0),    
+    TASK_DONE 	= BEEP_T(0, 1, 0),
     TASK_NG 	= BEEP_T(0, 2, 0),
 	DIP_SWITHED = BEEP_T(0, 0, 2),
-	BATTERY_LOW = BEEP_T(0, 3, 0),	
-	POWER_ON 	= BEEP_T(0, 0, 3),	
+	BATTERY_LOW = BEEP_T(0, 3, 0),
+	IDLE_TMO 	= BEEP_T(0, 2, 2),
+	POWER_ON 	= BEEP_T(0, 0, 3),
 	SIGN_DONE 	= BEEP_T(0, 3, 3)
 } BEEP_TYPE_T;
 
@@ -276,7 +283,8 @@ typedef struct {
     struct {
         u16 ch3_is_local_switch : 1;
         u16 ch3_is_momentary : 1;
-		u16 action_beep_en : 1;	
+		u16 action_beep_en : 1;
+		u16 battery_guard_en : 1;
     } flags;
     u16 startup_time;
     u16 no_signal_timeout;
@@ -286,7 +294,9 @@ typedef struct {
     u16 host_disconnect_timeout;
     u16 servo_pulse_min;
     u16 servo_pulse_max;
-    u16 initial_endpoint_delta;
+    u16 initial_endpoint_delta;	
+	u8 low_vbat_threshold; /* 64->6.4V */
+	u8 idle_timeout; /* unit: 5 minutes  */		
 } DEVICE_CONFIG_T;
 
 typedef enum {
@@ -343,11 +353,13 @@ typedef struct {
 	u16 ready_to_go : 1;
 	u16 ready_for_mp : 1;
 	u16 rc_is_initializing : 1;
-	u16 host_click : 1;
+	u16 host_click : 1;	
+	u16 sys_idle : 1;
 	u8 servo_output_setup : 3;
 	u8 reversing_setup : 2;
 	u8 steel_setup : 3;
 	u8 host_config;
+	u8 vbat;
 	SYS_INFO_T *si;
 } GLOBAL_FLAGS_T;
 
@@ -355,21 +367,13 @@ extern GLOBAL_FLAGS_T global_flags;
 extern const PRODUCT_INFO_T product_info;
 extern volatile u32 systick_count;
 
-#ifdef COSMIC
-@near extern DEVICE_CONFIG_T dev_config;
-@near extern EVENT_ACTIONS_T ch3_actions[MAX_CH3_PROFILE][CH3_CLICKS_MAX];
-@near extern EVENT_ACTIONS_T th_actions[MAX_AG_PROFILE][TH_KEY_MAX];
-@near extern SERVO_OUTPUTS_T servo_outputs[CH_MAX];
-@near volatile extern RC_CHANNEL_T rc_channel[RC_MAX];
-@near extern SERVO_ENDPOINTS_T servo_output_endpoint;
-#else
-extern DEVICE_CONFIG_T dev_config;
-extern EVENT_ACTIONS_T ch3_actions[MAX_CH3_PROFILE][CH3_CLICKS_MAX];
-extern EVENT_ACTIONS_T th_actions[MAX_AG_PROFILE][TH_KEY_MAX];
-extern SERVO_OUTPUTS_T servo_outputs[CH_MAX];
-extern volatile RC_CHANNEL_T rc_channel[RC_MAX];
-extern SERVO_ENDPOINTS_T servo_output_endpoint;
-#endif
+NEAR extern DEVICE_CONFIG_T dev_config;
+NEAR extern EVENT_ACTIONS_T ch3_actions[MAX_CH3_PROFILE][CH3_CLICKS_MAX];
+NEAR extern EVENT_ACTIONS_T th_actions[MAX_AG_PROFILE][TH_KEY_MAX];
+NEAR extern SERVO_OUTPUTS_T servo_outputs[CH_MAX];
+NEAR volatile extern RC_CHANNEL_T rc_channel[RC_MAX];
+NEAR extern SERVO_ENDPOINTS_T servo_output_endpoint;
+
 #define SERVO_OUTPUT_SIZE		(sizeof(servo_outputs)/CH_MAX)
 
 extern void init_servo_output(void);
@@ -397,6 +401,9 @@ extern void beep_notify(u8 beep);
 extern void led_notify(u8 mode);
 extern void cmd_frame_decode(u8 data);
 extern u16 servo_output_manually(u8 channel, s16 normalized);
+extern void battery_guard_init(void);
+extern void battery_guard_service(void);
+extern void get_vbat_samples(u16 vbat);
 
 #define EEPROM_ADDR_BASE				(0x4000)
 #define EEPROM_RESERVED					(0x10)

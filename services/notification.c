@@ -28,9 +28,9 @@ typedef enum {
 	BEEP_END
 } BEEP_STATE_T;
 
-#define	DASH_TMO 			(600  / SYSTICK_IN_MS)
-#define	DOT_TMO 			(300  / SYSTICK_IN_MS)
-#define	BLANK_TMO 			(500  / SYSTICK_IN_MS)
+#define	DASH_TMO 			(600 / SYSTICK_IN_MS)
+#define	DOT_TMO 			(300 / SYSTICK_IN_MS)
+#define	BLANK_TMO 			(500 / SYSTICK_IN_MS)
 
 typedef struct {
 	u16 enabled	: 1;
@@ -138,7 +138,7 @@ typedef enum {
 	LED_END
 } LED_STATE_T;
 
-#define	LED_TMO 				(100  / SYSTICK_IN_MS)
+#define	LED_TMO 				(100 / SYSTICK_IN_MS)
 typedef struct {
 	u8 enabled : 1;
 	u8 state : 3;

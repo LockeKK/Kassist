@@ -4,7 +4,7 @@
 @set COSMIC=8
 :ChannelOK
 cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\services\auto_gear.c
-cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\services\battery.c
+cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\services\battery_guard.c
 cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\services\config.c
 cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\services\host_service.c
 cxstm8 +warn +proto +mods0 -i. -i.\driver\ -i.\services\ -i"%TOOLSET%\Hstm8" -co.\out -l  -pxp -ac .\services\input_service.c
