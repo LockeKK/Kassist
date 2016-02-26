@@ -57,7 +57,6 @@ void diagnostics_service(void)
 	{
 		//led(CONFIG_NOT_VAILD);
 	}
-	LED_P8x16Str(0, 0, (u8 *)&systick_count);
 }
 void main(void) 
 {

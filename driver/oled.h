@@ -18,29 +18,39 @@
 #ifndef _OLED_H_
 #define _OLED_H_
 
-#define F14x16_MODE		0
-#define F8x16_MODE		1
-#define F6x8_MODE		0
-
 #include "stm8s_type.h"
 #include "board.h"
+#define OLED_CMD  0	//写命令
+#define OLED_DATA 1	//写数据
+#define OLED_MODE 0
 
-#define LED_IMAGE_WHITE       1
-#define LED_IMAGE_BLACK       0
+//OLED模式设置
+//0:4线串行模式
+//1:并行8080模式
 
+#define SIZE 16
+#define XLevelL		0x02
+#define XLevelH		0x10
+#define Max_Column	128
+#define Max_Row		64
+#define	Brightness	0xFF 
+#define X_WIDTH 	128
+#define Y_WIDTH 	64	    						  
+//-----------------OLED端口定义----------------  					   
+		     
 
-#define LED_MAX_ROW_NUM      64
-#define LED_MAX_COLUMN_NUM  128
-
-
-
-/* OLED driver support */
-void LED_Init(void);
-void LED_Fill(u8 ucData);
-void LED_P8x16Str(u8 ucIdxX, u8 ucIdxY, u8 ucDataStr[]);
-void LED_P14x16Str(u8 ucIdxX,u8 ucIdxY,u8 ucDataStr[]);
-void LED_P6x8Str(u8 ucIdxX, u8 ucIdxY, u8 ucDataStr[]);
-void SetDisplayOnOff(u8 ucData);
-void SetChargePump(u8 d);
+//OLED控制用函数
+void OLED_WR_Byte(u8 dat,u8 cmd);	    
+void OLED_Display_On(void);
+void OLED_Display_Off(void);	   							   		    
+void OLED_Init(void);
+void OLED_Clear(void);
+void OLED_DrawPoint(u8 x,u8 y,u8 t);
+void OLED_Fill(u8 x1,u8 y1,u8 x2,u8 y2,u8 dot);
+void OLED_ShowChar(u8 x,u8 y,u8 chr);
+void OLED_ShowNum(u8 x,u8 y,u32 num,u8 len,u8 size2);
+void OLED_ShowString(u8 x,u8 y, u8 *p);	 
+void OLED_Set_Pos(u8 x, u8 y);
+void OLED_DrawBMP(u8 x0, u8 y0,u8 x1, u8 y1,u8 bmp[]);
 
 #endif
