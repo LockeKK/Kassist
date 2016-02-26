@@ -403,17 +403,17 @@ void spi_init(void)
 	GPIOB->DDR|=0x02;
 	GPIOB->CR1|=0x02;
 	GPIOB->CR2|=0x02;
-	GPIOB->ODR&= (u8)~0x02;
+	GPIOB->ODR|=0x02;
 
 	GPIOF->DDR|=0x10;
 	GPIOF->CR1|=0x10;
 	GPIOF->CR2|=0x10;
-	GPIOF->ODR &= (u8)~0x10;
+	GPIOF->ODR &= ~0x10;
 
 	GPIOC->DDR|=0xE0;
 	GPIOC->CR1|=0xE0;
 	GPIOC->CR2|=0xE0;
-	GPIOC->ODR &= (u8)~0xE0;
+	GPIOC->ODR &= ~0xE0;
 }
 
 static void delay_ms(u16 nCount)
@@ -430,22 +430,16 @@ void board_int(void)
 	u8 buffer[] = {'a', 'b'};
 	//uart_int();
 	spi_init();
+	LED_Init();
 	
-	OLED_Init();			//3?¨º??¡¥OLED  
-	OLED_Clear()  	; 
-
-	OLED_ShowString(30,0,"OLED TEST");
-	OLED_ShowString(8,2,"ZHONGJINGYUAN");  
-	OLED_ShowString(20,4,"2014/05/01");  
-	OLED_ShowString(0,6,"ASCII:");  
-	OLED_ShowString(63,6,"CODE:");  
-
 	GPIOE->DDR|=0x20;
 	GPIOE->CR1|=0x20;
 	GPIOE->CR2|=0x00;
 	
 	while (1)
 	{	
+	LED_P8x16Str(0, 0, buffer);
+	//LED_PrintShort(8, 16, 45);
 	GPIOE->ODR^=0xf0;
 	for(i=0;i<200;i++)
 	for(j=0;j<200;j++);
