@@ -20,7 +20,6 @@
 #include "oled.h"
 #include "stm8s.h"
 
-
 #define HW_RESET_ADDR	(0X8000)
 
 void reboot(void)
@@ -230,9 +229,9 @@ static const TIMER2_REG_T timer2_reg[RC_MAX] =
 
 @interrupt void timer23_rc_handler(void)
 {
-    static @near u16 start[RC_MAX] = {0, 0, 0};
-    static @near u16 result[RC_MAX] = {0, 0, 0};
-    static @near u8 channel_flags = 0;
+    static NEAR u16 start[RC_MAX] = {0, 0, 0};
+    static NEAR u16 result[RC_MAX] = {0, 0, 0};
+    static NEAR u8 channel_flags = 0;
     u16 capture_value;
 	u8 low, high;
 	u8 i;
@@ -386,13 +385,37 @@ void pwm_update(u8 channel, u16 duty)
 	}
 }
 
+bool PA0 @0x5000:0;
+bool PB0 @0x5005:0;
+bool PC0 @0x500A:0;
+bool PD0 @0x500F:0;
+bool PE0 @0x5014:0;
+bool PF0 @0x5019:0;
+
+bool LCD_CS 	@0x5005:1; /*PB1*/
+bool LCD_DC 	@0x500A:7; /*PC7*/
+bool LCD_DIN 	@0x500A:6; /*PC6*/
+bool LCD_CLK 	@0x500A:5; /*PC5*/
+bool LCD_RST 	@0x5019:4; /*PF4*/
+
 void spi_init(void)
 {
+	GPIOB->DDR|=0x02;
+	GPIOB->CR1|=0x02;
+	GPIOB->CR2|=0x02;
+	GPIOB->ODR|=0x02;
+
+	GPIOF->DDR|=0x02;
+	GPIOF->CR1|=0x02;
+	GPIOF->CR2|=0x02;
+	GPIOF->ODR &= ~0x00;
+
+	GPIOC->DDR|=0xE0;
+	GPIOC->CR1|=0xE0;
+	GPIOC->CR2|=0xE0;
+	GPIOC->ODR &= ~0xE0;
 }
 
-void spi_send(u8 cData)
-{
-}
 static void delay_ms(u16 nCount)
 {
   /* Decrement nCount value */
@@ -401,45 +424,21 @@ static void delay_ms(u16 nCount)
     nCount--;
   }
 }
-#define to_HSE	0xB4			// definition of clock blocks (to be copied to SWR)
-#define	to_LSI	0xD2
-#define	to_HSI	0xE1
-#define ALL_LEDs 	((u8)0x0F)					// LEDs mask (EVAL board)
-#define BUTTON ((u8)0x01)						// Button mask (EVAL board)
-#define CLK_SWITCH_TIMEOUT ((u16)0x491)	//timeout for clock switching
-
-u8 switch_clock_system(u8 clck) 
-{	
-	u16 Tout= CLK_SWITCH_TIMEOUT;		
-	CLK->SWCR &= ~CLK_SWCR_SWIF;					// manual switch mode	CLK->SWR= clck;	   
-	while ( !(CLK->SWCR & CLK_SWCR_SWIF)  &&  Tout)		
-	Tout--; 											// wait for targed block is ready		
-
-	if(Tout)
-	{		
-		CLK->SWCR|= CLK_SWCR_SWEN;					// new block is ready - make switch!		
-		return(TRUE);									// return SUCCES!	
-	}	
-	else 
-	{		
-		CLK->SWCR &= ~CLK_SWCR_SWBSY;				// reswitch to original clock source		
-		return(FALSE);									// return switching wasn't succesfull	
-	}
-}
-
 void board_int(void)
 {
+	int i,j, n = 0;
+	u8 buffer[] = {'a', 'b'};
 	//uart_int();
-	//spi_init();
-	//LED_Init();
+	spi_init();
+	LED_Init();
 	
-
-	int i,j;
 	GPIOE->DDR|=0x20;
 	GPIOE->CR1|=0x20;
 	GPIOE->CR2|=0x00;
+	
 	while (1)
-	{
+	{	
+	LED_P8x16Str(0, 0, buffer);
 	GPIOE->ODR^=0xf0;
 	for(i=0;i<200;i++)
 	for(j=0;j<200;j++);

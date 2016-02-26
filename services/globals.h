@@ -50,9 +50,9 @@
 // 12		(AIN4/PB4, [SCL])						DIP1
 // 13		(AIN3/PB3, [TIM1_ETR])					DIP0
 // 14		(AIN2/PB2, [TIM1_CH3N])					TLC5940 BLANK
-// 15		(AIN1/PB1, [TIM1_CH2N])					KEY
+// 15		(AIN1/PB1, [TIM1_CH2N])					LCD CS
 // 16		(AIN0/PB0, [TIM1_CH1N])					Vbat
-// 17		(PE5, SPI_NSS)							LCD CS
+// 17		(PE5, SPI_NSS)							LED
 // 18		(PC1/TIM1_CH1/UART2_CK)					PWM0 output
 // 19		(PC2/TIM1_CH2)							PWM1 output
 // 20		(PC3/TIM1_CH3)							PWM2 output
@@ -60,7 +60,7 @@
 // 22		(PC5/SPI_SCK)							LCD SCK/TLC5940 SCLK
 // 23		(PC6/SPI_MOSI)							LCD SIN/TLC5940 SIN
 // 24		(PC7/SPI_MISO)							LCD DC
-// 25		(PD0/TIM3_CH2, [TIM1_BKIN, CLK_CCO])	LED
+// 25		(PD0/TIM3_CH2, [TIM1_BKIN, CLK_CCO])	KEY
 // 26		(PD1/SWIM)								ISP
 // 27		(PD2/TIM3_CH1, [TIM2_CH3])				RC CH3 input
 // 28		(PD3/TIM2_CH2, [ADC_ETR])				RC Throttle input

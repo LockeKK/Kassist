@@ -25,10 +25,6 @@
 #include "stm8s_type.h"
 #include "board.h"
 
-#define LED_RST //PIOD6
-#define LED_DC  //PIOD7
-
-
 #define LED_IMAGE_WHITE       1
 #define LED_IMAGE_BLACK       0
 

@@ -18,6 +18,42 @@
 #include "oled.h"
 #include "board.h"
 
+/* HW Support */
+bool LCD_CS 	@0x5005:1; /*PB1*/
+bool LCD_DC 	@0x500A:7; /*PC7*/
+bool LCD_DIN 	@0x500A:6; /*PC6*/
+bool LCD_CLK 	@0x500A:5; /*PC5*/
+bool LCD_RST 	@0x5019:4; /*PF4*/
+
+static void delay_ms(u16 nCount)
+{
+  /* Decrement nCount value */
+  while (nCount != 0)
+  {   
+    nCount--;
+  }
+}
+
+static void spi_send(u8 byte)
+{
+	u8 i;
+	
+	LCD_CS = 0;
+	for(i=0;i<8;i++)
+	{			  
+	LCD_SCK = 0;
+	if(dat&0x80)
+	{
+	LCD_DIN = 1;
+	}
+	else
+	LCD_DIN = 0;
+	LCD_SCK = 1;
+	dat<<=1;   
+	}						  
+}
+
+
 #if F6x8_MODE
 const u8 F6x8[][6] =
 {
@@ -256,13 +292,13 @@ void SetNop(void);
 
 void LED_WrDat(u8 cData)
 {
-	//LED_DC  = 1;
+	LCD_DC  = 1;
 	spi_send(cData);
 }
 
 void LED_WrCmd(u8 ucCmd)
 {
-	//LED_DC  = 0;
+	LCD_DC  = 0;
 	spi_send(ucCmd);
 }
 
@@ -453,23 +489,15 @@ void SetNop(void)
     LED_WrCmd(0xE3);        // Command for No Operation
 }
 
-static void delay_ms(u16 nCount)
-{
-  /* Decrement nCount value */
-  while (nCount != 0)
-  {   
-    nCount--;
-  }
-}
-
 void LED_Init(void)        
 {
-	//LED_RST = 0;    
-	delay_ms(1);
-	//LED_RST = 1;
-	delay_ms(1);
-
+	LCD_RST = 0;    
+	delay_ms(100);
+	LCD_RST = 1;
+	delay_ms(100);
     SetDisplayOnOff(0x00);     // Display Off (0x00/0x01)
+#if 1
+
     SetDisplayClock(0x80);     // Set Clock as 100 Frames/Sec
     SetMultiplexRatio(0x3F);   // 1/64 Duty (0x0F~0x3F)
     SetDisplayOffset(0x00);    // Shift Mapping RAM Counter (0x00~0x3F)
@@ -488,7 +516,7 @@ void LED_Init(void)
     SetDisplayOnOff(0x01);     // Display On (0x00/0x01)
     LED_Fill(0x00);            //clear the screen
     LED_SetPos(0,0);
-
+#endif
     return;
 } 
 

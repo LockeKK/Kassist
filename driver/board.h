@@ -30,5 +30,4 @@ extern u8 get_dip_state(void);
 extern void hw_storage_read(u8 *ee_addr, void *ram_addr, u16 length);
 extern void hw_storage_write(u8 *ee_addr, void *ram_addr, u16 length);
 extern void pwm_update(u8 channel, u16 duty);
-extern void spi_send(u8 cData);
 
