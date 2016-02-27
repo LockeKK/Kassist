@@ -50,8 +50,8 @@ void hw_led_swith(bool on)
 {
 	bool led_switch @0x5014:5;
 
-	//led_switch = on;
-	led_switch = ~led_switch;
+	led_switch = on;
+	//led_switch = ~led_switch;
 }
 
 void hw_beep_swith(bool on)
@@ -132,50 +132,65 @@ void timer_int(void)
 
 static void hw_timer_int(void)
 {
-	/* timer 1: PWM output */
+ 	CLK->PCKENR1|=1<<5;	//开启TIM2时钟
+	GPIOD->DDR&=~(1<<3);//PD3 输入模式
+	GPIOD->CR1|=1<<3;	//PD3,上拉
+	GPIOD->CR2&=~(1<<3);//PD3,不使用中断
+
+	TIM2->PSCR=4;		//2^psc次方分频
+	TIM2->ARRH=0XFF;	//必须先设置ARR的高字节
+	TIM2->ARRL=0XFF;//再设置低字节
+
+	TIM2->CCMR2|=1<<0;	//CC2映射在TI2FP2上
+	TIM2->CCMR2|=0<<2;	//无预分频,每个事件一次捕获
+	TIM2->CCMR2|=0<<4;	//无滤波,Fmaster采样.
+	TIM2->CCER1|=1<<5;	//捕获下降沿
+	TIM2->CCER1|=1<<4;	//IC2输入捕获使能,允许捕获计数器的值到捕获寄存器中
+#if 1
+
+	TIM2->CR1|=1<<7;	//预装载使能
+	//TIM2->IER|=1<<0;	//使能更新中断
+	TIM2->IER|=1<<2;	//通道2捕获中断使能
+	TIM2->CR1|=1<<0;	//使能TIM2 
+#endif
 #if 0	
-	/* Set the Autoreload value */
-	TIM1->ARRH = (uint8_t)(TIM1_Period >> 8);
-	TIM1->ARRL = (uint8_t)(TIM1_Period);
-	
-	/* Set the Prescaler value */
-	TIM1->PSCRH = (uint8_t)(TIM1_Prescaler >> 8);
-	TIM1->PSCRL = (uint8_t)(TIM1_Prescaler);
-	
-	/* Select the Counter Mode */
-	TIM1->CR1 = (uint8_t)((uint8_t)(TIM1->CR1 & (uint8_t)(~(TIM1_CR1_CMS | TIM1_CR1_DIR)))
-						  | (uint8_t)(TIM1_CounterMode));
-	
-	/* Set the Repetition Counter value */
-	TIM1->RCR = TIM1_RepetitionCounter;
-//#endif
 	/* timer 2: RC channel monitor */
-	
+
+	TIM2->PSCR = 4;
+
+	TIM2->ARRH = 0XFF;
+	TIM2->ARRL = 0XFF;
+
 	/* Disable the Channel 1~3 */
-	TIM2->CCER1 &= (u8)(~(TIM2_CCER1_CC1E | TIM2_CCER1_CC2E));	
-	TIM2->CCER2 &= (u8)(~(TIM2_CCER2_CC3E));
+	//TIM2->CCER1 &= (u8)(~(TIM2_CCER1_CC1E | TIM2_CCER1_CC2E));	
+	//TIM2->CCER2 &= (u8)(~(TIM2_CCER2_CC3E));
 	
 	/* Set sampling rate, input */
-	TIM2->CCMR1  = (u8)(0xa0<<4 | 0x01);
-	TIM2->CCMR2  = (u8)(0xa0<<4 | 0x01);
-	TIM2->CCMR3  = (u8)(0xa0<<4 | 0x01);
+	//TIM2->CCMR1  = (u8)(0x01);
+	TIM2->CCMR2  = (u8)(0x01);
+	//TIM2->CCMR3  = (u8)(0xa0 | 0x01);
 	
 	/*Rising edge trigger*/
-	TIM2->CCER1 &= (u8)(~(TIM2_CCER1_CC1P | TIM2_CCER1_CC2P)); 
+	//TIM2->CCER1 &= (u8)(~(TIM2_CCER1_CC1P | TIM2_CCER1_CC2P)); 
 	TIM2->CCER2 &= (u8)(~(TIM2_CCER2_CC3P)); 
 
+	/* Clear interrupt flag */
+	//TIM2->SR1 &= (u8)(~(TIM2_SR1_CC1IF | TIM2_SR1_CC2IF));
+
+
+	//TIM2->CNTRH = 0x00;
+	//TIM2->CNTRL = 0x00;
+
+	/* Enable the interrupt*/
+	TIM2->IER |= (u8)(TIM2_IER_CC1IE | TIM2_IER_CC2IE);
+
+	
 	/* Enable the Channel 1  */
 	TIM2->CCER1 |= TIM2_CCER1_CC1E | TIM2_CCER1_CC2E;
-	TIM2->CCER2 |= TIM2_CCER2_CC3E;
+	//TIM2->CCER2 |= TIM2_CCER2_CC3E;
 
 	/* Start the counter(3ch share one EN)*/
 	TIM2->CR1 |= (u8)TIM2_CR1_CEN;
-
-	/* Clear interrupt flag */
-	TIM2->SR1 &= (u8)(~(TIM2_SR1_CC1IF | TIM2_SR1_CC2IF | TIM2_SR1_CC3IF));
-
-	/* enable the interrupt*/
-	TIM2->IER |= (u8)(TIM2_IER_CC1IE | TIM2_IER_CC2IE | TIM2_IER_CC3IE);
 #endif	
 	/* timer 4: systick */
 	TIM4->PSCR = 7;				// init divider register /128		
@@ -192,7 +207,7 @@ static void hw_timer_int(void)
 	{
 		++systick_count;
 		tm_count = 0;
-		GPIOE->ODR^=0xf0;
+		//GPIOE->ODR^=0xf0;
 	}
 	TIM4->SR1 &= (u8)(~TIM4_SR1_UIF);
 }
@@ -221,9 +236,12 @@ static const TIMER2_REG_T timer2_reg[RC_MAX] =
 		TIM2_SR1_CC3IF, TIM2_CCER2_CC3P
 	}
 };
+u8  TIM2CH2_CAPTURE_STA=0;	//输入捕获状态		    				
+u16	TIM2CH2_CAPTURE_VAL;	//输入捕获值
 
 @interrupt void timer23_rc_handler(void)
 {
+#if 0
     static NEAR u16 start[RC_MAX] = {0, 0, 0};
     static NEAR u16 result[RC_MAX] = {0, 0, 0};
     static NEAR u8 channel_flags = 0;
@@ -231,9 +249,11 @@ static const TIMER2_REG_T timer2_reg[RC_MAX] =
 	u8 low, high;
 	u8 i;
 	TIMER2_REG_T *p;
+	static u8 n;
 
+	hw_led_swith(++n%2);
 
-	for (i = 1; i <= RC_MAX; i++)
+	for (i = 1; i <= 2; i++)
 	{
 		p = &timer2_reg[i-1];
 		if (*p->srx & p->srx_mask)
@@ -276,6 +296,44 @@ static const TIMER2_REG_T timer2_reg[RC_MAX] =
 			*p->srx &= (u8)(~p->srx_mask);
 		}
 	}
+#endif
+{
+	u8 tsr;
+	static u8 n;
+
+	tsr=TIM2->SR1;
+	//if((TIM2CH2_CAPTURE_STA&0X80)==0)//还未成功捕获	
+	{
+		if (tsr&0x04)//捕获2发生捕获事件
+		{
+		
+			//hw_led_swith(n++%2);
+#if 1
+			if((TIM2->CCER1 & (u8)(1<<5)) == 0)		//捕获到一个下降沿 		
+			{	  			
+				//TIM2CH2_CAPTURE_STA|=0X80;		//标记成功捕获到一次低电平脉宽
+			    TIM2CH2_CAPTURE_VAL=TIM2->CCR2H;//获取当前的捕获值.
+				TIM2CH2_CAPTURE_VAL<<=8;
+				TIM2CH2_CAPTURE_VAL+=TIM2->CCR2L;
+	 			TIM2->CCER1|=1<<5; 				//CC2P=1 设置为下降沿捕获 
+	 			
+				hw_led_swith(0);
+			}else  								//还未开始,第一次捕获下降沿
+			{
+	 			TIM2->CNTRH=0;					//计数器清空
+		 		TIM2->CNTRL=0;					//计数器清空
+				TIM2CH2_CAPTURE_STA=0;			//清空
+				TIM2CH2_CAPTURE_VAL=0;
+				TIM2CH2_CAPTURE_STA|=0X40;		//标记捕获到了下降沿
+	 			TIM2->CCER1&=~(1<<5);			//CC2P=0 设置为上升沿捕获
+	 			
+				hw_led_swith(1);
+			}
+#endif				
+		}	
+	}
+	TIM2->SR1&=~(1<<2);//清除捕获中断标志位 
+}
 
 }
 
@@ -368,35 +426,26 @@ NEAR static pwm_t hw_pwm[PWM_MAX];
 
 void pwm_int(void)
 {
-	//初始化捕获/比较模式寄存器1
-	TIM1->CCMR1 = 0x60;	  //TIM1_CCMR1[6:4]=110,设置PWM模式1
+	TIM1->CCMR1 = 0x60;
 	TIM1->CCMR2 = 0x60;
 	TIM1->CCMR3 = 0x60;
 	TIM1->CCMR4 = 0x60;
-	//  即： 
-	//初始化捕获/比较使能寄存器1 
-	TIM1->CCER1 = 0x11;	  //b0 CC1E=1,开启OC1信号输出到相应引脚
-							//b1 CC1P=0,OC1高电平有效
-							//b2 CC1NE=1,开启OC1N信号输出到相应引脚
-							//b3 CC1NP=0,OC1高电平有效
+
+	TIM1->CCER1 = 0x11;
 	TIM1->CCER2 = 0x11;
 
-	//初始化刹车寄存器中MOE（主输出使能位）
-	TIM1->BKR = 0x80; 	  //b0 MOE=1 使能OC和OCN引脚输出
-							//b7 MOE=0 
-
-	//初始化预分频器，fmaster不分频，（须先写高8位再写低8位）
+	TIM1->BKR = 0x80;
+	
 	TIM1->PSCRH = 0;		  
 	TIM1->PSCRL = 15;
 
-	//设置自动重装寄存器（须先写高8位再写低8位）,决定PWM的频率
-	//  PWM频率：f=50HZ, T=20, 000us
-	//  时钟周期：t=1/(fmaster)=1/1MHZ = 1us
-	//  TIM1_ARR = T/t = 20000us/1us = 20 000
+	//PWM: f=50HZ, T=20, 000us
+	//Priod：t=1/(fmaster)=1/1MHZ = 1us
+	//ARR = T/t = 20000us/1us = 20 000
 	TIM1->ARRH = (u8)(20000>>8);	  
 	TIM1->ARRL = (u8)200000;
 
-	//初始化比较寄存器，决定PWM的占空比 
+	//Duty
 	TIM1->CCR1H = (u8)(1500>>8);
 	TIM1->CCR1L = (u8)(1500);
 
@@ -409,8 +458,7 @@ void pwm_int(void)
 	TIM1->CCR4H = (u8)(1500>>8);
 	TIM1->CCR4L = (u8)(1500);
 
-	TIM1->CR1 = 0x01; 	 //CEN=1,则允许计数  
-
+	TIM1->CR1 = 0x01;
 }
 
 void pwm_setup(pwm_t *p_pwm)
@@ -507,6 +555,12 @@ void gpio_int(void)
 	GPIOD->CR1|= 0x38;
 	GPIOD->CR2&= (u8)~0x38;
 
+	
+	/* RC: PD4 */
+	GPIOD->DDR &= (u8)~0x10;
+	GPIOD->CR1 |= 0x10;
+	GPIOD->CR2 &= (u8)~0x10;
+
 }
 
 void board_int(void)
@@ -523,11 +577,11 @@ void board_int(void)
 	spi_init();
 	LED_Init();
 	timer_int();
-	hw_uart_int();
+	//hw_uart_int();
 	pwm_int();
 	enableInterrupts();
 
-	uart_send("Hello", 5);
+	//uart_send("Hello", 5);
 	systick_count = 0;
 	while (1)
 	{	
@@ -540,7 +594,11 @@ void board_int(void)
 	//TIM1->CCR1H = (u8)(pluse>>8);
 	//TIM1->CCR1L = (u8)(pluse);
 
-	//hw_led_swith(n%2);
+	//if(0 && TIM2->SR1&0x04)
+	{
+		//hw_led_swith(n%2);
+		//TIM2->SR1&=~0x04;
+	}
 
 	//GPIOE->ODR^=0xf0;
 	for(i=0;i<500;i++)
