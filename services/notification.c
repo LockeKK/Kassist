@@ -208,7 +208,7 @@ void led_management(void)
 
 	if (!led.enabled)
 		return;
-	
+
 	switch (led.state)
 	{
 		case LED_START:

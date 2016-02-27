@@ -2774,6 +2774,14 @@ CFG_TypeDef;
 #endif /* _COSMIC_ */
 
 /*============================== Handling bits ====================================*/
+/* macros for setting bit to 0 or 1 */
+#define BSET(addr, pin) \
+    addr |= (u8)(1 << pin)
+#define BRES(addr, pin) \
+    addr &= (u8)~(1 << pin)
+#define BCHK(addr, pin) \
+    (addr & (u8)(1 << pin))
+
 /*-----------------------------------------------------------------------------
 Method : I
 Description : Handle the bit from the character variables.

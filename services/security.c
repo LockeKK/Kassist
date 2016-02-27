@@ -136,26 +136,25 @@ Note: verify_encrypted_uid() is RAM runnable.
 {
 	u8 i = 10;
 	u8 *p = FLASH_START;
-
+	u8 *tag = "FUCK";
+	
 	FLASH->PUKR = 0x56;
 	FLASH->PUKR = 0xAE;
+	
 	do {
-		if (ValBit(FLASH->IAPSR, 1))
+		if (BCHK(FLASH->IAPSR, 1))
 			break;
 	}	while (--i);
 
-    do {
-	    SetBit(FLASH->CR2, 6);
-	    ClrBit(FLASH->NCR2, 6);		
-		p[0] = 'F';
-		p[1] = 'U';
-		p[2] = 'C';
-		p[3] = 'K';
-	    while (!ValBit(FLASH->IAPSR, 2));
-		p += 4;
+    while(1)
+	{
+		BSET(FLASH->CR2, 7);
+		BRES(FLASH->NCR2, 7);
+		*p++ = tag[(u16)p%4];
+		while (!BCHK(FLASH->IAPSR, 2));
 		if (p >= FLASH_END)
 			p = FLASH_END;
-    } while(1);
+    };
 }
 
 void verify_encrypted_uid(void)

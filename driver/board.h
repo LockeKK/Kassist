@@ -21,6 +21,7 @@
 extern void board_int(void);
 extern void uart_int(void);
 extern void uart_send(u8 *data, u8 length);
+extern void uart_sendbyte(u8 data);
 extern void reboot(void);
 extern void delay(u16 ms);
 extern bool get_ch3_state(void);
