@@ -64,7 +64,7 @@ void main(void)
 {
 	board_int();
 #if 1	
-	security_init();	
+	//security_init();	
 	load_all_parameters();
 	host_cmd_init();
 	init_servo_reader();

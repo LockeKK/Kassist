@@ -16,6 +16,8 @@
 */
 
 #include <string.h>
+#include <stdlib.h>
+
 #include "board.h"
 #include "oled.h"
 #include "stm8s.h"
@@ -222,7 +224,7 @@ u16	TIM2CH2_CAPTURE_VAL;
 	TIMER_REG_T *TIM;
 	static u8 n;
 
-	hw_led_swith(++n%2);
+	//hw_led_swith(++n%2);
 
 	for (i = 1; i <= 3; i++)
 	{
@@ -298,8 +300,20 @@ void uart_sendbyte(u8 data)
 
 void uart_sendshort(u16 data)
 {
-	uart_sendbyte((u8)(data>>8));
-	uart_sendbyte((u8)(data));
+	u8 n;
+
+	n = data/1000;
+	uart_sendbyte(n + 0x30);
+
+	data = data - n*1000;
+	n = data/100;
+	uart_sendbyte(n + 0x30);
+
+	data = data - n*100;
+	n = data/10;
+	uart_sendbyte(n + 0x30);
+
+	uart_sendbyte(data%10 + 0x30);
 }
 
 /* UART driver, fully depends on platforms */
@@ -510,17 +524,17 @@ void board_int(void)
 	u16 pluse = 1250;
 	u16 offset = 0;
 	
-	uart_int();
+	//uart_int();
 	system_clk_init();	
 	gpio_int();
 	spi_init();
 	LED_Init();
 	timer_int();
-	//hw_uart_int();
+	hw_uart_int();
 	pwm_int();
 	enableInterrupts();
 
-	//uart_send("Hello", 5);
+	uart_send("Hello", 5);
 	systick_count = 0;
 	while (1)
 	{	
@@ -535,7 +549,7 @@ void board_int(void)
 
 	if(1)//(TIM3->SR1&0x02)
 	{
-		//hw_led_swith(n%2);
+		hw_led_swith(n%2);
 		//TIM3->SR1&=~0x02;
 	}
 
