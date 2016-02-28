@@ -60,7 +60,7 @@ NEAR EVENT_ACTIONS_T th_actions[MAX_AG_PROFILE][TH_KEY_MAX];// = {
 //};
 NEAR SERVO_OUTPUTS_T servo_outputs[CH_MAX] = {
 	{CH_PWM0, false, 4, 0, SERVO_TYPE_MP, 		{1500, 1800, 2000}, false, 
-		{1, 1, 0, 0, 0, 0, 0, 0, {0}}, 	{1000, 9000}
+		{1, 1, 0, 0, 0, 0, 0, 0, {0}}, 	{1000, 0}
 	},
 
 	{CH_PWM1,  false, 2, 0, SERVO_TYPE_MP, 		{1500, 1800}, false, 

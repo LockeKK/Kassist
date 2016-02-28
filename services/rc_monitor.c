@@ -89,10 +89,6 @@
 ******************************************************************************/
 #include "globals.h"
 
-#define SERVO_PULSE_CLAMP_LOW 800
-#define SERVO_PULSE_CLAMP_HIGH 2300
-
-
 static enum {
     WAIT_FOR_FIRST_PULSE,
     WAIT_FOR_TIMEOUT,

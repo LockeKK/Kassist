@@ -35,9 +35,9 @@ struct intr_vector {
 
 
 extern void _stext();     /* startup routine */
-extern void hw_uart_rx_interrupt(void);
-extern void timer4_systick_interrupt(void);
-extern void timer23_rc_handler(void);
+extern void uart_rx_interrupt(void);
+extern void systick_timer_interrupt(void);
+extern void rc_capture_handler(void);
 extern void adc_end_interrupt(void);
 
 
@@ -58,16 +58,16 @@ struct intr_vector const _vectab[] = {
 	INTR_DEFAULT,		/* 11 TIM1 - update/overflow/underflow/trigger/break */
 	INTR_DEFAULT,		/* 12 TIM1 - capture/compare */
 	INTR_DEFAULT,		/* 13 TIM2 - update/overflow */
-	INTR_VEC(timer23_rc_handler),		/* 14 TIM2 - capture/compare */
+	INTR_VEC(rc_capture_handler),		/* 14 TIM2 - capture/compare */
 	INTR_DEFAULT,		/* 15 TIM3 - update/overflow */
-	INTR_VEC(timer23_rc_handler),		/* 16 TIM3 - capture/compare */
+	INTR_VEC(rc_capture_handler),		/* 16 TIM3 - capture/compare */
 	INTR_DEFAULT,		/* 17 */
 	INTR_DEFAULT,		/* 18 */
 	INTR_DEFAULT,		/* 19 I2C - interrupt */
 	INTR_DEFAULT,		/* 20 UART2 - Tx complete */
-	INTR_VEC(hw_uart_rx_interrupt),		/* 21 UART2 - Receiver register DATA FULL */
+	INTR_VEC(uart_rx_interrupt),		/* 21 UART2 - Receiver register DATA FULL */
 	INTR_VEC(adc_end_interrupt),		/* 22 ADC1 - end of conversion */
-	INTR_VEC(timer4_systick_interrupt),		/* 23 TIM4 - update/overflow */
+	INTR_VEC(systick_timer_interrupt),		/* 23 TIM4 - update/overflow */
 	INTR_DEFAULT,		/* 24 Flash - EOP/WR_PG_DIS */
 	INTR_DEFAULT,		/* 25 */
 	INTR_DEFAULT,		/* 26 */

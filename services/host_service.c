@@ -276,7 +276,6 @@ static void reset_to_factroy(void)
 {
 	reset_all_parameters();
 	cmd_execution_done();
-	delay(100);
 	reboot();
 }
 
