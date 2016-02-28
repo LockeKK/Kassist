@@ -17,12 +17,13 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "board.h"
 #include "oled.h"
 #include "stm8s.h"
 
-void uart_sendshort(u16 data);
+void uart_sendshort(s16 data);
 
 void reboot(void)
 {
@@ -51,8 +52,8 @@ void hw_led_swith(bool on)
 {
 	bool led_switch @0x5014:5;
 
-	//led_switch = on;
-	led_switch = ~led_switch;
+	led_switch = on;
+	//led_switch = ~led_switch;
 }
 
 void hw_beep_swith(bool on)
@@ -76,12 +77,14 @@ void hw_storage_write(u8 *ee_addr, u8 *ram_addr, u16 length)
 	
     storage_make_writable(ee_addr);
 
+	BSET(FLASH->CR2, 7);
+	BRES(FLASH->NCR2, 7);
+
 	for(i=0;i<length;i++)
 	{	
-		BSET(FLASH->CR2, 7);
-		BRES(FLASH->NCR2, 7);
-		ee_addr[i] = ram_addr[i];
-		while (!BCHK(FLASH->IAPSR, 2));
+		//ee_addr[i] = ram_addr[i];
+		*(@near u8*) (u16)(ee_addr+i) = 0;//ram_addr[i];
+		//while (!BCHK(FLASH->IAPSR, 2));
 	}
     storage_make_readonly(ee_addr);
 }
@@ -204,7 +207,8 @@ static const TIMER_REG_T timer_reg[RC_MAX] =
 {
     static NEAR u16 start[RC_MAX] = {0, 0, 0};
     static NEAR u16 result[RC_MAX] = {0, 0, 0};
-    static NEAR u8 channel_flags = 0;
+    static NEAR u8 channel_flags = 0;	
+	
     u16 capture_value;
 	u8 low, high;
 	u8 i;
@@ -235,8 +239,6 @@ static const TIMER_REG_T timer_reg[RC_MAX] =
 				{
 					result[i-1] = capture_value - start[i-1];
 				}
-				if (i==2)
-				uart_sendshort(result[i-1]);
 			}
 			else 
 			{
@@ -272,12 +274,17 @@ void uart_sendbyte(u8 data)
 {
 	while(!(UART2->SR & UART2_SR_TXE));
 	UART2->DR = data;
-
 }
 
-void uart_sendshort(u16 data)
+NEAR char xxx_buf[20];
+void uart_sendshort(s16 data)
 {
-#if 1
+	u8 n;
+	
+	n=sprintf(xxx_buf,"%d\n", data);
+	uart_send((u8 *)xxx_buf, n);
+
+#if 0
 	u8 n;
 	static u16 last = 0;
 
@@ -475,7 +482,6 @@ static void system_clk_init(void)
     CLK->CKDIVR = 0;                     //  Ensure the clocks are running at full speed.
     CLK->PCKENR1 = 0xff;                 //  Enable all peripheral clocks.
     CLK->PCKENR2 = 0xff;                 //  Ditto.
-    //CLK->CCOR = 1;                       //  Turn on CCO.
     CLK->HSITRIMR = 0;                   //  Turn off any HSIU trimming.
     CLK->SWR = 0xe1;                     //  Use HSI as the clock source.
     CLK->SWCR = 0;                       //  Reset the clock switch control register.
@@ -524,12 +530,19 @@ void board_int(void)
 
 	uart_send("Hello", 5);
 	systick_count = 0;
-	while (1)
+	delay_ms(0xffff);
+
+	while (0)
 	{	
 	//LED_P8x16Str(0, 0, buffer);
 	//m=n++%10+0x30;
 	//uart_send(&m, 1);
-	//hw_storage_write((u8 *)EEPROM_ADDR_BASE+m, &m, 1);
+	disableInterrupts();
+	for(m=0;m<20;m++) //0x8aae
+		hw_storage_write((u8 *)(0xbaae+m), &m, 1);
+	enableInterrupts();
+	for(m=0;m<20;m++)
+		uart_sendbyte(*(u8 *)(0xbaae+m));
 	//offset += 10;
 	//pluse = 1250 + offset%300;
 	//TIM1->CCR1H = (u8)(pluse>>8);

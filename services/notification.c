@@ -46,13 +46,13 @@ static BEEP_T beep;
 
 void beep_ctrl(bool on)
 {
-	beep.enabled = on;
+	//beep.enabled = on;
 }
 
 void beep_notify(u8 tick)
 {
-	if (!beep.enabled)
-		return;
+	//if (!beep.enabled)
+		//return;
 
 	beep.sl_order = tick&0x80;
 	beep.dash = (u8)(tick>>3);
@@ -62,8 +62,8 @@ void beep_notify(u8 tick)
 
 void beep_management(void)
 {
-	if (!beep.enabled)
-		return;
+	//if (!beep.enabled)
+		//return;
 
 	switch (beep.state)
 	{
@@ -153,13 +153,13 @@ static LED_T led;
 
 void led_ctrl(bool on)
 {
-	led.enabled = on;
+	//led.enabled = on;
 }
 
 void led_notify(u8 mode)
 {
-	if (!led.enabled)
-		return;
+	//if (!led.enabled)
+		//return;
 
 	switch (mode)
 	{
@@ -206,8 +206,8 @@ void led_management(void)
 {
 	static u8 cycle;
 
-	if (!led.enabled)
-		return;
+	//if (!led.enabled)
+		//return;
 
 	switch (led.state)
 	{

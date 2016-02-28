@@ -42,6 +42,7 @@ void get_vbat_samples(u16 vbat)
 
 void battery_guard_service(void)
 {
+	return;
 	
     if ((!dev_config.flags.battery_guard_en) ||
 		(!global_flags.systick) ||

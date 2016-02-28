@@ -76,11 +76,11 @@ Signature, length is less than 12Bytes.
 */
 void security_init(void)
 {	
-	if (signature[0] == INIT_SIGNATURE0 &&
-		signature[1] == INIT_SIGNATURE1)
+	if (1||(signature[0] == INIT_SIGNATURE0 &&
+		signature[1] == INIT_SIGNATURE1))
 	{
 		save_system_configs(CONFIG_CHECK);
-		make_uid_signature();
+		//make_uid_signature();
 	}
 	else
 	{
@@ -161,6 +161,8 @@ void verify_encrypted_uid(void)
 {
 	u8 buf[12];
 	u8 i;
+
+	return;
 	
 	encrypte(buf, UID_ADDR, 12);
 	for (i = 0; i < 12; i++)

@@ -88,6 +88,8 @@
 
 ******************************************************************************/
 #include "globals.h"
+#include "board.h"
+#include "stdlib.h"
 
 static enum {
     WAIT_FOR_FIRST_PULSE,
@@ -103,8 +105,6 @@ static void initialize_channel(RC_CHANNEL_T *c);
 void init_servo_reader(void)
 {
     global_flags.rc_is_initializing = 1;
-	/* dev_config the Timer to capature the pulse*/
-	/* TODO*/
 }
 
 void read_rc_channels(void)
@@ -120,8 +120,10 @@ void read_rc_channels(void)
     if (!report_rc_actions) {
         return;
     }
+	
+	uart_sendshort(rc_channel[2].normalized);
+	
     report_rc_actions = false;
-
     switch (servo_reader_state) {
         case WAIT_FOR_FIRST_PULSE:
             servo_reader_timer = dev_config.startup_time;
@@ -155,12 +157,25 @@ void read_rc_channels(void)
     }
 }
 
+static NEAR u16 last_res[3]= {0, 0, 0};
 void output_raw_channels(u16 result[3])
 {
-    rc_channel[ST].raw_data = result[0] >> 1;
-    rc_channel[TH].raw_data = result[1] >> 1;
+    report_rc_actions = false;
+
+	if (!((result[2] > last_res[2] + 20) ||
+		(result[2] < last_res[2] - 20)))
+	{
+		return;
+	}
+	last_res[2]= result[2];
+
+	//uart_sendshort(result[1]);
+	//uart_sendshort(result[2]);
+
+    rc_channel[ST].raw_data = result[0];
+    rc_channel[TH].raw_data = result[1];
     if (!dev_config.flags.ch3_is_local_switch) {
-        rc_channel[CH3].raw_data = result[2] >> 1;
+        rc_channel[CH3].raw_data = result[2];
     }
 
     result[0] = result[1] = result[2] = 0;

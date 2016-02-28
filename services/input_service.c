@@ -304,6 +304,7 @@ static void add_click(void)
 {
     ++ch3_clicks;
     ch3_click_counter = dev_config.ch3_multi_click_timeout;
+	uart_send("ch3\n", 5);
 }
 
 

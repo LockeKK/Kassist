@@ -246,7 +246,7 @@ void save_system_configs(u8 index)
 	hw_storage_write(p->ram, p->mem, p->size);	
 }
 
-void load_all_parameters(void)
+void load_parameters(void)
 {
 	u8 i;
 
@@ -262,7 +262,7 @@ void load_all_parameters(void)
 	fresh_config_items();
 }
 
-void reset_all_parameters(void)
+void reset_parameters(void)
 {
 	u8 i;
 
@@ -279,7 +279,7 @@ static void fresh_config_items(void)
 	u8 i;
 	bool ready_to_go = true;
 	bool ready_for_mp = true;
-
+#if 0
 	for (i = 0; i < CONFIG_ITEMS_MAX; i++)
 	{
 		if (config_check[i].attr == IGNORE)
@@ -296,7 +296,7 @@ static void fresh_config_items(void)
 			ready_for_mp = ready_to_go;
 		}
 	}
-
+#endif
 	global_flags.ready_to_go = ready_to_go; 
 	global_flags.ready_for_mp = ready_for_mp;
 

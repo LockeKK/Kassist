@@ -55,36 +55,29 @@ static void check_no_signal(void)
 
 void diagnostics_service(void)
 {
-	if (!global_flags.ready_to_go)
-	{
-		led_notify(CONFIG_NOT_READY);
-	}
 }
 void main(void) 
 {
 	board_int();
-#if 1	
-	//security_init();	
-	load_all_parameters();
+	security_init();
+	load_parameters();
 	host_cmd_init();
 	init_servo_reader();
 	verify_encrypted_uid();
 	beep_notify(POWER_ON);
-#endif	
 
 	while(1)
 	{
 		service_systick();
-		//read_rc_channels();
-		//host_cmd_process();		
-		//setup_mode_service();
-		//input_ch3_handler();
-		//update_servo_output();
-		//check_no_signal();
-		//diagnostics_service();
-		//notification_service();
-		//battery_guard_service();
+		read_rc_channels();
+		host_cmd_process();		
+		setup_mode_service();
+		input_ch3_handler();
+		update_servo_output();
+		check_no_signal();
+		diagnostics_service();
+		notification_service();
+		battery_guard_service();
 	}
-//#endif	
 }
 
