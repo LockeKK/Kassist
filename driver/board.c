@@ -20,6 +20,8 @@
 #include "oled.h"
 #include "stm8s.h"
 
+void uart_sendshort(u16 data);
+
 void reboot(void)
 {
 	WWDG->CR |= (u8)(0x80);
@@ -50,8 +52,8 @@ void hw_led_swith(bool on)
 {
 	bool led_switch @0x5014:5;
 
-	led_switch = on;
-	//led_switch = ~led_switch;
+	//led_switch = on;
+	led_switch = ~led_switch;
 }
 
 void hw_beep_swith(bool on)
@@ -132,66 +134,36 @@ void timer_int(void)
 
 static void hw_timer_int(void)
 {
- 	CLK->PCKENR1|=1<<5;	//开启TIM2时钟
-	GPIOD->DDR&=~(1<<3);//PD3 输入模式
-	GPIOD->CR1|=1<<3;	//PD3,上拉
-	GPIOD->CR2&=~(1<<3);//PD3,不使用中断
+	GPIOD->DDR &= (u8)~0X1C;	//PD3 输入模式
+	GPIOD->CR1 |= (u8)0X1C;	//PD3,上拉
+	GPIOD->CR2 &= (u8)~0X1C;		//PD3,不使用中断
 
-	TIM2->PSCR=4;		//2^psc次方分频
-	TIM2->ARRH=0XFF;	//必须先设置ARR的高字节
-	TIM2->ARRL=0XFF;//再设置低字节
+	TIM2->PSCR = 4;		//2^psc次方分频
+	TIM2->ARRH = 0XFF;	//必须先设置ARR的高字节
+	TIM2->ARRL = 0XFF;	//再设置低字节
 
-	TIM2->CCMR2|=1<<0;	//CC2映射在TI2FP2上
-	TIM2->CCMR2|=0<<2;	//无预分频,每个事件一次捕获
-	TIM2->CCMR2|=0<<4;	//无滤波,Fmaster采样.
-	TIM2->CCER1|=1<<5;	//捕获下降沿
-	TIM2->CCER1|=1<<4;	//IC2输入捕获使能,允许捕获计数器的值到捕获寄存器中
-#if 1
+	TIM2->CCMR1 = 0x01; /*no prescale, no fliter, TI1FP1*/
+	TIM2->CCMR2 = 0X01; /*no prescale, no fliter, TI2FP2*/
+	TIM2->CCER1 = 0x11; /*Rising and enable capture*/
 
-	TIM2->CR1|=1<<7;	//预装载使能
+	TIM2->CR1 |= 0X80;	//预装载使能
 	//TIM2->IER|=1<<0;	//使能更新中断
-	TIM2->IER|=1<<2;	//通道2捕获中断使能
-	TIM2->CR1|=1<<0;	//使能TIM2 
-#endif
-#if 0	
-	/* timer 2: RC channel monitor */
+	TIM2->IER |= 0X06;	/* ISR, enable CH1 + CH2 */
+	TIM2->CR1 |= 0x01;	/* Enable TIM2*/ 
 
-	TIM2->PSCR = 4;
+	TIM3->PSCR = 4;		//2^psc次方分频
+	TIM3->ARRH = 0XFF;	//必须先设置ARR的高字节
+	TIM3->ARRL = 0XFF;	//再设置低字节
 
-	TIM2->ARRH = 0XFF;
-	TIM2->ARRL = 0XFF;
+	TIM3->CCMR1 = 0x01; /*no prescale, no fliter, TI1FP1*/
+	TIM3->CCER1 = 0x01; /*Rising and enable capture*/
 
-	/* Disable the Channel 1~3 */
-	//TIM2->CCER1 &= (u8)(~(TIM2_CCER1_CC1E | TIM2_CCER1_CC2E));	
-	//TIM2->CCER2 &= (u8)(~(TIM2_CCER2_CC3E));
-	
-	/* Set sampling rate, input */
-	//TIM2->CCMR1  = (u8)(0x01);
-	TIM2->CCMR2  = (u8)(0x01);
-	//TIM2->CCMR3  = (u8)(0xa0 | 0x01);
-	
-	/*Rising edge trigger*/
-	//TIM2->CCER1 &= (u8)(~(TIM2_CCER1_CC1P | TIM2_CCER1_CC2P)); 
-	TIM2->CCER2 &= (u8)(~(TIM2_CCER2_CC3P)); 
-
-	/* Clear interrupt flag */
-	//TIM2->SR1 &= (u8)(~(TIM2_SR1_CC1IF | TIM2_SR1_CC2IF));
+	TIM3->CR1 |= 0X80;	//预装载使能
+	//TIM2->IER|=1<<0;	//使能更新中断
+	TIM3->IER |= 0X02;	/* ISR, enable CH1*/
+	TIM3->CR1 |= 0x01;	/* Enable TIM3*/ 
 
 
-	//TIM2->CNTRH = 0x00;
-	//TIM2->CNTRL = 0x00;
-
-	/* Enable the interrupt*/
-	TIM2->IER |= (u8)(TIM2_IER_CC1IE | TIM2_IER_CC2IE);
-
-	
-	/* Enable the Channel 1  */
-	TIM2->CCER1 |= TIM2_CCER1_CC1E | TIM2_CCER1_CC2E;
-	//TIM2->CCER2 |= TIM2_CCER2_CC3E;
-
-	/* Start the counter(3ch share one EN)*/
-	TIM2->CR1 |= (u8)TIM2_CR1_CEN;
-#endif	
 	/* timer 4: systick */
 	TIM4->PSCR = 7;				// init divider register /128		
 	TIM4->ARR = 250;				// init auto reload register	
@@ -213,15 +185,15 @@ static void hw_timer_int(void)
 }
 
 typedef struct{
-	u8 *srx;
-	u8 *ccrxh;
-	u8 *ccrxl;
-	u8 *ccerx;
-	u8 srx_mask;
-	u8 ccerx_mask;
-} TIMER2_REG_T;
+	u8 *SRx;
+	u8 *CCRHx;
+	u8 *CCRLx;
+	u8 *CCERx;
+	u8 SR_MASK;
+	u8 CCER_MASK;
+} TIMER_REG_T;
 
-static const TIMER2_REG_T timer2_reg[RC_MAX] =
+static const TIMER_REG_T timer2_reg[RC_MAX] =
 {
 	{
 		&TIM2->SR1, &TIM2->CCR1H, &TIM2->CCR1L, &TIM2->CCER1,
@@ -232,39 +204,39 @@ static const TIMER2_REG_T timer2_reg[RC_MAX] =
 		TIM2_SR1_CC2IF, TIM2_CCER1_CC2P
 	},
 	{
-		&TIM2->SR1, &TIM2->CCR3H, &TIM2->CCR3L, &TIM2->CCER2,
-		TIM2_SR1_CC3IF, TIM2_CCER2_CC3P
+		&TIM3->SR1, &TIM3->CCR1H, &TIM3->CCR1L, &TIM3->CCER1,
+		TIM3_SR1_CC1IF, TIM3_CCER1_CC1P
 	}
 };
-u8  TIM2CH2_CAPTURE_STA=0;	//输入捕获状态		    				
-u16	TIM2CH2_CAPTURE_VAL;	//输入捕获值
+u8  TIM2CH2_CAPTURE_STA=0;
+u16	TIM2CH2_CAPTURE_VAL;
 
 @interrupt void timer23_rc_handler(void)
 {
-#if 0
     static NEAR u16 start[RC_MAX] = {0, 0, 0};
     static NEAR u16 result[RC_MAX] = {0, 0, 0};
     static NEAR u8 channel_flags = 0;
     u16 capture_value;
 	u8 low, high;
 	u8 i;
-	TIMER2_REG_T *p;
+	TIMER_REG_T *TIM;
 	static u8 n;
 
 	hw_led_swith(++n%2);
 
-	for (i = 1; i <= 2; i++)
+	for (i = 1; i <= 3; i++)
 	{
-		p = &timer2_reg[i-1];
-		if (*p->srx & p->srx_mask)
+		TIM = &timer2_reg[i-1];
+		
+		if (*TIM->SRx & TIM->SR_MASK)
 		{
-			high = *p->ccrxh;
-			low = *p->ccrxl;
+			high = *TIM->CCRHx;
+			low = *TIM->CCRLx;
 	
 			capture_value = (u16)(low);
 			capture_value |= (u16)((u16)high << 8);
 	
-			if (*p->ccerx & p->ccerx_mask)
+			if (*TIM->CCERx & TIM->CCER_MASK)
 			{
 				// Falling edge triggered
 				if (start[i-1] > capture_value)
@@ -276,6 +248,7 @@ u16	TIM2CH2_CAPTURE_VAL;	//输入捕获值
 				{
 					result[i-1] = capture_value - start[i-1];
 				}
+				uart_sendshort(result[i-1]);
 			}
 			else 
 			{
@@ -289,52 +262,13 @@ u16	TIM2CH2_CAPTURE_VAL;	//输入捕获值
 				channel_flags |= (u8)(1 << i);
 			}
 	
-			//Toggle the edge
-			*p->ccerx ^= p->ccerx_mask;
+			//Toggle the trigger edge
+			*TIM->CCERx ^= TIM->CCER_MASK;
 	
 			//Clear the interrupt
-			*p->srx &= (u8)(~p->srx_mask);
+			*TIM->SRx &= (u8)(~TIM->SR_MASK);
 		}
 	}
-#endif
-{
-	u8 tsr;
-	static u8 n;
-
-	tsr=TIM2->SR1;
-	//if((TIM2CH2_CAPTURE_STA&0X80)==0)//还未成功捕获	
-	{
-		if (tsr&0x04)//捕获2发生捕获事件
-		{
-		
-			//hw_led_swith(n++%2);
-#if 1
-			if((TIM2->CCER1 & (u8)(1<<5)) == 0)		//捕获到一个下降沿 		
-			{	  			
-				//TIM2CH2_CAPTURE_STA|=0X80;		//标记成功捕获到一次低电平脉宽
-			    TIM2CH2_CAPTURE_VAL=TIM2->CCR2H;//获取当前的捕获值.
-				TIM2CH2_CAPTURE_VAL<<=8;
-				TIM2CH2_CAPTURE_VAL+=TIM2->CCR2L;
-	 			TIM2->CCER1|=1<<5; 				//CC2P=1 设置为下降沿捕获 
-	 			
-				hw_led_swith(0);
-			}else  								//还未开始,第一次捕获下降沿
-			{
-	 			TIM2->CNTRH=0;					//计数器清空
-		 		TIM2->CNTRL=0;					//计数器清空
-				TIM2CH2_CAPTURE_STA=0;			//清空
-				TIM2CH2_CAPTURE_VAL=0;
-				TIM2CH2_CAPTURE_STA|=0X40;		//标记捕获到了下降沿
-	 			TIM2->CCER1&=~(1<<5);			//CC2P=0 设置为上升沿捕获
-	 			
-				hw_led_swith(1);
-			}
-#endif				
-		}	
-	}
-	TIM2->SR1&=~(1<<2);//清除捕获中断标志位 
-}
-
 }
 
 static void (*uart_rx_callback)(u8);
@@ -360,6 +294,12 @@ void uart_sendbyte(u8 data)
 	while(!(UART2->SR & UART2_SR_TXE));
 	UART2->DR = data;
 
+}
+
+void uart_sendshort(u16 data)
+{
+	uart_sendbyte((u8)(data>>8));
+	uart_sendbyte((u8)(data));
 }
 
 /* UART driver, fully depends on platforms */
@@ -554,7 +494,6 @@ void gpio_int(void)
 	GPIOD->DDR &= (u8)~0x38;
 	GPIOD->CR1|= 0x38;
 	GPIOD->CR2&= (u8)~0x38;
-
 	
 	/* RC: PD4 */
 	GPIOD->DDR &= (u8)~0x10;
@@ -571,7 +510,7 @@ void board_int(void)
 	u16 pluse = 1250;
 	u16 offset = 0;
 	
-	//uart_int();
+	uart_int();
 	system_clk_init();	
 	gpio_int();
 	spi_init();
@@ -594,10 +533,10 @@ void board_int(void)
 	//TIM1->CCR1H = (u8)(pluse>>8);
 	//TIM1->CCR1L = (u8)(pluse);
 
-	//if(0 && TIM2->SR1&0x04)
+	if(1)//(TIM3->SR1&0x02)
 	{
 		//hw_led_swith(n%2);
-		//TIM2->SR1&=~0x04;
+		//TIM3->SR1&=~0x02;
 	}
 
 	//GPIOE->ODR^=0xf0;
