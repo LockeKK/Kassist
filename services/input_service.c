@@ -66,7 +66,6 @@ void input_ch3_handler(void)
 
     if (dev_config.flags.ch3_is_momentary) {
         if ((rc_channel[CH3].normalized > 0)  !=  (ch3_flags.last_state)) {
-
             // Did we register this transition already?
             if (!ch3_flags.transitioned) {
                 // No: Register transition and add click
@@ -200,8 +199,8 @@ static void input_process_thread(u8 clicks)
 			break;						
 
 		case CH3_TOGGLE:
-			toggle_it(sout[ch].pos_config.toggle);
-			pos_configs->current = sout[ch].pos_config.toggle;
+			toggle_it(sout->pos_config.toggle);
+			pos_configs->current = sout->pos_config.toggle;
 			break;
 
 		case CH3_PRIFILE_TOGGLE:
@@ -218,8 +217,13 @@ static void input_process_thread(u8 clicks)
 			break;
 	}
 
-	if (pos_configs->current != current)
-		pos_configs->mp_update = true;
+	//if (pos_configs->current != current)
+	
+	uart_send("cur", 3);
+	uart_sendshort(pos_configs->current);
+	uart_send("pos", 3);
+	uart_sendshort(action);
+	pos_configs->mp_update = true;
 
 	return;
 }
@@ -289,13 +293,15 @@ static void process_ch3_click_timeout(void)
     if (ch3_click_counter != 0) {   // Double-click timer expired?
         return;                     // No: wait for more buttons
     }
-
-	ret = if_under_setup_actions();
+	//uart_send("+", 1);
+	ret = if_setup_actions_done();
+	//uart_sendshort((s16)global_flags.reversing_setup);	
+	//uart_send("-", 1);
 	
 	if (ret)
-		input_user_acknowledge(ch3_clicks);
+		input_process_thread(ch3_clicks);
 	else
-    	input_process_thread(ch3_clicks);
+    	input_user_acknowledge(ch3_clicks);
 
     ch3_clicks = 0;
 }
@@ -304,7 +310,7 @@ static void add_click(void)
 {
     ++ch3_clicks;
     ch3_click_counter = dev_config.ch3_multi_click_timeout;
-	uart_send("ch3\n", 5);
+	//uart_send("ch3\n", 5);
 }
 
 

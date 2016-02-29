@@ -59,10 +59,11 @@ void diagnostics_service(void)
 void main(void) 
 {
 	board_int();
-	security_init();
+	//security_init();
 	load_parameters();
 	host_cmd_init();
 	init_servo_reader();
+	init_servo_output();
 	verify_encrypted_uid();
 	beep_notify(POWER_ON);
 
@@ -71,7 +72,7 @@ void main(void)
 		service_systick();
 		read_rc_channels();
 		host_cmd_process();		
-		setup_mode_service();
+		//setup_mode_service();
 		input_ch3_handler();
 		update_servo_output();
 		check_no_signal();

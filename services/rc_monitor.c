@@ -121,7 +121,7 @@ void read_rc_channels(void)
         return;
     }
 	
-	uart_sendshort(rc_channel[2].normalized);
+	//uart_sendshort(rc_channel[2].normalized);
 	
     report_rc_actions = false;
     switch (servo_reader_state) {
@@ -165,7 +165,7 @@ void output_raw_channels(u16 result[3])
 	if (!((result[2] > last_res[2] + 20) ||
 		(result[2] < last_res[2] - 20)))
 	{
-		return;
+		//return;
 	}
 	last_res[2]= result[2];
 

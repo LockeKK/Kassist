@@ -106,7 +106,13 @@ void update_servo_output(void)
 		if (sout->mp_setup_done == false)
 			continue;
 
-		switch (ch)
+		if (pos_configs->mp_update == false)
+			continue;
+		
+		uart_send("$", 1);
+		uart_sendshort(pos_configs->current);
+		//uart_send("%", 1);
+		switch (sout->type)
 		{
 			case SERVO_TYPE_MP:
 				servo_pulse = calculate_servo_activeness(ch);
@@ -121,13 +127,14 @@ void update_servo_output(void)
 				return;
 		}		
 		pwm_update(ch, servo_pulse);
+		pos_configs->mp_update = false;
 	}
 }
 
-bool if_under_setup_actions(void)
+bool if_setup_actions_done(void)
 {
-	return (if_reversing_setup_done() ||
-			if_steel_setup_done() ||
+	return (if_reversing_setup_done() &&
+			if_steel_setup_done() &&
 			if_servo_output_setup_done());
 }
 
@@ -422,7 +429,7 @@ static void do_servo_output_setup(SERVO_OUTPUTS_T *sout)
 	}
 	
     servo_pulse = calculate_servo_pulse(rc_channel[ST].normalized);
-	pwm_update(sout->channel, servo_pulse);
+	//pwm_update(sout->channel, servo_pulse);
 
 	if (!user_confirmed)
 	{
@@ -476,6 +483,12 @@ static u16 calculate_servo_activeness(u8 ch)
 	pos_configs = &servo_outputs[ch].pos_config;
 	servo_pulse = sout->position[pos_configs->current];
 
+	uart_send("a",1);
+	uart_sendshort(pos_configs->current);
+	uart_send("*",1);
+	uart_sendshort(servo_pulse);
+	//uart_send("b",1);
+
 	if (sout->type != SERVO_TYPE_MP)
 	{
 		return servo_pulse;
@@ -483,7 +496,7 @@ static u16 calculate_servo_activeness(u8 ch)
 
 	if (pos_configs->mp_update)
 	{
-		pos_configs->mp_update = false;
+		//pos_configs->mp_update = false;
 		servo_counter[ch] = sout->sp.active_tmo;				
 		servo_active[ch] = true;		
 	}
@@ -517,7 +530,7 @@ u16 servo_output_manually(u8 channel, s16 normalized)
 	u16 servo_pulse;
 
 	servo_pulse = calculate_servo_pulse(normalized);
-	pwm_update(channel, servo_pulse);
+	//pwm_update(channel, servo_pulse);
 
 	return servo_pulse;
 }

@@ -73,6 +73,66 @@
 // 5V     	(12)
 // ****************************************************************************
 
+// ****************************************************************************
+// IO pins: (STM8S105 in LQFP48 package) [*] means high speed GPIO
+//
+// 1		(NRST)					ISP
+// 2		(OSCIN/PA1)				Crystal
+// 3		(OSCOUT/PA2)			Crystal
+// 4		(VSSIO_1)				GND
+// 5		(VSS)					GND
+// 6		(VCAP)					Power
+// 7		(VDD)					Power
+// 8		(VDDIO_1)				Power
+// 9		(PA3/TIM2_CH3)			RC CH3 input(2)
+// 10		(PA4)*					NC
+// 11		(PA5)*					NC
+// 12		(PA6)*					NC
+
+// 13		(VDDA)					Power
+// 14		(VSSA)					GND
+// 15		(AIN7/PB7)				DIP3
+// 16		(AIN6/PB6)				DIP2
+// 18		(AIN5/PB5)				DIP1
+// 18		(AIN4/PB4)				DIP0
+// 19		(AIN3/PB3)				KEY3
+// 20		(AIN2/PB2)				KEY2
+// 21		(AIN1/PB1)				KEY1
+// 22		(AIN0/PB0)				KEY0
+// 23		(AIN8/PE7)				LED
+// 24		(AIN9/PE6)				Li-Po Vbat
+
+// 25		(PE5/SPI_NSS)			OLED CS
+// 26		(PC1/TIM1_CH1)*			PWM0 output
+// 27		(PC2/TIM1_CH2)*			PWM1 output
+// 28		(PC3/TIM1_CH3)*			PWM2 output
+// 29		(PC4/TIM1_CH4)*			PWM3 output
+// 30		(PC5/SPI_SCK)*			OLED CLK
+// 31		(VSSIO_2)				GND
+// 32		(VDDIO_2)				Power
+// 33		(PC6/SPI_MOSI)*			OLED SIN
+// 34		(PC7/SPI_MISO)*			OLED Reset
+// 35		(PG0)					OLED DC
+// 36		(PG1)					BEEP
+
+// 37		(PE3/TIM1_BKIN)			TLC5940 XLAT
+// 38		(PE2/I2C_SDA)			NC
+// 39		(PE1/I2C_SCL)			NC
+// 40		(PE0/CLK_CCO)*			TLC5940 SIN
+// 41		(PD0/TIM3_CH2)*			TLC5940 GSCLK
+// 42		(PD1/SWIM)*				ISP
+// 43		(PD2/TIM3_CH1)*			TLC5940 BLANK
+// 44		(PD3/TIM2_CH2)*			RC Throttle input(1)
+// 45		(PD4/TIM2_CH1)*			RC Steel input(0)
+// 46		(PD5/UART2_TX)			UART/WIFI TX
+// 47		(PD6/UART2_RX)			UART/WIFI RX
+// 48		(PD7/TLI[TMI1_CH4])		TLC5940 SCLK
+
+//
+// GND
+// 3.3V
+// ****************************************************************************
+
 // Number of positions of our virtual light switch. Includes the "off"
 // position 0.
 // NOTE: if you change this value you need to adjust CAR_LIGHT_FUNCTION_T
@@ -92,7 +152,7 @@
 #define MAX(x, y) ((x) > (y) ? x : (y))
 
 #define MAX_MP 			(4)
-#define MAX_EXMP 		((MAX_MP+1)>>1)
+#define MAX_EXMP 		((MAX_MP)>>1)
 #define NA 				(0XFF)
 #define toggle_it(a)	(a=a?0:1)
 #define MAX_CH3_PROFILE (2)
@@ -380,7 +440,7 @@ NEAR extern SERVO_ENDPOINTS_T servo_output_endpoint;
 
 extern void init_servo_output(void);
 extern void update_servo_output(void);
-extern bool if_under_setup_actions(void);
+extern bool if_setup_actions_done(void);
 extern void input_user_acknowledge(u8 ch3_clicks);
 extern void setup_mode_service(void);
 extern void init_servo_reader(void);

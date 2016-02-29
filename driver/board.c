@@ -137,11 +137,13 @@ static void systick_timer_init(void)
 @interrupt void systick_timer_interrupt(void)
 {
 	/*TODO: 20mS timer*/
+	static u8 n;
 	static u16 tm_count;
 	if (++tm_count == 10)
 	{
 		++systick_count;
 		tm_count = 0;
+		hw_led_swith(++n%2);
 	}
 	TIM4->SR1 &= (u8)(~TIM4_SR1_UIF);
 }
@@ -430,6 +432,10 @@ void pwm_update(u8 channel, u16 duty)
 
 	offset = channel * 2;
 
+	uart_send("pwm",3);
+	uart_sendshort(duty);
+	//uart_send("-",1);
+
 	if(duty == 0)
 	{
 		*(volatile u8 *)(CCRH + offset) = (u8)(duty>>8);
@@ -440,8 +446,10 @@ void pwm_update(u8 channel, u16 duty)
 		if (duty > SERVO_PULSE_CLAMP_LOW &&
 			duty < SERVO_PULSE_CLAMP_HIGH)
 		{
-			*(volatile u8 *)(CCRH + offset) = (u8)(duty>>8);
-			*(volatile u8 *)(CCRL + offset) = (u8)(duty);
+			//*(volatile NEAR u8 *)(CCRH + offset) = (u8)(duty>>8);
+			//*(volatile NEAR u8 *)(CCRL + offset) = (u8)(duty);
+			TIM1->CCR1H = (u8)(duty>>8);
+			TIM1->CCR1L = (u8)(duty);
 		}
 	}
 }
@@ -537,21 +545,15 @@ void board_int(void)
 	//LED_P8x16Str(0, 0, buffer);
 	//m=n++%10+0x30;
 	//uart_send(&m, 1);
-	disableInterrupts();
-	for(m=0;m<20;m++) //0x8aae
-		hw_storage_write((u8 *)(0xbaae+m), &m, 1);
-	enableInterrupts();
-	for(m=0;m<20;m++)
-		uart_sendbyte(*(u8 *)(0xbaae+m));
 	//offset += 10;
 	//pluse = 1250 + offset%300;
 	//TIM1->CCR1H = (u8)(pluse>>8);
 	//TIM1->CCR1L = (u8)(pluse);
-	pwm_update(0, 1?0:1500);
+	//pwm_update(0, 1?0:1500);
 
 	if(1)
 	{
-		hw_led_swith(n%2);
+		hw_led_swith(++n%2);
 	}
 
 	for(i=0;i<500;i++)

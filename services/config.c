@@ -59,20 +59,20 @@ NEAR EVENT_ACTIONS_T th_actions[MAX_AG_PROFILE][TH_KEY_MAX];// = {
 	//{TH_KEY3, NO_ACTION}
 //};
 NEAR SERVO_OUTPUTS_T servo_outputs[CH_MAX] = {
-	{CH_PWM0, false, 4, 0, SERVO_TYPE_MP, 		{1500, 1800, 2000}, false, 
-		{1, 1, 0, 0, 0, 0, 0, 0, {0}}, 	{1000, 0}
+	{CH_PWM0, true, 4, 0, SERVO_TYPE_MP, 		{1200, 1500, 1800, 2000}, true, 
+		{1, 1, 0, 0, 0, 0, 0, 0, {0, NA}}, 	{1000, 0}
 	},
 
 	{CH_PWM1,  false, 2, 0, SERVO_TYPE_MP, 		{1500, 1800}, false, 
-		{1, 1, 0, 0, 0, 0, 0, 0, {NA}}, {1000, 0	}
+		{1, 1, 0, 0, 0, 0, 0, 0, {NA, NA}}, {1000, 0	}
 	},
 
 	{CH_PWM2,  false, 0, 0, SERVO_TYPE_SWITCH, 	{1500}, false, 
-		{0, 0, 0, 0, 0, 0, 0, 0, {NA}}, {0, 0}
+		{0, 0, 0, 0, 0, 0, 0, 0, {NA, NA}}, {0, 0}
 	},
 
 	{CH_PWM3,  false, 0, 0, SERVO_TYPE_WHEEL, 	{1500}, false, 
-		{0, 0, 0, 0, 0, 0, 0, 0, {NA}},	{0, 0}
+		{0, 0, 0, 0, 0, 0, 0, 0, {NA, NA}},	{0, 0}
 	}
 };
 
@@ -86,7 +86,7 @@ NEAR volatile RC_CHANNEL_T rc_channel[RC_MAX] = {
 NEAR DEVICE_CONFIG_T dev_config = {
 /* flags */ 	{
 /* ch3_is_local_switch */		false,
-/* ch3_is_momentary */			false,
+/* ch3_is_momentary */			true,
 /* action_beep_en */			true,
 /* battery_guard_en */			true,
     			},
@@ -249,7 +249,7 @@ void save_system_configs(u8 index)
 void load_parameters(void)
 {
 	u8 i;
-
+#if 0
 	load_system_configs(CONFIG_CHECK);
 
 	for (i = DEVICE_CONFIG; i < VAILD_SYS_INFO_MAX; i++)
@@ -259,6 +259,7 @@ void load_parameters(void)
 			load_system_configs(i);
 		}
 	}
+#endif	
 	fresh_config_items();
 }
 
